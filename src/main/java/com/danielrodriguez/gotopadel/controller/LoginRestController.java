@@ -26,8 +26,9 @@ public class LoginController {
 
         if (usuario != null) {
             // Si el login es exitoso, guardar datos en la sesión
-            session.setAttribute("idUsuario", usuario.getIdUsuario());
-            session.setAttribute("nombreUsuario", usuario.getNombre());
+            // session.setAttribute("idUsuario", usuario.getIdUsuario());
+            // session.setAttribute("nombreUsuario", usuario.getNombre());
+            session.setAttribute("usuarioAutenticado" , usuario);
 
             return new ResponseEntity<>("Login exitoso, redirigiendo a zonaPersonal.html", HttpStatus.OK);
         } else {
