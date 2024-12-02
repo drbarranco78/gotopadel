@@ -1,30 +1,21 @@
 package com.danielrodriguez.gotopadel.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.*;
+import java.io.Serializable;
 
 @Entity
-@Table(name = "PARTIDO") 
-public class Partido {
+@Table(name = "ARCHIVO") 
+public class Archivo {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_partido")
+    @Column(name = "id_partido", nullable = false)
     private Integer idPartido;
 
-    @ManyToOne
-    @JoinColumn(name = "id_usuario", nullable = false)
-    private Usuario usuario;
+    @Column(name = "id_usuario", nullable = false)
+    private Integer idUsuario;
 
     @Column(name = "tipo_partido", nullable = false, length = 10)
     private String tipoPartido;
-
-    @Column(name = "vacantes", nullable = false)
-    private Byte vacantes;
 
     @Column(name = "nivel", length = 20)
     private String nivel;
@@ -38,16 +29,17 @@ public class Partido {
     @Column(name = "hora_partido", length = 6)
     private String horaPartido;
 
-    @ManyToOne
-    @JoinColumn(name = "ubicacion", referencedColumnName = "id_ubicacion")
-    private Ubicacion ubicacion;
+    @Column
+    private Integer ubicacion;
 
-    @Column(name = "comentarios", columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String comentarios;
 
-    @OneToMany(mappedBy = "partido", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private List<Inscribe> inscripciones = new ArrayList<>();
+    @Column(name = "fecha_archivo", length = 10)
+    private String fechaArchivo;
+
+    @Column(name = "motivo_archivado", length = 30)
+    private String motivoArchivado;
 
     // Getters y setters
     public Integer getIdPartido() {
@@ -58,14 +50,13 @@ public class Partido {
         this.idPartido = idPartido;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public Integer getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setIdUsuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
     }
-
 
     public String getTipoPartido() {
         return tipoPartido;
@@ -75,13 +66,7 @@ public class Partido {
         this.tipoPartido = tipoPartido;
     }
 
-    public Byte getVacantes() {
-        return vacantes;
-    }
-
-    public void setVacantes(Byte vacantes) {
-        this.vacantes = vacantes;
-    }
+    
 
     public String getNivel() {
         return nivel;
@@ -115,11 +100,11 @@ public class Partido {
         this.horaPartido = horaPartido;
     }
 
-    public Ubicacion getUbicacion() {
+    public Integer getUbicacion() {
         return ubicacion;
     }
 
-    public void setUbicacion(Ubicacion ubicacion) {
+    public void setUbicacion(Integer ubicacion) {
         this.ubicacion = ubicacion;
     }
 
@@ -131,11 +116,22 @@ public class Partido {
         this.comentarios = comentarios;
     }
 
-    public List<Inscribe> getInscripciones() {
-        return inscripciones;
+    public String getFechaArchivo() {
+        return fechaArchivo;
     }
 
-    public void setInscripciones(List<Inscribe> inscripciones) {
-        this.inscripciones = inscripciones;
+    public void setFechaArchivo(String fechaArchivo) {
+        this.fechaArchivo = fechaArchivo;
+    }
+
+    public String getMotivoArchivado() {
+        return motivoArchivado;
+    }
+
+    public void setMotivoArchivado(String motivoArchivado) {
+        this.motivoArchivado = motivoArchivado;
     }
 }
+
+
+

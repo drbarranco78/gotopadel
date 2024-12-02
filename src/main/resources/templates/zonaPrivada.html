@@ -1,15 +1,425 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <title>Area Personal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/zonaPrivada.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="HTTP://code.jquery.com/jquery-latest.js"></script>
+    <title>GoToPadel Area Personal</title>
 </head>
+
 <body>
-    <div id="mensaje-bienvenida"></div>
+    <header>
+        <div class="logotipo">
+            <img src="img/logo.png" id="logo-cabecera" class="icono-cabecera" alt="Logotipo de GoToPádel">
+            <h3>GoToPádel</h3>
+        </div>
+
+        <div class="usuario">
+            <div id="mensaje-bienvenida"></div>
+            <img src="img/ico_usuario_activo.png" id="icono-usuario" class="icono-cabecera" alt="Icono de usuario">
+            <div class="opciones-usuario">
+                <div id="ver-perfil" class="ver-perfil">Ver Perfil</div>
+                <div id="cerrar-sesion" class="cerrar-sesion">Cerrar Sesión</div>
+            </div>
+        </div>
+
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="" id="enlace-inicio">Inicio</a></li>
+            <li><a href="" id="enlace-ver">Ver Partidos</a></li>
+            <li><a href="" id="enlace-publicar">Publicar Partidos</a></li>
+            <li><a href="" id="enlace-mispartidos">Mis Partidos</a></li>
+            <li><a href="" id="enlace-estadisticas">Estadísticas</a></li>
+        </ul>
+    </nav>
+
+    <section id="contenedor-principal">
 
 
-    <script src="/js/personal.js"></script>
+        <div class="mensaje-exito"></div>
+        <div class="mensaje-error"></div>
+
+
+        <div id="confirmar-accion" class="confirmar-accion">
+            <p class="texto-confirmar-accion">Estas seguro?</p>
+            <div class="botones-accion">
+                <button id="aceptar-accion" class="aceptar-accion">Aceptar</button>
+                <button id="cancelar-accion" class="cancelar-accion">Cancelar</button>
+            </div>
+        </div>
+
+        <div id="confirmar-archivado" class="confirmar-archivado">
+            <p>Seleccione el motivo del archivado:</p>
+            <button id="archivar-jugado" class="archivar-jugado opciones-archivado">Partido jugado</button>
+            <button id="archivar-cancelado" class="archivar-cancelado opciones-archivado">Partido cancelado</button>
+            <button id="cancelar-archivado" class="cancelar-archivado opciones-archivado">Cancelar</button>
+        </div>
+        
+
+
+        <div class="contenido datos-usuario">
+
+            <div class="ficha-usuario">
+                <img class="icono-usuario-ficha icono-cabecera" src="img/ico_usuario.png" alt="Icono del usuario">
+
+                <p class="nombre-usuario-ficha">Carlos Martinez</p>
+                <p class="fecha-usuario-ficha">Miembro desde: <span></span></p>
+                <p class="id-usuario-ficha">Nº de Usuario: <span></span></p>
+                <p class="nacimiento-usuario-ficha">Fecha de Nacimiento: <span></span></p>
+                <p class="genero-usuario-ficha">Género: <span></span></p>
+                <p class="nivel-usuario-ficha">Nivel de Juego: <span></span></p>
+                <p class="publicados-usuario-ficha">Partidos Publicados: <span></span></p>
+                <p class="inscrito-usuario-ficha">Partidos Inscrito: <span></span></p>
+                <div class="botones-ficha-usuario">
+                    <button id="ver-partidos-usuario-ficha">Ver Partidos</button>
+                    <button id="eliminar-cuenta-usuario">Eliminar Cuenta</button>
+
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="contenido ver-partidos" id="ver-partidos">
+            <div id="ficha-detalles" class="ficha-detalles">
+                <!-- Número de Partido -->
+                <div class="detalle-item">
+                    <i class="fa-solid fa-hashtag"></i>
+                    <p class="detalles-partido">Partido N°:</p>
+                    <span class="numero-partido"></span> <!-- Número de partido dinámico -->
+                </div>
+
+                <!-- Organizador -->
+                <div class="detalle-item">
+                    <i class="fa-solid fa-user"></i>
+                    <p class="detalles-organizador">Organizador:</p>
+                    <span class="organizador-partido"></span> <!-- Organizador dinámico -->
+                </div>
+
+                <!-- Fecha de Publicación -->
+                <div class="detalle-item">
+                    <i class="fa-solid fa-pencil-alt"></i>
+                    <p class="detalles-publicacion">Fecha de publicación:</p>
+                    <span class="fecha-publicacion"></span> <!-- Fecha de publicación dinámica -->
+                </div>
+
+                <!-- Fecha -->
+                <div class="detalle-item">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <p class="detalles-fecha">Fecha del partido:</p>
+                    <span class="fecha-partido"></span> <!-- Fecha dinámica -->
+                </div>
+
+                <!-- Hora -->
+                <div class="detalle-item">
+                    <i class="fa-solid fa-clock"></i>
+                    <p class="detalles-hora">Hora de inicio:</p>
+                    <span class="hora-partido"></span> <!-- Hora dinámica -->
+                </div>
+
+                <!-- Lugar -->
+                <div class="detalle-item">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <p class="detalles-lugar">Lugar:</p>
+                    <span class="lugar-partido"></span> <!-- Lugar dinámico -->
+                </div>
+
+                <!-- Ciudad -->
+                <div class="detalle-item">
+                    <i class="fa-solid fa-city"></i>
+                    <p class="detalles-ciudad">Ciudad:</p>
+                    <span class="ciudad-partido"></span> <!-- Ciudad dinámica -->
+                </div>
+
+                <!-- Tipo de Partido -->
+                <div class="detalle-item">
+                    <i class="fa-solid fa-gamepad"></i>
+                    <p class="detalles-tipo">Tipo de partido:</p>
+                    <span class="tipo-partido"></span> <!-- Tipo de partido dinámico -->
+                </div>
+
+                <!-- Jugadores inscritos -->
+                <div class="detalle-item">
+                    <i class="fa-solid fa-users"></i>
+                    <p class="detalles-jugadores">Jugadores inscritos:</p>
+                    <span class="jugadores-inscritos"></span> <!-- Jugadores inscritos dinámico -->
+                </div>
+
+                <!-- Vacantes -->
+                <div class="detalle-item">
+                    <i class="fa-solid fa-user-plus"></i>
+                    <p class="detalles-vacantes">Vacantes:</p>
+                    <span class="vacantes-partido"></span> <!-- Vacantes dinámico -->
+                </div>
+                <!-- Nivel de Juego -->
+                <div class="detalle-item">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <p class="detalles-nivel">Nivel de juego:</p>
+                    <span class="nivel-partido"></span> <!-- Nivel dinámico -->
+                </div>
+                <!-- Comentarios -->
+                <div class="detalle-item">
+                    <i class="fa-solid fa-comment"></i>
+                    <p class="detalles-comentarios">Comentarios:</p>
+                    <span class="comentarios-partido"></span>
+                    <!-- Comentarios dinámico -->
+                </div>
+
+                <!-- Botones -->
+                <div class="detalle-botones">
+                    <!-- Botón para cerrar la ficha -->
+                    <button class="bt-cerrar-ficha">Cerrar</button>
+
+                    <!-- Botón dinámico de inscripción -->
+                    <button id="bt-inscribir">
+                        Inscribirse <!-- Este texto cambiará dinámicamente -->
+                    </button>
+                </div>
+                <!-- <div class="exito-inscripcion"></div> -->
+                <!-- <div class="error-inscripcion"></div> -->
+            </div>
+            <h2>Partidos disponibles</h2>
+            <div id="ficha-partido" class="partido-detalles">
+                <p class="partido-fecha"></p>
+                <p class="partido-ciudad"></p>
+                <p class="partido-nivel"></p>
+                <p class="partido-estrellas"></p>
+
+                <p class="partido-tipo"></p>
+                <p class="partido-hora"></p>
+                <p class="partido-usuario"></p>
+                <p class="partido-ubicacion"></p>
+                <p class="partido-vacantes"></p>
+                <button id="boton-detalles">Ver Detalles</button>
+            </div>
+
+        </div>
+
+        <div class="contenido" id="publicar-partidos">
+
+            <fieldset>
+                <h2>Publicar Partido</h2>
+                <form id="form-publicar" action="" method="post">
+                    <div class="radio-modalidad">
+                        <label id="lbModalidad">Modalidad</label>
+                        <div class="rd1">
+                            <input type="radio" name="modalidad" id="rdSingles" value="Singles" checked>
+                            <label for="rdSingles">Singles</label>
+                        </div>
+                        <div class="rd2">
+                            <input type="radio" name="modalidad" id="rdDobles" value="Dobles">
+                            <label for="rdDobles">Dobles</label>
+                        </div>
+                    </div>
+
+                    <div class="div-vacantes">
+                        <label for="numVacantes">Número de Vacantes</label>
+                        <input type="number" id="numVacantes" min="1" max="3" value="1">
+                    </div>
+
+                    <div class="div-nivel">
+                        <label for="nivel">Nivel de Juego</label>
+                        <select id="nivel" name="nivel">
+                            <option value="Principiante" selected="selected">Principiante</option>
+                            <option value="Intermedio">Intermedio</option>
+                            <option value="Avanzado">Avanzado</option>
+                            <option value="Experto">Experto</option>
+                            <option value="Profesional">Profesional</option>
+                        </select>
+                    </div>
+
+                    <div class="div-ubicacion">
+                        <label for="ciudades">Ciudad</label>
+                        <select id="ciudades" name="ciudades">
+
+                        </select>
+                        <label for="pista">Pista</label>
+                        <select id="pista" name="pista">
+
+                        </select>
+                    </div>
+                    <div class="div-fecha">
+                        <label for="fechaPartido">Fecha</label>
+                        <input type="date" name="fechaPartido" id="fechaPartido" required />
+                    </div>
+                    <div class="div-hora">
+                        <label for="horaPartido">Hora</label>
+                        <input type="time" name="horaPartido" id="horaPartido" required />
+                    </div>
+                    <div class="div-comentarios">
+                        <label for="comentarios">Comentarios</label>
+                        <input type="text" name="comentarios" id="comentarios">
+                    </div>
+
+                    <div class="botones-publicar">
+                        <input type="reset" name="limpiar" id="limpiar" value="Limpiar" />
+                        <input type="submit" name="publicar" id="publicar" value="Publicar" />
+                    </div>
+
+                </form>
+            </fieldset>
+            <!-- <div class="exito-publicado"></div>
+            <div class="error-publicado"></div> -->
+
+        </div>
+
+        <div class="contenido mis-partidos" id="mis-partidos">
+            <!-- <h2>Mis partidos</h2> -->
+            <div id="ficha-mis-partidos">
+                <div class="detalle-item">
+                    <i class="fa-solid fa-hashtag"></i>
+                    <p>N°: <span class="numero-partido"></span></p>
+                </div>
+                <div class="div-icono-ficha">
+                    <img class="img-icono-ficha" src="" alt="">
+                    <p class="texto-icono"></p>
+                </div>
+                <div class="detalle-item">
+                    <i class="fa-solid fa-user"></i>
+                    <p class="organizador-partido">Organizador: <span></span></p>
+                </div>
+                <div class="detalle-item">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <p class="fecha-partido">Fecha: <span></span></p>
+                </div>
+                <div class="detalle-item">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <p class="lugar-partido">Lugar: <span></span></p>
+                </div>
+                <div class="detalle-botones">
+                    <button class="bt-ver-detalles">Ver detalles</button>
+
+                </div>
+            </div>
+            <div class="ficha-detalles" id="ficha-detalles-mis">
+                <!-- Número de Partido -->
+                <div class="detalle-item">
+                    <i class="fa-solid fa-hashtag"></i>
+                    <p class="detalles-partido">Partido N°:</p>
+                    <span class="numero-partido"></span> <!-- Número de partido dinámico -->
+                </div>
+
+                <!-- Organizador -->
+                <div class="detalle-item">
+                    <i class="fa-solid fa-user"></i>
+                    <p class="detalles-organizador">Organizador:</p>
+                    <span class="organizador-partido"></span> <!-- Organizador dinámico -->
+                </div>
+
+                <!-- Fecha de Publicación -->
+                <div class="detalle-item">
+                    <i class="fa-solid fa-pencil-alt"></i>
+                    <p class="detalles-publicacion">Fecha de publicación:</p>
+                    <span class="fecha-publicacion"></span> <!-- Fecha de publicación dinámica -->
+                </div>
+
+                <!-- Fecha -->
+                <div class="detalle-item">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <p class="detalles-fecha">Fecha del partido:</p>
+                    <span class="fecha-partido"></span> <!-- Fecha dinámica -->
+                </div>
+
+                <!-- Hora -->
+                <div class="detalle-item">
+                    <i class="fa-solid fa-clock"></i>
+                    <p class="detalles-hora">Hora de inicio:</p>
+                    <span class="hora-partido"></span> <!-- Hora dinámica -->
+                </div>
+
+                <!-- Lugar -->
+                <div class="detalle-item">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <p class="detalles-lugar">Lugar:</p>
+                    <span class="lugar-partido"></span> <!-- Lugar dinámico -->
+                </div>
+
+                <!-- Ciudad -->
+                <div class="detalle-item">
+                    <i class="fa-solid fa-city"></i>
+                    <p class="detalles-ciudad">Ciudad:</p>
+                    <span class="ciudad-partido"></span> <!-- Ciudad dinámica -->
+                </div>
+
+                <!-- Tipo de Partido -->
+                <div class="detalle-item">
+                    <i class="fa-solid fa-gamepad"></i>
+                    <p class="detalles-tipo">Tipo de partido:</p>
+                    <span class="tipo-partido"></span> <!-- Tipo de partido dinámico -->
+                </div>
+
+                <!-- Jugadores inscritos -->
+                <div class="detalle-item">
+                    <i class="fa-solid fa-users"></i>
+                    <p class="detalles-jugadores">Jugadores inscritos:</p>
+                    <span class="jugadores-inscritos"></span> <!-- Jugadores inscritos dinámico -->
+                </div>
+
+                <!-- Vacantes -->
+                <div class="detalle-item">
+                    <i class="fa-solid fa-user-plus"></i>
+                    <p class="detalles-vacantes">Vacantes:</p>
+                    <span class="vacantes-partido"></span> <!-- Vacantes dinámico -->
+                </div>
+                <!-- Nivel de Juego -->
+                <div class="detalle-item">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <p class="detalles-nivel">Nivel de juego:</p>
+                    <span class="nivel-partido"></span> <!-- Nivel dinámico -->
+                </div>
+                <!-- Comentarios -->
+                <div class="detalle-item">
+                    <i class="fa-solid fa-comment"></i>
+                    <p class="detalles-comentarios">Comentarios:</p>
+                    <span class="comentarios-partido"></span>
+                    <!-- Comentarios dinámico -->
+                </div>
+
+                <!-- Botones -->
+                <div class="detalle-botones">
+                    <!-- Botón para cerrar la ficha -->
+                    <button class="bt-cerrar-ficha">Cerrar</button>
+
+                    <!-- Botón dinámico de inscripción -->
+                    <button id="bt-inscribir-mis">
+                        Inscribirse <!-- Este texto cambiará dinámicamente -->
+                    </button>
+                </div>
+                <!-- <div class="exito-inscripcion"></div>
+                <div class="error-inscripcion"></div> -->
+            </div>
+            <!-- aqui a continuacion iria el codigo de ficha-detalles -->
+        </div>
+
+        <div class="contenido" id="estadisticas">
+            <h2>Estadísticas</h2>
+        </div>
+
+    </section>
+
+    <footer>
+        <p>2024 GoToPadel. Todos los derechos reservados.</p>
+        <ul>
+            <li><a href="/privacy">Política de Privacidad</a></li>
+            <li><a href="/contact">Contacto</a></li>
+            <li><a href="/about">Acerca de</a></li>
+        </ul>
+    </footer>
+    <script src="/js/variables.js"></script>
+    <script src="/js/zonaPrivada.js"></script>
+    <script src="/js/publicar.js"></script>
+
+
+    <script src="js/utilidades.js"></script>
+
+    <script src="/js/mis-partidos.js"></script>
+    <script src="/js/ver-partidos.js"></script>
 </body>
+
+
 </html>

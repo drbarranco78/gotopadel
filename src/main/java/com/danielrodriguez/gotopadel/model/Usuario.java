@@ -2,10 +2,12 @@ package com.danielrodriguez.gotopadel.model;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
+
 
 @Entity
 @Table(name = "USUARIO")
-public class Usuario {
+public class Usuario implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +23,7 @@ public class Usuario {
     @Column(name = "fecha_nac")
     private String fechaNac;
 
-    @Column(name = "genero", nullable = false)
+    @Column(name = "genero", length = 10)
     private String genero;
 
     @Column(name = "nivel", length = 20)
@@ -32,6 +34,8 @@ public class Usuario {
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
     private Credenciales credenciales;
+
+    private String rol;
 
     public Integer getIdUsuario() {
         return id;
@@ -87,5 +91,12 @@ public class Usuario {
 
     public void setFechaInscripcion(String fechaInscripcion) {
         this.fechaInscripcion = fechaInscripcion;
+    }
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 }

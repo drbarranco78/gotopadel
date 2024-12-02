@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/administrador.css">
+    <!-- <link rel="stylesheet" href="/css/zonaPrivada.css"> -->
+    <script src="HTTP://code.jquery.com/jquery-latest.js"></script>
+    <title>Area de administración</title>
+</head>
+
+<body>
+    <header>
+        <div class="logotipo">
+            <img src="img/logo.png" class="icono-cabecera" alt="Logotipo de GoToPádel">
+            <h3>GoToPádel</h3>
+        </div>
+
+        <div class="usuario">
+            <div id="mensaje-bienvenida">Bienvenido, administrador</div>
+            <img src="img/ico_usuario_activo.png" id="icono-usuario" class="icono-cabecera" alt="Icono de usuario">
+            <div class="opciones-usuario">
+                <!-- <div id="ver-perfil" class="ver-perfil">Ver Perfil</div> -->
+                <div id="cerrar-sesion" class="cerrar-sesion">Cerrar Sesión</div>
+            </div>
+        </div>
+
+    </header>
+    <div id="confirmar-accion" class="confirmar-accion">
+        <p class="texto-confirmar-accion">Estas seguro?</p>
+        <div class="botones-accion">
+            <button id="aceptar-accion" class="aceptar-accion">Aceptar</button>
+            <button id="cancelar-accion" class="cancelar-accion">Cancelar</button>
+        </div>
+    </div>
+    
+    <div class="botones-admin">
+        <button id="admin-ver-partidos">Ver Partidos</button>
+        <button id="admin-ver-usuarios">Ver Usuarios</button>
+        <button id="admin-ver-archivo">Ver Archivo</button>
+    </div>
+    <section class="listados-admin"></section>
+    <script src="js/zonaPrivada.js"></script>
+    <script src="js/administrador.js"></script>
+    <!-- <script src="/js/ver-partidos.js"></script> -->
+    <script src="js/utilidades.js"></script>
+
+</body>
+
+</html>

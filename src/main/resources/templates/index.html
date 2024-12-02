@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GoToPadel - Encuentra tu Partido de Padel</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/index.css">
     <script src="HTTP://code.jquery.com/jquery-latest.js"></script>
 </head>
 
@@ -22,10 +22,9 @@
         <nav>
             <ul>
                 <li><a href="/">Inicio</a></li>
-                <li><a href="/partidos">Partidos</a></li>
                 <li><a href="#contenedor-pistas">Pistas</a></li>
                 <li><a href="#contenedor-noticias">Noticias</a></li>
-                <li><a href="#enlace-login">Iniciar Sesión</a></li>
+                <li id="nav-login"><a href="#">Iniciar Sesión</a></li>
             </ul>
         </nav>
     </header>
@@ -35,8 +34,8 @@
         <h1>Encuentra y organiza tus partidos de pádel fácilmente</h1>
         <p>Conéctate con jugadores y clubes cercanos a ti.</p>
         <div class="botones">
-            <button id="enlace-login" class="cta-button">Iniciar Sesión</button>
-            <button id="enlace-registro" class="cta-button">Registrarse</button>
+            <button id="enlace-login" class="botones-acceso">Iniciar Sesión</button>
+            <button id="enlace-registro" class="botones-acceso">Registrarse</button>
         </div>
     </section>
     <section class="login">
@@ -44,16 +43,16 @@
             <legend>Inicio de Sesión</legend>
             <form id="formulario-login" action="" method="post">
 
-                <label for="email-login">Dirección de correo</label>
-                <input type="text" name="email-login" id="email-login" maxlength="60" required />
-                <label for="contrasena-login">Contraseña:</label>
-                <input type="password" name="contrasena-login" id="contrasena-login" maxlength="20" required />
+                <label for="username">Dirección de correo</label>
+                <input type="text" name="username" id="username" maxlength="60" required />
+                <label for="current-password">Contraseña:</label>
+                <input type="password" name="current-password" id="current-password" maxlength="20" required />
                 <input type="submit" class="boton-login" value="Acceder" />
             </form>
         </fieldset>
-        <div class="error-login">
-
-        </div>
+        <p class="pie-formularios">No tienes cuenta?<a id="pie-formularios-login" href="#">Regístrate</a></p>
+        <div class="exito-login"></div>
+        <div class="error-login"></div>
     </section>
     <section class="registro">
         <fieldset>
@@ -76,11 +75,11 @@
                 </div>
                 <label for="nivel">Nivel de Juego:</label>
                 <select id="nivel" name="nivel">
-                    <option value="0" selected="selected">Principiante</option>
-                    <option value="1">Intermedio</option>
-                    <option value="2">Avanzado</option>
-                    <option value="3">Experto</option>
-                    <option value="4">Profesional</option>
+                    <option value="Principiante" selected="selected">Principiante</option>
+                    <option value="Intermedio">Intermedio</option>
+                    <option value="Avanzado">Avanzado</option>
+                    <option value="Experto">Experto</option>
+                    <option value="Profesional">Profesional</option>
                 </select>
                 <label for="fechaNac">Fecha de Nacimiento</label>
                 <input type="date" name="fechaNac" id="fechaNac" required>
@@ -104,33 +103,38 @@
 
             </form>
         </fieldset>
+        <p class="pie-formularios">Ya tienes una cuenta?<a id="pie-formularios-registro" href="#">Inicia Sesión</a></p>
+        <div class="exito-registro"></div>
         <div class="error-registro"></div>
     </section>
 
-    <h2 id="subtitulo-noticias" class="subtitulos">Pádel News</h2>
+
 
     <div class="noticias">
+        <h2 id="subtitulo-noticias" class="subtitulos">Noticias de Pádel</h2>
 
-        <img id="anterior" src="img/izquierda.png" alt="Anterior">
+        <div class="contenedor-flex">
+            <img id="anterior" src="img/ico_left.png" alt="Anterior">
+            <div id="contenedor-noticias">
+                <!-- Aquí se inyectarán las noticias desde el JavaScript -->
+            </div>
+            <img id="siguiente" src="img/ico_right.png" alt="Siguiente">
+        </div>
+    </div>
 
-        <div id="contenedor-noticias">
-            <!-- Aquí se inyectarán las noticias desde el JavaScript -->
+
+    <div class="pistas">
+        <div id="selector-ciudades">
+
+            <h2 class="subtitulos">Pistas de pádel en: </h2>
+            <select name="ciudades" id="ciudades">
+
+            </select>
         </div>
 
-        <img id="siguiente" src="img/derecha.png" alt="Siguiente">
-
+        <div id="contenedor-pistas"></div>
+        <p id="mas-pistas">Cargar más pistas</p>
     </div>
-
-    <div id="selector-ciudades">
-
-        <h2 class="subtitulos">Pistas de pádel en: </h2>
-        <select name="ciudades" id="ciudades">
-
-        </select>
-    </div>
-
-    <div id="contenedor-pistas"></div>
-    <p id="mas">Cargar más pistas</p>
 
 
 
@@ -151,7 +155,7 @@
         </div>
         <div id="feat3" class="feature-item">
             <h3>Noticias del Mundo del Pádel</h3>
-            <img src="img/noticias.png" alt="Imáhen de un periódico">
+            <img src="img/noticias.png" alt="Imágen de un periódico">
             <p>Mantente informado con las últimas noticias sobre pádel.</p>
         </div>
         <div id="feat4" class="feature-item">
@@ -170,12 +174,14 @@
             <li><a href="/about">Acerca de</a></li>
         </ul>
     </footer>
-   <!-- <script src="js/formularios.js"></script>-->
-    <script src="js/login.js"></script>
-    <script src="js/registro.js"></script>
-    <script src="js/noticias.js"></script>
-    <script src="js/pistas.js"></script>
-    <script src="js/animacion.js"></script>
+    <script src="js/formularios.js"></script>
+    <script src="js/index.js"></script>
+    <!-- <script src="js/login.js"></script> -->
+    <!-- <script src="js/registro.js"></script> -->
+    <!-- <script src="js/noticias.js"></script> -->
+    <!-- <script src="js/pistas.js"></script> -->
+    <!-- <script src="js/animacion.js"></script> -->
+    <script src="js/utilidades.js"></script>
 </body>
 
 </html>

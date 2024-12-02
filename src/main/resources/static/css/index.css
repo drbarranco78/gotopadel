@@ -1,3 +1,6 @@
+@import 'variables.css';
+
+
 /* Resetea los estilos generales */
 * {
     margin: 0;
@@ -21,7 +24,8 @@ body {
     margin: 0;
     padding: 0;
     line-height: 1.6;
-    background-color: #ccc;
+    background-color: var(--color-azul);
+    color: var(--color-verde);
 }
 
 /* Header Styles */
@@ -39,7 +43,7 @@ header {
 }
 
 .cabecera h1 {
-    font-size: 70px;
+    font-size: 50px;
 }
 
 .go {
@@ -55,7 +59,7 @@ header {
 }
 
 header .logo img {
-    width: 200px;
+    width: 150px;
     text-align: center;
     border-radius: 50%;
     animation: escalar 1.5s forwards 3s;
@@ -98,9 +102,10 @@ header .logo img {
 }
 
 header nav {
-    border: 2px solid white;
+    border: 2px solid whitesmoke;
     height: 5vh;
     align-content: center;
+    border-radius: 15px;
     /* margin-top: 2vh; */
 }
 
@@ -124,6 +129,9 @@ header nav ul li a {
     height: 600px;
     text-align: center;
     padding: 100px 0;
+    border: 2px solid whitesmoke;
+    border-radius: 15px;
+    margin-top: 10px;
     /* overflow: hidden; */
 }
 
@@ -143,7 +151,7 @@ header nav ul li a {
 
 .intro h1,
 .intro p,
-.cta-button {
+.botones-acceso {
     position: relative;
     z-index: 2;
     /* Asegura que el texto esté sobre la imagen de fondo */
@@ -157,25 +165,31 @@ header nav ul li a {
 }
 
 .intro p {
-    margin-bottom: 100px;
+    margin: 100px 0px 150px 0px;
+    font-size: 26px;
 }
 
 
-.intro .botones button {
+.botones{
     display: flex;
-    text-align: center;
+    flex-direction: row;
     justify-content: center;
-    margin: 0 auto;
-    margin-bottom: 30px;
-    background-color: #f90;
-    color: #fff;
+    gap: 50px;
+    margin-top: 100px;
+    
+}
+.botones-acceso{
+    text-align: center;
+    background-color: var(--color-secundario);
+    color: whitesmoke;
     padding: 10px 20px;
     width: 200px;
-    text-decoration: none;
+    border: 2px solid whitesmoke;
+    font-size: 20px;
     font-weight: bold;
-    border-radius: 5px;
-}
+    border-radius: 15px;
 
+}
 fieldset{
     width: fit-content;
     margin: 0 auto;
@@ -185,7 +199,9 @@ fieldset{
 legend{
     font-size: 20px;
     font-weight: bold;
-    color: white;
+    font-size: 24px;
+    color:whitesmoke;
+    margin-bottom: 20px;
 }
 
 .login {
@@ -194,7 +210,7 @@ legend{
     background-size: cover; */
     /* position: relative; */
     /* background: url('../img/pista1.png') no-repeat center center/cover; */
-    background-color: #5f0ca3;
+    /* background-color: #5f0ca3; */
     height: 600px;
     text-align: center;
     padding: 100px 0;
@@ -226,12 +242,27 @@ legend{
     color: white;
 }
 
+.pie-formularios {
+    color: whitesmoke;
+    width: fit-content;
+    text-align: center;
+    font-weight: bold;
+    margin: 20px auto; /* Centrará horizontalmente */
+    background-color: var(--color-azul);
+    padding: 5px 30px;
+    border-radius: 15px;
+}
+
+.pie-formularios a{
+    margin-left: 10px;
+    color: var(--color-naranja);
+}
 .boton-login {
     margin-top: 20px;
     font-size: 20px;
     font-weight: bold;
 }
-.error-login, .error-registro {
+.error-login, .error-registro, .exito-login, .exito-registro {
     position: absolute;
     top: 85%;
     left: 50%;
@@ -248,19 +279,25 @@ legend{
 .error-login h3, .error-registro h3{
     color:red;
 }
+.exito-login h3, .exito-registro h3 {
+    color:var(--color-verde);
+}
 
 .registro {
     background: url('../img/registro.png') no-repeat center center/cover;
+    filter: blur(50%);
     display: none;
-    height: 80vh ;
+    height: 100vh ;
     text-align: center;    
     /* padding: 50px 0; */
     align-content: center;
 }
-/* #formulario-registro{
-    margin-left: 200px;
-    margin-right: auto;
-} */
+#formulario-registro{
+    /* margin-left: 200px;
+    margin-right: auto; */
+    width: 30vw;
+  
+}
 
 .registro input,
 .registro select {
@@ -336,21 +373,29 @@ legend{
 
 .noticias {
     display: flex;
-    flex-direction: row;
+    flex-direction: column; /* El título está arriba y los otros abajo */
     align-items: center;
-    /* Centra verticalmente los elementos dentro de .noticias */
-    /* margin-bottom: 50px; */
-    /* height: 700px; */
+    margin-top: 10px;
+    border: 2px solid whitesmoke;
+    border-radius: 15px;
+}
 
+.contenedor-flex {
+    display: flex;
+    flex-direction: row;
+    align-items: center; /* Mantiene alineación horizontal para las imágenes y contenedor de noticias */
+    gap: 10px; /* Espacio opcional entre ellos */
 }
 
 #contenedor-noticias {
+   
     display: flex;
     justify-content: center;
     align-items: center;
     /* overflow: hidden; */
     /* width: 80%; */
-    margin: 0 auto;
+    margin-top: 50px;
+    margin-bottom: 100px;
     gap: 70px;
     /* margin-top: 20px; */
 }
@@ -358,9 +403,9 @@ legend{
 #anterior,
 #siguiente {
     cursor: pointer;
-    width: 30px;
+    /* width: 30px; */
     /* Ajusta el tamaño de las flechas */
-    height: 50px;
+    /* height: 50px; */
     /* Mantiene la proporción original de las imágenes */
     align-self: center;
     /* Centra verticalmente las flechas dentro de su contenedor flex */
@@ -372,7 +417,8 @@ legend{
     margin: 0 10px;
     padding: 15px;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    background-color: #ccc;
+    border-radius: 15px;
     text-align: center;
     transition: transform 0.5s ease, filter 0.5s ease;
     opacity: 0.5;
@@ -391,6 +437,9 @@ legend{
     opacity: 1;
     filter: grayscale(0%);
     transform: scale(1.1);
+    
+    color: darkslategray;
+    border: 2px solid var(--color-verde);
 
 }
 
@@ -401,6 +450,12 @@ legend{
 .noticia-articulo p {
     text-align: center;
     margin: 0 auto;
+}
+.pistas{
+    border: 2px solid whitesmoke;
+    border-radius: 15px;
+    margin-top: 10px;
+    padding-bottom: 20px;
 }
 
 #selector-ciudades {
@@ -437,7 +492,8 @@ legend{
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    background-color: #f4f4f4;
+    background-color: #ccc;
+    color: darkslategray;
     border: 1px solid #ddd;
     border-radius: 15px;
     padding: 20px;
@@ -471,26 +527,55 @@ legend{
     margin: 5px 0;
 }
 
-#mas {
+#mas-pistas {
     text-align: center;
     cursor: pointer;
-    color: blue;
+    color: #eea509;
+    text-decoration: underline;
 }
 
 .features {
-    margin-top: 50px;
+    margin-top: 10px;
     display: grid;
-    grid-template-areas: 'cabecera cabecera' 'feature1 feature1' 'feature2 feature2' 'feature3 feature3' 'feature4 feature4';
-}
-
-.feature-item {
-    margin-top: 50px;
-
+    grid-template-areas: 
+        'cabecera cabecera' 
+        'feature1 feature2' 
+        'feature3 feature4';
+    /* grid-template-columns: 1fr 1fr;  */
+    row-gap: 120px; 
+    /* column-gap: 20px; */
+    justify-items: center; 
+    border: 2px solid whitesmoke;
+    border-radius: 15px;
+    padding: 50px 100px 150px 100px;
+    
+    
 }
 
 .features h2 {
     grid-area: cabecera;
+    color: whitesmoke;
+    /* margin-bottom: 100px; */
 }
+
+.feature-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    
+    width: 30vw;
+    height: auto;
+    border-radius: 20px;
+    gap: 20px;
+    opacity: 0; /* Para animaciones */
+    /* background-color: white;  */
+}
+/* .feature-item h3{
+    color: var(--color-naranja);
+
+} */
+
 
 #feat1 {
     grid-area: feature1;
@@ -501,9 +586,6 @@ legend{
 
 #feat2 {
     grid-area: feature2;
-
-
-
 }
 
 #feat3 {
@@ -516,32 +598,12 @@ legend{
 
 }
 
-#feat1,
-#feat3 {
-    align-items: center;
-    margin-left: 10vw;
-    display: flex;
-    flex-direction: column;
-    width: 30vw;
-    height: 450px;
-    background-color: white;
-    border-radius: 20px;
-    gap: 50px;
-    opacity: 0;
-}
 
-#feat2,
-#feat4 {
-    align-items: center;
-    margin-left: 60vw;
-    display: flex;
-    flex-direction: column;
-    width: 30vw;
-    height: 450px;
-    background-color: white;
-    border-radius: 20px;
-    gap: 50px;
-    opacity: 0;
+.features img{
+    width: 100px;
+    height: auto;
+    filter: invert(1) brightness(2);
+
 }
 
 
@@ -552,7 +614,9 @@ footer {
     color: #fff;
     text-align: center;
     padding: 10px 0;
-    margin-top: 20px;
+    margin-top: 10px;
+    border: 2px solid whitesmoke;
+    border-radius: 15px;
 }
 
 footer ul {
@@ -604,4 +668,9 @@ footer ul li a {
 
 .animacion-desplazar-izquierda {
     animation: desplazarIzquierda 1.5s ease-out forwards;
+}
+/* Efecto de clic */
+.boton-click {
+    transform: scale(0.80);
+    transition: transform 0.1s ease;
 }

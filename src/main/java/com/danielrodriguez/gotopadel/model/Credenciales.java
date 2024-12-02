@@ -2,9 +2,11 @@ package com.danielrodriguez.gotopadel.model;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name = "CREDENCIALES")
-public class Credenciales {
+public class Credenciales implements Serializable {
 
     @Id
     @Column(name = "id_usuario")

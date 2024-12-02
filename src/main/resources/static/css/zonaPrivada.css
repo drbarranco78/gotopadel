@@ -1,3 +1,5 @@
+@import 'variables.css';
+
 /* Resetea los estilos generales */
 * {
     margin: 0;
@@ -6,3 +8,632 @@
     user-select: none;
 }
 
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    background-color: #ccc;
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+}
+
+.logotipo,
+.usuario {
+    display: flex;
+    flex-direction: row;
+    margin: 0px 30px;
+}
+
+.logotipo h3 {
+    align-content: center;
+    margin-left: 30px;
+    font-size: 20px;
+    font-style: italic;
+}
+
+.icono-cabecera {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+#mensaje-bienvenida {
+    align-content: center;
+    margin-right: 20px;
+}
+.opciones-usuario{
+    display: none;
+    /* display: flex; */
+    flex-direction: column;
+    position: absolute;
+    top:80px;
+    right: 20px;
+    text-align: center;
+    width: 150px;
+    height: 200px;
+    background-color: whitesmoke;
+    /* align-content: center; */
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    border: 2px solid black;
+    border-radius: 10px;
+    
+}
+.ver-perfil, .cerrar-sesion{
+    position: relative;
+    margin: 10px;
+    border-radius: 10px;
+    width: 120px;
+    height: 50px;
+    background-color: var(--color-azul);
+    border-radius: 10px;
+    color: whitesmoke;
+    align-content: center;
+    /* border: 2px dashed black; */
+    border: 2px solid black;
+}
+
+.ficha-usuario{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:center;
+    width: 50%;
+    height: 100%;
+    gap: 20px;
+    border-radius: 10px;
+    background-color: #ccc;
+    font-size: 20px;
+    color: var(--color-azul);
+    font-weight: bold;
+}
+.ficha-usuario span{
+    color: darkgreen;
+}
+.nombre-usuario-ficha{
+    font-size: 26px;
+    font-weight: bold;
+}
+.botones-ficha-usuario button{
+    font-size: 20px;
+    margin: 20px;
+    width: 160px;
+    height: 50px;
+    border-radius: 10px;
+    background-color: var(--color-azul);
+    color: whitesmoke;
+}
+
+nav {
+    border: 2px solid white;
+    height: 5vh;
+    align-content: center;
+    background-color: #333;
+    /* margin-top: 2vh; */
+}
+
+
+nav ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    list-style: none;
+}
+
+/* Estilo básico de los enlaces del menú */
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    display: inline-block;
+    transition: transform 0.2s, color 0.2s;
+}
+
+/* Estilo para el enlace activo */
+nav ul li a.activo {
+    color: var(--color-verde);
+    transform: scale(1.2);
+}
+
+#contenedor-principal {
+    height: 80vh;
+
+    background-color: var(--color-azul);
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.contenido {
+    width: 80%;
+    height: 90%;
+    border-radius: 10px;
+    /* background-color: #A9A9A9; */
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    /* display: none; */
+}
+.datos-usuario{
+    display: none;
+}
+/* .datos-usuario{
+    width: 70%;
+    height: 90%;
+    border-radius: 10px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    background-color: rebeccapurple;
+    display: none;
+} */
+
+#publicar-partidos {
+    background: url('../img/registro.png') no-repeat center center/cover;
+}
+
+.mensaje-exito, .mensaje-error {
+    position: absolute;
+    top: 85%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: black;
+    padding: 15px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 300px;
+    text-align: center;
+    display: none;
+}
+
+.mensaje-exito h3 {
+    color: var(--color-verde);    
+}
+
+.mensaje-error h3 {
+    color: red;
+}
+
+fieldset {
+    background-color: #D8DCDCDF;
+    border-radius: 10px;
+    width: 70%;
+    height: 90%;
+}
+
+legend {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+#form-publicar {
+
+    display: grid;
+    grid-template-areas: "modo modo" "nivel vacantes" "nivel ubicacion" "fecha ubicacion" "hora ubicacion" "comentarios comentarios" "botones botones";
+
+}
+
+.radio-modalidad {
+    grid-area: modo;
+
+}
+
+.div-vacantes {
+    grid-area: vacantes;
+
+}
+
+.div-nivel {
+    grid-area: nivel;
+
+}
+
+.div-ubicacion {
+    grid-area: ubicacion;
+
+}
+
+.div-fecha {
+    grid-area: fecha;
+
+}
+
+.div-hora {
+    grid-area: hora;
+
+}
+
+.div-comentarios {
+    grid-area: comentarios;
+
+}
+
+.botones-publicar {
+    grid-area: botones;
+    margin-top: 20px;
+
+}
+
+.div-vacantes,
+.div-nivel,
+.div-ubicacion,
+.div-fecha,
+.div-hora,
+.div-comentarios {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.radio-modalidad {
+    display: grid;
+    grid-template-areas: "titulo titulo" "rd1 rd2";
+    justify-content: center;
+    column-gap: 50px;
+    row-gap: 10px;
+    height: 50px;
+    margin-bottom: 30px;
+    margin-top: 20px;
+}
+
+#lbModalidad {
+    grid-area: titulo;
+}
+
+.rd1 {
+    grid-area: rd1;
+    width: fit-content;
+}
+
+.rd2 {
+    grid-area: rd2;
+    width: fit-content;
+}
+
+#form-publicar input:not([type="radio"]),
+#form-publicar select {
+    width: 20em;
+    padding: 5px;
+    font-size: 16px;
+    text-align: center;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+#form-publicar input[type="submit"],
+#form-publicar input[type="reset"] {
+    width: 20%;
+    padding: 10px;
+    font-size: 16px;
+    text-align: center;
+    border-radius: 10px;
+    margin: 0 50px;
+}
+
+#form-publicar input[type="text"] {
+    width: 85%;
+    height: 50px;
+    margin-bottom: 20px;
+}
+
+#form-publicar label {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.ver-partidos {
+    /* position: relative;  */
+    width: 100%;
+    min-height: 600px;
+    /* gap: 20px; */
+    /* flex-direction: column; */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+/* .ver-partidos::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* background: url('../img/pista1.png') no-repeat center center/cover;
+    filter: brightness(70%); */
+    /* z-index: -1;  
+} */
+
+#ficha-partido {
+    /* position: relative; */
+    /* z-index: 1;  */
+    width: 80%;
+    filter: none;
+    height: auto;
+    /* min-width: fit-content; */
+    padding: 10px;
+    background-color: var(--color-fondo-ficha);
+    border: 2px solid whitesmoke;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-areas:
+        'fecha fecha fecha'
+        'ciudad organizador estrellas'
+        'tipo ubicacion nivel'
+        'hora vacantes boton';
+    gap: 10px;
+    margin: 10px;
+    display: none; /* Si esto es temporal para ocultar, puedes controlarlo con JS */
+}
+
+
+#ficha-partido p {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: start;
+    padding: 0px 0px 0px 50px;
+    
+}
+
+.partido-fecha {
+    grid-area: fecha;
+    background-color: var(--color-verde);
+    color: white;
+    border: 2px solid black;
+    border-radius: 10px;
+    justify-content: center !important;
+    padding: 0px !important;
+}
+
+.partido-ciudad {
+    grid-area: ciudad;
+}
+
+.partido-hora {
+    grid-area: hora;
+}
+
+.partido-usuario {
+    grid-area: organizador;
+}
+
+.partido-nivel {
+    grid-area: nivel;
+    justify-self: center;
+    padding: 0% !important;
+}
+
+.partido-estrellas {
+    grid-area: estrellas;
+    justify-self: center;
+    padding: 0% !important;
+    /* padding: 0px 0px 0px 30px !important; */
+}
+
+.partido-tipo {
+    grid-area: tipo;
+}
+
+.partido-ubicacion {
+    grid-area: ubicacion;
+}
+
+.partido-vacantes {
+    grid-area: vacantes;
+}
+
+#boton-detalles {
+    position: sticky;
+    cursor: pointer;
+    grid-area: boton;
+    border-radius: 10px;
+    font-weight: bold;
+    width: 60%;
+    margin: 0 auto;
+}
+
+.ficha-detalles {
+    grid-column: span 2;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px 50px;
+    width: fit-content;
+    /* height: 90%; */
+    background-color: whitesmoke;
+    border-radius: 10px;
+    margin: auto;
+    border: 3px solid #333;
+}
+
+
+.detalle-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 20px;
+}
+
+.detalle-item span {
+    font-weight: bold;
+}
+
+.comentarios-partido {
+    max-width: 200px;
+    /* Limitar el ancho */
+    /* word-wrap: break-word; 
+    white-space: normal;  */
+
+}
+
+.detalle-botones button {
+    width: 100px;
+    height: auto;
+    font-size: 16px;
+    padding: 10px;
+    margin: 30px;
+    border-radius: 10px;
+    margin-bottom: 0px;
+    background-color: #333;
+    color: whitesmoke;
+    font-weight: bold;
+
+}
+
+
+.fas.fa-star {
+    color: gold;
+    /* Color de las estrellas */
+    text-shadow: 1px 1px 2px black;
+    margin-top: 0px;
+}
+
+.mis-partidos {
+    width: 90%;
+    height: 90%;
+    display: grid;
+    align-items: self-start;
+    grid-template-columns: repeat(3, 1fr);
+    /* 3 fichas en una fila */
+    gap: 20px;
+    padding: 20px;
+    overflow-y: scroll;
+}
+.mis-partidos-detalle {
+    width: 80%;
+    height: 80%;
+    display: flex;
+    
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;  /* Quitamos el scroll */
+    padding: 0;  /* Quitamos el padding */
+    
+}
+
+#ficha-mis-partidos {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: whitesmoke;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    font-size: 0.9em;    
+    transition: transform 0.2s ease;
+    position: relative;
+}
+
+#ficha-mis-partidos:hover {
+    transform: scale(1.02);
+}
+
+.div-icono-ficha {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.lista-vacia{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: whitesmoke;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+
+
+
+
+/* Footer Styles */
+footer {
+    border: 2px solid white;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    /* margin-top: 20px; */
+}
+
+footer ul {
+    list-style: none;
+    padding: 0;
+}
+
+footer ul li {
+    display: inline;
+    margin-right: 10px;
+}
+
+footer ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Efecto de clic */
+.boton-click {
+    transform: scale(0.80);
+    transition: transform 0.1s ease;
+}
+button{
+    cursor: pointer;
+}
+
+.confirmar-accion, .confirmar-archivado{
+    position: fixed;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    width: auto;
+    height: auto;
+    margin: 0 auto;
+    
+    border-radius: 10px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: var(--color-oscuro);
+    color: whitesmoke;
+    border: 2px solid whitesmoke;
+    padding: 20px;
+}
+
+.aceptar-accion, .cancelar-accion, .opciones-archivado{
+    width: auto;
+    height: auto;
+    /* background-color: aqua; */
+    margin: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 10px;
+    padding: 10px;
+}
+.aceptar-accion, .archivar-jugado{
+    background-color: var(--color-verde);
+}
+.cancelar-accion , .cancelar-archivado{
+    background-color: var(--color-rojo);
+}
+.archivar-cancelado{
+    background-color: orange;
+}
