@@ -20,10 +20,10 @@ public class VistasController {
     @GetMapping("/zonaPrivada")
     public String mostrarZonaPrivada(HttpSession session) {
         Object usuario = session.getAttribute("usuarioAutenticado");
-        if (usuario != null) {
+        //if (usuario != null) {
             return "zonaPrivada";  // Usuario autenticado, mostrar zona privada
-        }
-        return "redirect:/";  // Redirigir a la página de inicio si no hay sesión
+        //}
+        //return "redirect:/";  // Redirigir a la página de inicio si no hay sesión
     }
 
     @GetMapping("/administrador")

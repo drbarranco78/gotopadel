@@ -1,3 +1,10 @@
+$(document).ready(function () {
+    $('#admin-ver-partidos').click();
+
+});
+// window.addEventListener('unload', function () {
+//     navigator.sendBeacon('/api/usuario/logout'); // Usa sendBeacon para asegurar que la solicitud se envía
+// });
 
 $('#admin-ver-partidos').click(function () {
     $.ajax({
@@ -6,10 +13,14 @@ $('#admin-ver-partidos').click(function () {
         success: function (partidos) {
             // Limpiar el contenedor antes de cargar nuevos partidos
             $('.listados-admin').empty();
+            if (partidos.length === 0) {
+                mostrarListaVacia($('.listados-admin'), true);
+            } else {
 
-            // Recorrer la lista de partidos y crear elementos HTML para mostrarlos
-            partidos.forEach(function (partido) {
-                let partidoHTML = `
+                let partidoHTML = `<h2 class="listados-admin-titulo">Partidos Disponibles</h2>`;
+                // Recorrer la lista de partidos y crear elementos HTML para mostrarlos
+                partidos.forEach(function (partido) {
+                    partidoHTML += `
                     <div class="partido-item" id="partido-${partido.idPartido}">
                         <p>ID Partido: ${partido.idPartido}</p>
                         <p>ID del Organizador: ${partido.usuario.idUsuario}</p>
@@ -26,10 +37,11 @@ $('#admin-ver-partidos').click(function () {
                         <button class="eliminar-partido" data-id="${partido.idPartido}">Eliminar</button>
                     </div>
                 `;
-
-                // Agregar el partido al contenedor de la lista
+                    // Agregar el partido al contenedor de la lista
+                    
+                });
                 $('.listados-admin').append(partidoHTML);
-            });
+            }
         },
         error: function (error) {
             console.error("Error al cargar los partidos:", error);
@@ -70,18 +82,15 @@ $('#admin-ver-usuarios').click(function () {
             // Limpiar el contenedor antes de agregar nuevos usuarios
             $('.listados-admin').empty();
 
-            if (usuarios.length <= 1) {
-                // Si no hay usuarios (solo el administrador)
-                $('.listados-admin').html('<p>No hay usuarios disponibles.</p>');
-                return;
-            }
+            if (usuarios.length === 0) {
+                mostrarListaVacia($('.listados-admin'), true);
+            } else {
+                // Generar el título y el contenido de los usuarios
+                let usuarioHTML = `<h2 class="listados-admin-titulo">Usuarios Registrados</h2>`;
+                for (let index = 1; index < usuarios.length; index++) { // Comienza en 1 para omitir al administrador
+                    let usuario = usuarios[index];
 
-            // Generar el título y el contenido de los usuarios
-            let usuarioHTML = `<h2 class="listados-admin-titulo">Usuarios</h2>`;
-            for (let index = 1; index < usuarios.length; index++) { // Comienza en 1 para omitir al administrador
-                let usuario = usuarios[index];
-
-                usuarioHTML += `
+                    usuarioHTML += `
                     <div class="usuario-item" id="usuario-${usuario.idUsuario}">
                         <p>ID: ${usuario.idUsuario}</p>
                         <p>Nombre: ${usuario.nombre}</p>
@@ -93,10 +102,10 @@ $('#admin-ver-usuarios').click(function () {
                         <button class="eliminar-usuario" data-id="${usuario.idUsuario}">Eliminar</button>
                     </div>
                 `;
+                }
+                // Añadir todo el HTML generado de una vez
+                $('.listados-admin').html(usuarioHTML);
             }
-
-            // Añadir todo el HTML generado de una vez
-            $('.listados-admin').html(usuarioHTML);
         },
         error: function (error) {
             console.error("Error al cargar los usuarios:", error);

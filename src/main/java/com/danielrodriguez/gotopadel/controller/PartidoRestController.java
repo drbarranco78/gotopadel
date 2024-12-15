@@ -50,4 +50,6 @@ public class PartidoRestController {
         partidoService.eliminarPartido(id);
         return ResponseEntity.noContent().build();
     }
+
+    
 }

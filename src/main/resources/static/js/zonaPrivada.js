@@ -2,6 +2,9 @@ let idUsuario;
 let usuario;
 let opUsuario = $(".opciones-usuario");
 $(document).ready(function () {
+    window.addEventListener('unload', function () {
+        navigator.sendBeacon('/api/usuario/logout'); // Usa sendBeacon para asegurar que la solicitud se envía
+    });
 
     // Hacer una petición AJAX para obtener los datos del usuario desde el backend
     $.ajax({
@@ -22,7 +25,7 @@ $(document).ready(function () {
     });
     // $("#enlace-inicio").click(function () {
     //     $('#cerrar-sesion').click();
-        
+
     // })
     $("#enlace-ver").addClass("activo");
     function mostrarSeccion(seccionId) {
@@ -88,7 +91,7 @@ $(document).ready(function () {
     });
     $(document).click(function (event) {
         // let opUsuario = $(".opciones-usuario");
-        
+
         // Verificar si el elemento está visible y el clic es fuera de él
         if (opUsuario.css("display") !== "none" && !$(event.target).closest(".opciones-usuario, #icono-usuario").length) {
             opUsuario.slideUp(300);  // Ocultar el menú
@@ -109,7 +112,7 @@ $(document).ready(function () {
         cargarDatosUsuario(usuario);
     });
 
-    $('#enlace-inicio, #cerrar-sesion, #logo-cabecera').click(function (event) {
+    $('#enlace-inicio, #cerrar-sesion, #logo-cabecera, #logo-cabecera-admin').click(function (event) {
         event.preventDefault();
         efectoClick(this);
         mostrarDialogo("Cerrar la sesión y volver al inicio ?")
@@ -146,6 +149,11 @@ $(document).ready(function () {
         $('.nacimiento-usuario-ficha span').text(usuario.fechaNac);
         $('.genero-usuario-ficha span').text(usuario.genero);
         $('.nivel-usuario-ficha span').text(usuario.nivel);
+        $.get(`/api/usuario/${idUsuario}/publicados/count`, function(count) {
+            $('.publicados-usuario-ficha span').text(count);
+        });
+        $('.inscrito-usuario-ficha span').text();
+
     }
 
 

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.danielrodriguez.gotopadel.model.Usuario;
+import com.danielrodriguez.gotopadel.service.PartidoService;
 import com.danielrodriguez.gotopadel.service.UsuarioService;
 
 import jakarta.servlet.http.HttpSession;
@@ -26,6 +27,13 @@ import jakarta.servlet.http.HttpSession;
 public class UsuarioRestController {
     @Autowired
     private UsuarioService usuarioService;
+    private PartidoService partidoService;
+
+    public UsuarioRestController(UsuarioService usuarioService,PartidoService partidoService){
+        this.usuarioService=usuarioService;
+        this.partidoService=partidoService;
+
+    }
 
     // Login del usuario 
     @PostMapping("/login")
@@ -133,6 +141,11 @@ public class UsuarioRestController {
     public ResponseEntity<Void> eliminarUsuario(@PathVariable Integer id) {
         usuarioService.eliminarUsuarioPorId(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{idUsuario}/publicados/count")
+    public int contarPartidosPublicados(@PathVariable Integer idUsuario) {
+        return partidoService.contarPartidosPublicadosPorUsuario(idUsuario);
     }
 
 }

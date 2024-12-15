@@ -26,7 +26,7 @@ function mostrarListaVacia(container,esAdmin=false) {
         
     }
     let contenedor = container[0] || container;    
-    
+    contenedor.classList.remove('ver-partidos');
     //container.className = '';  // Esto elimina todas las clases previas del contenedor (ERA LO QUE CAUSABA EL PROBLEMA)
     contenedor.classList.add('lista-vacia');  // Agrega la clase específica para lista vacía
 

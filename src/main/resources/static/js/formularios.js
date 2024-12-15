@@ -3,14 +3,21 @@ const patronPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$/;
 const patronNombre = /^(?=[A-Za-zñÑáéíóúÁÉÍÓÚ])[A-Za-zñÑáéíóúÁÉÍÓÚ\s]{1,48}[A-Za-zñÑáéíóúÁÉÍÓÚ]$/;
 
 let emailLogin, passwordLogin, nombre, emailRegistro, contrasena1, contrasena2, nivel, fechaNac, genero, fechaActual, fechaFormateada;
+let fechaNacimiento = document.getElementById('fechaNac');
+
+// Calcula la fecha máxima permitida (hace 18 años desde hoy)
+let hoy = new Date();
+hoy.setFullYear(hoy.getFullYear() - 16);
+fechaNacimiento.max = hoy.toISOString().split("T")[0];
+
 // Formulario de Login 
 $(document).ready(function () {
     $("#enlace-login, #nav-login a, #pie-formularios-registro").click(function (event) {
         efectoClick(this);
         event.preventDefault();
-        if ($(".registro").css("display") !=="none") {
+        if ($(".registro").css("display") !== "none") {
             $(".registro").css("display", "none");
-            
+
         }
 
         $(".intro").fadeOut(1000, function () {
@@ -56,7 +63,7 @@ $(document).ready(function () {
                 },
                 error: function (error) {
                     console.error('Error:', error);
-                    mostrarMensaje("Usuario o contraseña incorrectos", ".error-login");           
+                    mostrarMensaje("Usuario o contraseña incorrectos", ".error-login");
                 }
             });
         }

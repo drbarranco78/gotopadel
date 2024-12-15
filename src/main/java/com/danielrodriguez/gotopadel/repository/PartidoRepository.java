@@ -16,4 +16,7 @@ public interface PartidoRepository extends JpaRepository<Partido, Integer> {
             "WHERE p.usuario.id = :idUsuario OR i.usuario.id = :idUsuario")
     List<Partido> findByUsuarioOrInscripciones_Usuario(@Param("idUsuario") Integer idUsuario);
 
+    @Query("SELECT COUNT(p) FROM Partido p WHERE p.usuario.id = :idUsuario")
+    int countPartidosPublicadosPorUsuario(@Param("idUsuario") Integer idUsuario);
+
 }

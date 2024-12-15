@@ -86,6 +86,7 @@
         </div>
 
         <div class="contenido ver-partidos" id="ver-partidos">
+            <h2>Partidos Disponibles</h2>
             <div id="ficha-detalles" class="ficha-detalles">
                 <!-- Número de Partido -->
                 <div class="detalle-item">
@@ -185,6 +186,7 @@
             </div>
             <h2>Partidos disponibles</h2>
             <div id="ficha-partido" class="partido-detalles">
+                
                 <p class="partido-fecha"></p>
                 <p class="partido-ciudad"></p>
                 <p class="partido-nivel"></p>
@@ -203,7 +205,7 @@
         <div class="contenido" id="publicar-partidos">
 
             <fieldset>
-                <h2>Publicar Partido</h2>
+                <legend>Publicar Partido</legend>
                 <form id="form-publicar" action="" method="post">
                     <div class="radio-modalidad">
                         <label id="lbModalidad">Modalidad</label>
@@ -249,7 +251,7 @@
                     </div>
                     <div class="div-hora">
                         <label for="horaPartido">Hora</label>
-                        <input type="time" name="horaPartido" id="horaPartido" required />
+                        <input type="time" name="horaPartido" id="horaPartido" required min="08:00" max="22:00"/>
                     </div>
                     <div class="div-comentarios">
                         <label for="comentarios">Comentarios</label>
@@ -271,7 +273,7 @@
         <div class="contenido mis-partidos" id="mis-partidos">
             <!-- <h2>Mis partidos</h2> -->
             <div id="ficha-mis-partidos">
-                <div class="detalle-item">
+                <div id="detalle-mi-partido-id" class="detalle-item">
                     <i class="fa-solid fa-hashtag"></i>
                     <p>N°: <span class="numero-partido"></span></p>
                 </div>

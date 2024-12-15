@@ -5,8 +5,38 @@ const urlCiudades = './json/ciudades.json';
 let ciudadSeleccionada;
 let formulario = document.getElementById('form-publicar');
 const selectPistas = document.getElementById('pista');
-  
-formulario.reset();
+let limpiarFormulario = document.getElementById('limpiar');
+//formulario.reset();
+let fechaPartido = document.getElementById('fechaPartido');
+fechaPartido.min = new Date().toISOString().split("T")[0];
+
+// Cargar ciudades al iniciar
+document.addEventListener('DOMContentLoaded', cargarCiudades , formulario.reset());
+
+limpiarFormulario.addEventListener('click', function () {
+    cargarCiudades();
+});
+
+//let tipoPartido = document.querySelector('input[name="modalidad"]:checked').value;
+let modalidadRadios = document.querySelectorAll('input[name="modalidad"]');
+let vacantes = document.getElementById('numVacantes');
+actualizarMaxVacantes();
+function actualizarMaxVacantes() {
+    let tipoPartido = document.querySelector('input[name="modalidad"]:checked').value;
+    if (tipoPartido === "Singles") {
+        vacantes.max = 1;
+        vacantes.value = 1;
+        //vacantes.value = Math.min(vacantes.value, 1); 
+    } else {
+        vacantes.max = 3;
+        vacantes.value = 3;
+        //vacantes.value = Math.min(vacantes.value, 3); 
+    }
+}
+modalidadRadios.forEach(radio => {
+    radio.addEventListener('change', actualizarMaxVacantes);
+});
+
 
 function cargarCiudades() {
 
@@ -89,8 +119,7 @@ async function cargarPistas(ciudad) {
         console.error('Error al hacer la solicitud de pistas:', error);
     }
 }
-// Cargar ciudades al iniciar
-document.addEventListener('DOMContentLoaded', cargarCiudades);
+
 
 document.getElementById('form-publicar').addEventListener('submit', function (event) {
     event.preventDefault(); // Prevenir el comportamiento por defecto del formulario
@@ -124,7 +153,7 @@ document.getElementById('form-publicar').addEventListener('submit', function (ev
                             tipoPartido: document.querySelector('input[name="modalidad"]:checked').value,
                             vacantes: document.getElementById('numVacantes').value,
                             nivel: document.getElementById('nivel').value,
-                            fechaPartido: formatearFecha(document.getElementById('fechaPartido').value),
+                            fechaPartido: formatearFecha(fechaPartido.value),
                             fechaPublicacion: formatearFecha(new Date().toISOString().split('T')[0]),
                             horaPartido: document.getElementById('horaPartido').value,
                             ubicacion: ubicacion,
@@ -143,7 +172,7 @@ document.getElementById('form-publicar').addEventListener('submit', function (ev
                             .then(partidoCreado => {
                                 mostrarMensaje("Partido publicado con éxito", ".mensaje-exito");
                                 console.log(partidoCreado);
-                                
+
 
                                 // Limpiar y recargar la interfaz después de unos segundos
                                 setTimeout(() => {

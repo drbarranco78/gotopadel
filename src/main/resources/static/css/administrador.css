@@ -10,6 +10,8 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 20px 40px;
+    background-color: whitesmoke;
+    border: 2px solid black;
 }
 
 .logotipo,
@@ -39,9 +41,9 @@ header {
 .opciones-usuario{
     display: none;
     /* display: flex; */
-    flex-direction: column;
+    /* flex-direction: column; */
     position: absolute;
-    top:80px;
+    top:100px;
     right: 20px;
     text-align: center;
     width: 150px;
@@ -50,7 +52,7 @@ header {
     /* align-content: center; */
     align-items: center;
     justify-content: center;
-    gap: 15px;
+    /* gap: 15px; */
     border: 2px solid black;
     border-radius: 10px;
     
@@ -74,6 +76,19 @@ header {
     flex-direction: row;
     justify-content: space-around;
     cursor: pointer;
+    margin-top: 50px;
+}
+.botones-admin button{
+    text-align: center;
+    background-color: var(--color-secundario);
+    color: whitesmoke;
+    padding: 10px 20px;
+    width: 200px;
+    height: auto;
+    border: 2px solid whitesmoke;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 15px;
 }
 .listados-admin {
     display: grid;
@@ -82,20 +97,40 @@ header {
     gap: 20px;
     align-items: center;
     justify-items: center;
-    margin-top: 80px;
+    margin-top: 50px;
     text-align: center;
+    background-color: var(--color-azul);
+    padding-bottom: 50px;
 }
 
 .listados-admin-titulo {
     grid-column: span 3;
+    color: whitesmoke;
   
 }
 
 .usuario-item, .partido-item, .archivo-item{
     background-color: var(--color-verde);
+    color: whitesmoke;
+    font-weight: bold;
+    font-size: 18px;
     border: 2px solid black;
     border-radius: 20px;
     padding: 20px;
+    width: 70%;
+}
+.usuario-item button, .partido-item button, .archivo-item button{
+    width: 30%;
+    height: auto;
+    font-size: 16px;
+    border-radius: 15px;
+    margin-top: 20px;
+    font-weight: bold;
+    padding: 10px;
+
+}
+.archivo-item span{
+    color: black;
 }
 .confirmar-accion{
     position: fixed;
@@ -118,6 +153,9 @@ header {
     color: whitesmoke;
     border: 2px solid whitesmoke;
     padding: 20px;
+}
+.confirmar-accion button{
+    color: whitesmoke;
 }
 
 .aceptar-accion, .cancelar-accion, .opciones-archivado{

@@ -92,4 +92,8 @@ public class PartidoService {
         partidoRepository.deleteById(id);
     }
 
+    public Integer contarPartidosPublicadosPorUsuario(Integer idUsuario) {
+        return partidoRepository.countPartidosPublicadosPorUsuario(idUsuario);
+    }
+
 }

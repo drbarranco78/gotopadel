@@ -17,6 +17,7 @@ function cargarPartidos() {
                 mostrarListaVacia(fichaPartidoContainer);
                 return;
             }
+            fichaPartidoContainer.classList.add('ver-partidos');
             data.forEach(partido => {
                 if (!fichaPartidoTemplate) {
                     console.warn("No se encontró el elemento #ficha-partido en el DOM, saltando la clonación.");
@@ -146,7 +147,7 @@ function verDetalles(partido, miPartido, organizador) {
 
     // Configurar el botón según el contexto
     if (miPartido && organizador) {
-        btInscribe.innerText = 'Archivar Partido';
+        btInscribe.innerText = 'Archivar';
         btInscribe.addEventListener('click', function () {
             mostrarConfirmacionArchivado()
                 .then(motivo => {
@@ -232,7 +233,7 @@ function comprobarInscripcion(idUsuario, idPartido) {
             if (data.inscrito) {
                 // Al cargar la ficha, actualizamos el botón si ya está inscrito                
                 btInscribe.innerText = 'Inscrito';
-                btInscribe.style.color = '#69f88d';
+                btInscribe.style.color = 'var(--color-verde)';
                 return true;
 
             } else {
@@ -265,7 +266,7 @@ function inscribirJugador(idUsuario, idPartido, organizador) {
 
                 mostrarMensaje("Jugador inscrito en el partido", ".mensaje-exito");
                 btInscribe.innerText = 'Inscrito';
-                btInscribe.style.color = '#69f88d';
+                btInscribe.style.color = 'var(--color-verde)';
                 //cambiarBotonInscribe();
             }
 

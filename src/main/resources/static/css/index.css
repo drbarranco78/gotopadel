@@ -66,47 +66,13 @@ header .logo img {
     opacity: 0%;
 }
 
-@keyframes moveRigth {
-    from {
-        opacity: 0;
-        transform: translateX(-200%);
-    }
 
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-@keyframes moveLeft {
-    from {
-        opacity: 0;
-        transform: translateX(200%);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-@keyframes escalar {
-    from {
-        scale: 0;
-    }
-
-    to {
-        scale: 100%;
-        opacity: 1;
-    }
-}
 
 header nav {
     border: 2px solid whitesmoke;
     height: 5vh;
     align-content: center;
-    border-radius: 15px;
-    /* margin-top: 2vh; */
+    border-radius: 15px;    
 }
 
 
@@ -123,16 +89,14 @@ header nav ul li a {
 }
 
 .intro {
-    position: relative;
-    /* background: url('../img/pista1.png') no-repeat center center/cover; */
+    position: relative;   
     color: #fff;
     height: 600px;
     text-align: center;
     padding: 100px 0;
     border: 2px solid whitesmoke;
     border-radius: 15px;
-    margin-top: 10px;
-    /* overflow: hidden; */
+    margin-top: 10px;    
 }
 
 .intro::before {
@@ -142,11 +106,9 @@ header nav ul li a {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('../img/pista1.png') no-repeat center center/cover;
-    /* filter: grayscale(50%);  */
+    background: url('../img/pista1.png') no-repeat center center/cover;    
     filter: brightness(70%);
-    z-index: 1;
-    /* opacity: 0.8; */
+    z-index: 1;   
 }
 
 .intro h1,
@@ -154,9 +116,6 @@ header nav ul li a {
 .botones-acceso {
     position: relative;
     z-index: 2;
-    /* Asegura que el texto esté sobre la imagen de fondo */
-    /* opacity: 1; */
-
 }
 
 .intro h1 {
@@ -166,11 +125,10 @@ header nav ul li a {
 
 .intro p {
     margin: 100px 0px 150px 0px;
-    font-size: 26px;
+    font-size: 1.8rem;
 }
 
-
-.botones{
+.div-botones-acceso{
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -197,21 +155,19 @@ fieldset{
    
 }
 legend{
-    font-size: 20px;
-    font-weight: bold;
-    font-size: 24px;
+    font-size: 1.2rem;
+    font-weight: bold;    
     color:whitesmoke;
     margin-bottom: 20px;
+    background-color: var(--color-azul);
+    border-radius: 15px;
+    padding: 0 20px;
+    border: 2px solid whitesmoke;
 }
 
 .login {
     background: url('../img/pista2.png') no-repeat center center/cover;
-    /* background: url('../img/pista2.png') no-repeat center top;
-    background-size: cover; */
-    /* position: relative; */
-    /* background: url('../img/pista1.png') no-repeat center center/cover; */
-    /* background-color: #5f0ca3; */
-    height: 600px;
+    /* height: 600px; */
     text-align: center;
     padding: 100px 0;
     display: none;
@@ -222,19 +178,20 @@ legend{
 #formulario-registro {
     display: flex;
     flex-direction: column;
-    width: 400px;
+    width: 25vw;
     background-color: #10537A;
     margin: 0 auto;
     border-radius: 20px;
     padding: 20px;
     font-size: 20px;
+    border: 2px solid var(--color-verde);
 }
 
 #formulario-login input {
     margin-bottom: 20px;
     border-radius: 10px;
     padding: 10px;
-    height: 50px;
+    /* height: 50px; */
 }
 
 #formulario-login label,
@@ -258,9 +215,11 @@ legend{
     color: var(--color-naranja);
 }
 .boton-login {
-    margin-top: 20px;
+    margin-top: 1.5em;
     font-size: 20px;
     font-weight: bold;
+    width: 50%;
+    align-self: center;
 }
 .error-login, .error-registro, .exito-login, .exito-registro {
     position: absolute;
@@ -292,28 +251,23 @@ legend{
     /* padding: 50px 0; */
     align-content: center;
 }
-#formulario-registro{
-    /* margin-left: 200px;
-    margin-right: auto; */
-    width: 30vw;
-  
-}
+/* #formulario-registro{ 
+    width: 30vw;  
+} */
 
 .registro input,
 .registro select {
     margin-bottom: 20px;
     border-radius: 10px;
     padding: 5px;
-    /* height: 30px; */
-
 }
 
 .nuevoPassword, .repetirPassword {
     display: grid;
     grid-template-columns: 1fr auto;
     grid-template-rows: auto auto;
-    gap: 5px; /* Espacio entre filas */
-    align-items: center; /* Centra verticalmente los elementos */
+    gap: 5px; 
+    align-items: center; 
 }
 
 .nuevoPassword label, .repetirPassword label {
@@ -322,10 +276,7 @@ legend{
 }
 
 .nuevoPassword input, .repetirPassword input {
-    grid-column: 1 / 2; /* Coloca el input en la primera columna */
-    /* padding: 5px;
-    border-radius: 5px;
-    height: 30px; */
+    grid-column: 1 / 2; /* Coloca el input en la primera columna */  
 }
 
 .nuevoPassword img, .repetirPassword img {
@@ -349,7 +300,7 @@ legend{
 
 #lbGenero {
     grid-area: lbGenero;
-    /* margin-bottom: 5px; Espacio debajo del título */
+    
 }
 .rd1{
     grid-area: rd1;
@@ -632,6 +583,40 @@ footer ul li {
 footer ul li a {
     color: #fff;
     text-decoration: none;
+}
+@keyframes moveRigth {
+    from {
+        opacity: 0;
+        transform: translateX(-200%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes moveLeft {
+    from {
+        opacity: 0;
+        transform: translateX(200%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes escalar {
+    from {
+        scale: 0;
+    }
+
+    to {
+        scale: 100%;
+        opacity: 1;
+    }
 }
 
 @keyframes desplazarDerecha {
