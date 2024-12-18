@@ -10,7 +10,8 @@
 </head>
 
 <body>
-    <!-- Header -->
+  
+    <!-- ZONA DE CABECERA -->
     <header>
         <div class="cabecera">
             <h1 class="go">GO</h1>
@@ -19,6 +20,8 @@
             </div>
             <h1 class="to">TO</h1>
         </div>
+
+        <!-- Menú de navegación -->
         <nav>
             <ul>
                 <li><a href="/">Inicio</a></li>
@@ -29,7 +32,7 @@
         </nav>
     </header>
 
-    <!-- Contenido -->
+    <!-- ZONA DE INTRODUCCIÓN Y FORMULARIOS -->
     <section class="intro">
         <h1>Encuentra y organiza tus partidos de pádel fácilmente</h1>
         <p>Conéctate con jugadores y clubes cercanos a ti.</p>
@@ -38,6 +41,8 @@
             <button id="enlace-registro" class="botones-acceso">Registrarse</button>
         </div>
     </section>
+
+    <!-- Formulario para el login -->
     <section class="login">
         <fieldset>
             <legend>Inicio de Sesión</legend>
@@ -54,6 +59,8 @@
         <div class="exito-login"></div>
         <div class="error-login"></div>
     </section>
+
+    <!-- Formulario de registro -->
     <section class="registro">
         <fieldset>
             <legend>Nuevo Usuario</legend>
@@ -108,39 +115,29 @@
         <div class="error-registro"></div>
     </section>
 
-
-
+  
+    <!--ZONA DE NOTICIAS -->
     <div class="noticias">
         <h2 id="subtitulo-noticias" class="subtitulos">Noticias de Pádel</h2>
-
-        <div class="contenedor-flex">
+        <div class="carrusel-noticias">
             <img id="anterior" src="img/ico_left.png" alt="Anterior">
-            <div id="contenedor-noticias">
-                <!-- Aquí se inyectarán las noticias desde el JavaScript -->
-            </div>
+            <div id="contenedor-noticias"></div>
             <img id="siguiente" src="img/ico_right.png" alt="Siguiente">
         </div>
     </div>
 
-
+    <!--ZONA DE PISTAS DE PÁDEL-->
     <div class="pistas">
         <div id="selector-ciudades">
-
             <h2 class="subtitulos">Pistas de pádel en: </h2>
             <select name="ciudades" id="ciudades">
-
             </select>
         </div>
-
         <div id="contenedor-pistas"></div>
         <p id="mas-pistas">Cargar más pistas</p>
     </div>
 
-
-
-
-
-    <!-- Características -->
+    <!-- ZONA DE CARACTERÍSTICAS -->
     <section class="features">
         <h2 class="subtitulos">¿Por qué usar GoToPadel?</h2>
         <div id="feat1" class="feature-item">
@@ -165,7 +162,7 @@
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- PIE DE PÁGINA -->
     <footer>
         <p>2024 GoToPadel. Todos los derechos reservados.</p>
         <ul>
@@ -174,13 +171,9 @@
             <li><a href="/about">Acerca de</a></li>
         </ul>
     </footer>
+    
     <script src="js/formularios.js"></script>
-    <script src="js/index.js"></script>
-    <!-- <script src="js/login.js"></script> -->
-    <!-- <script src="js/registro.js"></script> -->
-    <!-- <script src="js/noticias.js"></script> -->
-    <!-- <script src="js/pistas.js"></script> -->
-    <!-- <script src="js/animacion.js"></script> -->
+    <script src="js/index.js"></script>    
     <script src="js/utilidades.js"></script>
 </body>
 

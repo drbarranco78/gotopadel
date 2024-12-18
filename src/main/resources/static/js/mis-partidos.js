@@ -16,7 +16,8 @@ $(document).ready(function () {
 
 function cargarMisPartidos(idUsuario) {
 
-    fichaMiPartidoContainer.innerHTML = ''; // Limpia el contenedor antes de cargar
+    fichaMiPartidoContainer.innerHTML = `<h2>Mis Partidos</h2>`; // Limpia el contenedor antes de cargar
+
     fetch(`/api/partido/misPartidos?usuario=${idUsuario}`)
         .then(res => res.json())
         .then(partidos => {
@@ -57,8 +58,8 @@ function cargarMisPartidos(idUsuario) {
 
                 // Evento para ver detalles del partido
                 fichaMiPartido.querySelector('.bt-ver-detalles').addEventListener('click', function () {
-                    fichaMiPartidoContainer.classList.remove('mis-partidos');
-                    fichaMiPartidoContainer.classList.add('mis-partidos-detalle');
+                    // fichaMiPartidoContainer.classList.remove('mis-partidos');
+                    // fichaMiPartidoContainer.classList.add('mis-partidos-detalle');
                     verDetalles(partido, true, organizador);
                 });
 

@@ -1,8 +1,10 @@
 
 document.addEventListener('DOMContentLoaded', function () {
-    cargarPartidos();  // Cargar los partidos solo cuando el DOM esté completamente cargado
+    // Carga los partidos al cargarse el DOM
+    cargarPartidos();  
 });
 
+// Carga los partidos disponibles al hacer click en el enlace "Ver Partidos"
 document.getElementById('enlace-ver').addEventListener('click', function () {
     cargarPartidos();
 }, { once: true });
@@ -18,11 +20,11 @@ function cargarPartidos() {
                 return;
             }
             fichaPartidoContainer.classList.add('ver-partidos');
+            fichaPartidoContainer.innerHTML=`<h2>Partidos publicados</h2>`
             data.forEach(partido => {
                 if (!fichaPartidoTemplate) {
                     console.warn("No se encontró el elemento #ficha-partido en el DOM, saltando la clonación.");
-
-                    return;  // Saltar esta iteración si no se encuentra la plantilla
+                    return;  // Salta la iteración si no se encuentra la plantilla
                 }
 
                 let nuevoPartido = fichaPartidoTemplate.cloneNode(true);
@@ -58,17 +60,18 @@ function cargarPartidos() {
                 nuevoPartido.querySelector('.partido-vacantes').innerHTML = vacantesHTML;
                 nuevoPartido.querySelector('.partido-nivel').textContent = partido.nivel;
 
-                // Convertir la fecha a un formato legible
-                // Dividir la fecha en formato DD/MM/YYYY
+                
+                // Divide la fecha en formato DD/MM/YYYY
                 let [dia, mes, anio] = partido.fechaPartido.split('/');
 
-                // Crear una nueva fecha en formato YYYY-MM-DD
+                // Crea una nueva fecha en formato YYYY-MM-DD
                 let fechaPartido = new Date(`${anio}-${mes}-${dia}`);
 
-                // Verificar si la fecha es válida
+                // Verifica si la fecha es válida
                 if (isNaN(fechaPartido.getTime())) {
                     nuevoPartido.querySelector('.partido-fecha').textContent = 'Fecha no disponible';
                 } else {
+                    // Convierte la fecha a un formato legible
                     let opcionesFecha = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                     let fechaFormateada = fechaPartido.toLocaleDateString('es-ES', opcionesFecha);
                     nuevoPartido.querySelector('.partido-fecha').textContent = fechaFormateada;
@@ -95,12 +98,11 @@ function cargarPartidos() {
                     estrellasHTML += '<i class="fas fa-star"></i>';
                 }
 
-                // Añadir evento al botón de detalles
+                // Evento de click del botón de detalles
                 let btDetalles = nuevoPartido.querySelector('#boton-detalles');
                 btDetalles.addEventListener('click', function () {
-
-                    verDetalles(partido, false, false); // Llamada a la función verDetalles
-
+                    // Llamada a la función verDetalles indicando que no es organizador ni está inscrito
+                    verDetalles(partido, false, false); 
                 });
 
                 nuevoPartido.querySelector('.partido-estrellas').innerHTML = estrellasHTML;
@@ -126,7 +128,7 @@ function verDetalles(partido, miPartido, organizador) {
     detallesClone.style.display = 'flex';
     fichaPartidoContainer.appendChild(detallesClone);
 
-    // Asignar valores del partido
+    // Asigna los valores del partido
     detallesClone.querySelector('.numero-partido').innerText = partido.idPartido;
     detallesClone.querySelector('.organizador-partido').innerText = partido.usuario.nombre;
     detallesClone.querySelector('.fecha-publicacion').innerText = partido.fechaPublicacion;
@@ -142,7 +144,7 @@ function verDetalles(partido, miPartido, organizador) {
     detallesClone.querySelector('.nivel-partido').innerText = partido.nivel;
     detallesClone.querySelector('.comentarios-partido').innerText = partido.comentarios || "No hay comentarios";
 
-    // Seleccionar el botón de inscripción/archivo adecuado
+    // Selecciona el botón de inscripción/archivo adecuado
     btInscribe = detallesClone.querySelector(miPartido ? '#bt-inscribir-mis' : '#bt-inscribir');
 
     // Configurar el botón según el contexto

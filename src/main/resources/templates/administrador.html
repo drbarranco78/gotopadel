@@ -4,29 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/administrador.css">
-    <!-- <link rel="stylesheet" href="/css/zonaPrivada.css"> -->
+    <link rel="stylesheet" href="/css/administrador.css">    
     <script src="HTTP://code.jquery.com/jquery-latest.js"></script>
     <title>Area de administración</title>
 </head>
 
 <body>
+    <!-- Zona de cabecera -->
     <header>
         <div class="logotipo">
             <img src="img/logo.png" id="logo-cabecera-admin" class="icono-cabecera" alt="Logotipo de GoToPádel">
             <h3>GoToPádel</h3>
         </div>
 
+        <!-- Icono y opciones del administrador  -->
         <div class="usuario">
             <div id="mensaje-bienvenida">Bienvenido, administrador</div>
             <img src="img/ico_admin.png" id="icono-usuario" class="icono-cabecera" alt="Icono de usuario">
-            <div class="opciones-usuario">
-                <!-- <div id="ver-perfil" class="ver-perfil">Ver Perfil</div> -->
+            <div class="opciones-usuario">                
                 <div id="cerrar-sesion" class="cerrar-sesion">Cerrar Sesión</div>
             </div>
         </div>
-
     </header>
+
+    <!-- Cuadro de diálogo para confirmar eliminación de partidos y usuarios  -->
     <div id="confirmar-accion" class="confirmar-accion">
         <p class="texto-confirmar-accion">Estas seguro?</p>
         <div class="botones-accion">
@@ -34,18 +35,23 @@
             <button id="cancelar-accion" class="cancelar-accion">Cancelar</button>
         </div>
     </div>
+
+    <!-- Cuadros para mostrar mensajes  -->
+    <div class="mensaje-exito"></div>
+    <div class="mensaje-error"></div>
     
+    <!-- Botones disponibles para el administrador  -->
     <div class="botones-admin">
         <button id="admin-ver-partidos">Ver Partidos</button>
         <button id="admin-ver-usuarios">Ver Usuarios</button>
         <button id="admin-ver-archivo">Ver Archivo</button>
     </div>
-    <section class="listados-admin">
-        
-    </section>
+
+    <!-- Area donde se cargan dinámicamente las listas de partidos y usuarios  -->
+    <section class="listados-admin"></section>
+
     <script src="js/zonaPrivada.js"></script>
-    <script src="js/administrador.js"></script>
-    <!-- <script src="/js/ver-partidos.js"></script> -->
+    <script src="js/administrador.js"></script>    
     <script src="js/utilidades.js"></script>
 
 </body>

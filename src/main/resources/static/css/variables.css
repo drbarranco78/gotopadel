@@ -1,3 +1,8 @@
+/*=============================================================*/
+/*                    DEFINICIÓN DE CONSTANTES                 */
+/*=============================================================*/
+
+/*------ Definición de las variables de color --------*/
 :root {
     /* --color-verde: #69f88d; */
     /* --color-rojo:#f86969; */
@@ -9,7 +14,37 @@
     --color-oscuro: #333;
     --color-secundario: #005573;
     --color-naranja: #eea509;
-    --color-formularios:#10537A;
-    --color-terciario:#8ba4d1;
-    /* Otras variables de color, fuente, etc. */
+    --color-formularios: #10537A;
+    --color-terciario: #8ba4d1;
+  
+}
+
+/*------ Definición de las variables de fuente --------*/
+@font-face {
+    font-family: "fuente_principal";
+    src: url("../fonts/Roboto.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "fuente_titulos";
+    src: url("../fonts/Montserrat.ttf") format("truetype");
+}
+
+/* Resetea los estilos generales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+/* Tipo de fuente de los encabezados */
+h1, h2, h3 {
+    font-family: var(--fuente-titulos);
+    text-align: center;
+}
+
+/* Estilo de fuente general */
+body {
+    font-family: var(--fuente-principal);
+    line-height: 1.6;
 }

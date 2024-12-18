@@ -140,11 +140,7 @@ header {
     gap: 10px;
     top: 50%; /* Centrado vertical */
     left: 50%; /* Centrado horizontal */
-    transform: translate(-50%, -50%);
-    /* width: auto;
-    height: auto;
-    margin: 0 auto; */
-    /* background-color: var(--color-fondo-ficha); */
+    transform: translate(-50%, -50%);    
     border-radius: 10px;
     text-align: center;
     font-size: 20px;
@@ -173,6 +169,29 @@ header {
 }
 .cancelar-accion , .cancelar-archivado{
     background-color: var(--color-rojo);
+}
+
+.mensaje-exito, .mensaje-error {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: black;
+    padding: 15px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 300px;
+    text-align: center;
+    display: none;
+    z-index: 3;
+}
+
+.mensaje-exito h3 {
+    color: var(--color-verde);    
+}
+
+.mensaje-error h3 {
+    color: var(--color-rojo);
 }
 
 #pagina-error{

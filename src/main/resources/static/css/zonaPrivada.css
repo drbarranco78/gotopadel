@@ -1,23 +1,7 @@
 @import 'variables.css';
 
-/* Resetea los estilos generales */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    user-select: none;
-}
-
-
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    line-height: 1.6;
-    background-color: #ccc;
-}
-
 header {
+    background-color: #ccc;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -48,12 +32,10 @@ header {
 #mensaje-bienvenida {
     align-content: center;
     margin-right: 20px;
-    font-weight: bold;
-    font-size: 1rem;
+    font-weight: bold;    
 }
 .opciones-usuario{
-    display: none;
-    /* display: flex; */
+    display: none;    
     flex-direction: column;
     position: absolute;
     top:80px;
@@ -61,15 +43,13 @@ header {
     text-align: center;
     width: 150px;
     height: 200px;
-    background-color: whitesmoke;
-    /* align-content: center; */
+    background-color: whitesmoke;    
     align-items: center;
     justify-content: center;
     gap: 15px;
     border: 2px solid black;
     border-radius: 10px;
-    z-index: 2;
-    
+    z-index: 2;    
 }
 .ver-perfil, .cerrar-sesion{
     position: relative;
@@ -89,9 +69,11 @@ header {
     flex-direction: column;
     align-items: center;
     justify-content:center;
-    width: 50%;
-    height: 100%;
+    width: 40%;
+    height: 80%;
+    min-height: fit-content;
     gap: 20px;
+    border: 2px solid whitesmoke;
     border-radius: 10px;
     background-color: #ccc;
     font-size: 20px;
@@ -147,15 +129,15 @@ nav ul li a.activo {
 
 #contenedor-principal {
     height: 80vh;
-    background-color: var(--color-azul);
+    background-color: var(--color-terciario);
     align-items: center;
     justify-content: center;
     display: flex;
 }
 
 .contenido {
-    width: 80%;
-    height: 90%;
+    width: 100%;
+    height: 100%;
     border-radius: 10px;
     /* background-color: #A9A9A9; */
     text-align: center;
@@ -179,30 +161,19 @@ nav ul li a.activo {
 } */
 
 #publicar-partidos {
-    background: url('../img/registro.png') no-repeat center center/cover;
+    position: relative; /* Necesario para que el pseudo-elemento se posicione dentro del contenedor */
 }
 
-.mensaje-exito, .mensaje-error {
+#publicar-partidos::before {
+    content: ""; /* Necesario para que el pseudo-elemento funcione */
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: black;
-    padding: 15px;
-    border-radius: 10px;
-    width: 80%;
-    max-width: 300px;
-    text-align: center;
-    display: none;
-    z-index: 3;
-}
-
-.mensaje-exito h3 {
-    color: var(--color-verde);    
-}
-
-.mensaje-error h3 {
-    color: var(--color-rojo);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../img/registro.png') no-repeat center center/cover;
+    opacity: 0.2; /* Ajusta la opacidad de la imagen */
+    z-index: 0; /* Coloca la imagen detrás del contenido */
 }
 
 fieldset {
@@ -216,8 +187,7 @@ fieldset {
 
 legend{
     font-size: 20px;
-    font-weight: bold;
-    
+    font-weight: bold;    
     color:whitesmoke;
     margin-bottom: 20px;
     background-color: var(--color-azul);
@@ -228,53 +198,35 @@ legend{
 
 
 #form-publicar {
-
     display: grid;
     grid-template-areas: "modo modo" "nivel vacantes" "nivel ubicacion" "fecha ubicacion" "hora ubicacion" "comentarios comentarios" "botones botones";
-
 }
 
 .radio-modalidad {
     grid-area: modo;
-
 }
-
 .div-vacantes {
     grid-area: vacantes;
-
 }
-
 .div-nivel {
     grid-area: nivel;
-
 }
-
 .div-ubicacion {
     grid-area: ubicacion;
-
 }
-
 .div-fecha {
     grid-area: fecha;
-
 }
-
 .div-hora {
     grid-area: hora;
-
 }
-
 .div-comentarios {
     grid-area: comentarios;
-
 }
-
 .botones-publicar {
     grid-area: botones;
     margin-top: 20px;
-
 }
-
 .div-vacantes,
 .div-nivel,
 .div-ubicacion,
@@ -285,7 +237,6 @@ legend{
     flex-direction: column;
     align-items: center;
 }
-
 .radio-modalidad {
     display: grid;
     grid-template-areas: "titulo titulo" "rd1 rd2";
@@ -296,21 +247,17 @@ legend{
     margin-bottom: 30px;
     margin-top: 20px;
 }
-
 #lbModalidad {
     grid-area: titulo;
 }
-
 .rd1 {
     grid-area: rd1;
     width: fit-content;
 }
-
 .rd2 {
     grid-area: rd2;
     width: fit-content;
 }
-
 #form-publicar input:not([type="radio"]),
 #form-publicar select {
     width: 20em;
@@ -320,7 +267,6 @@ legend{
     border-radius: 10px;
     margin-bottom: 20px;
 }
-
 #form-publicar input[type="submit"],
 #form-publicar input[type="reset"] {
     width: 15%;
@@ -334,46 +280,58 @@ legend{
     color: whitesmoke;
     margin: 0 50px;
 }
-
 #form-publicar input[type="text"] {
     width: 80%;
     height: 50px;
     margin-bottom: 20px;
 }
-
 #form-publicar label {
     font-size: 18px;
     font-weight: bold;
 }
-
 .ver-partidos {
-    /* position: relative;  */
+    position: relative; 
     width: 100%;
-    min-height: 600px;
-    /* gap: 20px; */
-    /* flex-direction: column; */
+    min-height: 600px;    
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-template-rows: 0.2fr auto;
     justify-items: center;
+    align-items: center;    
     overflow-y: auto;
     padding: 20px;
 }
-
-/* .ver-partidos::before {
+.ver-partidos::before {
     content: "";
     position: absolute;
+    
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('../img/pista1.png') no-repeat center center/cover;
-    filter: brightness(70%); 
+    background: url('../img/pista2.webp') no-repeat center center/cover;
+    filter:opacity(0.3); 
     z-index: 0;  
-}  */
+}  
+
+.ver-partidos h2, .mis-partidos h2{
+    grid-column:  1 / -1;    
+    background-color: var(--color-azul);
+    color: whitesmoke;
+    border-radius: 15px;
+    padding: 0 20px;
+    border: 2px solid whitesmoke;
+    z-index: 1;
+}
+/* .mis-partidos h2{
+    grid-column: span 3; 
+} */
+
+
 
 #ficha-partido {
     /* position: relative; */
-    /* z-index: 1;  */
+    z-index: 1; 
     width: 80%;
     filter: none;
     height: auto;
@@ -393,68 +351,53 @@ legend{
         'hora vacantes boton';
     gap: 10px;
     margin: 10px;
-    display: none; /* Si esto es temporal para ocultar, puedes controlarlo con JS */
-
+    display: none;
 }
-
-
 #ficha-partido p {
     display: flex;
     align-items: center;
     gap: 10px;
     justify-content: start;
     padding: 0px 0px 0px 50px;
-    overflow:hidden;
-    
+    overflow:hidden;    
 }
-
 .partido-fecha {
     grid-area: fecha;
     background-color: var(--color-azul);
-    color: white;
+    color: whitesmoke;
     border: 2px solid black;
     border-radius: 10px;
     justify-content: center !important;
     padding: 0px !important;
 }
-
 .partido-ciudad {
     grid-area: ciudad;
 }
-
 .partido-hora {
     grid-area: hora;
 }
-
 .partido-usuario {
     grid-area: organizador;
 }
-
 .partido-nivel {
     grid-area: nivel;
     justify-self: center;
     padding: 0% !important;
 }
-
 .partido-estrellas {
     grid-area: estrellas;
     justify-self: center;
-    padding: 0% !important;
-    /* padding: 0px 0px 0px 30px !important; */
+    padding: 0% !important;    
 }
-
 .partido-tipo {
     grid-area: tipo;
 }
-
 .partido-ubicacion {
     grid-area: ubicacion;
 }
-
 .partido-vacantes {
     grid-area: vacantes;
 }
-
 #boton-detalles {
     position: sticky;
     cursor: pointer;
@@ -464,38 +407,30 @@ legend{
     width: 60%;
     margin: 0 auto;
 }
-
 .ficha-detalles {
-    grid-column: span 2;
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
     display: none;
-    flex-direction: column;
-    justify-content: center;
-    padding: 20px 50px;
-    width: fit-content;
-    /* height: 90%; */
-    background-color: var(--color-fondo-ficha);
-    /* color: whitesmoke; */
-    border-radius: 10px;
-    margin: auto;
+    flex-direction: column;    
+    padding: 20px 50px;    
+    align-self: center;   
+    background-color: var(--color-fondo-ficha);    
+    border-radius: 10px;    
     border: 3px solid #333;
+    z-index: 1;
 }
-
-
 .detalle-item {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
     gap: 20px;
 }
-
 .detalle-item span {
     font-weight: bold;
 }
-
 #detalle-mi-partido-id{
     margin-bottom: 40px;
 }
-
 .comentarios-partido {
     max-width: 200px;
     /* Limitar el ancho */
@@ -522,42 +457,35 @@ legend{
     font-weight: bold;
 
 }
-
-
 .fas.fa-star {
-    color: gold;
-    /* Color de las estrellas */
+    color: gold;    
     text-shadow: 1px 1px 2px black;
     margin-top: 0px;
 }
-
 .mis-partidos {
-    width: 90%;
-    height: 90%;
+    position: relative;    
     display: grid;
     align-items: self-start;
     grid-template-columns: repeat(3, 1fr);
-    /* 3 fichas en una fila */
+    grid-template-rows: 0.2fr auto;
     gap: 20px;
     padding: 20px;
-    overflow-y: scroll;
-    background: url('../img/pista_lapiz2.webp') no-repeat center center/cover;
-    /* filter: brightness(70%); */
+    justify-items: center;
+    overflow-y: scroll;   
 }
-.mis-partidos-detalle {
-    width: 80%;
-    height: 80%;
-    display: flex;
-    background: url('../img/pista_lapiz3.webp') no-repeat center center/cover;
-    
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;  /* Quitamos el scroll */
-    padding: 0;  /* Quitamos el padding */
-    
+.mis-partidos::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../img/vestuario.webp') no-repeat center center/cover;
+    opacity: 0.5;
+    z-index: 0;
 }
-
 #ficha-mis-partidos {
+    width: 100%;
     border: 1px solid #ccc;
     border-radius: 10px;
     padding: 10px;
@@ -593,19 +521,13 @@ legend{
     font-size: 26px;
     font-weight: bold;
 }
-
-
-
-
-
-/* Footer Styles */
+/* Estilo del pie de página */
 footer {
     border: 2px solid white;
     background-color: #333;
     color: #fff;
     text-align: center;
-    padding: 10px 0;
-    /* margin-top: 20px; */
+    padding: 10px 0;   
 }
 
 footer ul {
@@ -622,8 +544,7 @@ footer ul li a {
     color: #fff;
     text-decoration: none;
 }
-
-/* Efecto de clic */
+/* Efecto de clic de los botones */
 .boton-click {
     transform: scale(0.80);
     transition: transform 0.1s ease;
@@ -631,18 +552,13 @@ footer ul li a {
 button{
     cursor: pointer;
 }
-
 .confirmar-accion, .confirmar-archivado{
     position: fixed;
     display: none;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 10px;
-    width: auto;
-    height: auto;
-    margin: 0 auto;
-    
+    gap: 10px;    
     border-radius: 10px;
     text-align: center;
     font-size: 20px;
@@ -656,8 +572,7 @@ button{
 
 .aceptar-accion, .cancelar-accion, .opciones-archivado{
     width: 70%;
-    height: auto;
-    /* background-color: aqua; */
+    height: auto;    
     margin: 20px;
     font-size: 18px;
     font-weight: bold;
@@ -675,4 +590,26 @@ button{
 .archivar-cancelado{
     background-color: orange;
     color: whitesmoke;
+}
+.mensaje-exito, .mensaje-error {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: black;
+    padding: 15px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 300px;
+    text-align: center;
+    display: none;
+    z-index: 3;
+}
+
+.mensaje-exito h3 {
+    color: var(--color-verde);    
+}
+
+.mensaje-error h3 {
+    color: var(--color-rojo);
 }

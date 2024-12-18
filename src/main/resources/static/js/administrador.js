@@ -1,6 +1,6 @@
+// Carga por defecto los partidos disponibles al cargar el documento 
 $(document).ready(function () {
     $('#admin-ver-partidos').click();
-
 });
 // window.addEventListener('unload', function () {
 //     navigator.sendBeacon('/api/usuario/logout'); // Usa sendBeacon para asegurar que la solicitud se envía
@@ -36,10 +36,10 @@ $('#admin-ver-partidos').click(function () {
                         <p>Ubicación: ${partido.ubicacion.nombre} (${partido.ubicacion.ciudad})</p>                       
                         <button class="eliminar-partido" data-id="${partido.idPartido}">Eliminar</button>
                     </div>
-                `;
-                    // Agregar el partido al contenedor de la lista
-                    
+                `;                   
                 });
+
+                // Agregar el partido al contenedor de la lista
                 $('.listados-admin').append(partidoHTML);
             }
         },
@@ -51,22 +51,22 @@ $('#admin-ver-partidos').click(function () {
 $(document).on('click', '.eliminar-partido', function () {
     let idPartido = $(this).data('id'); // Obtener el ID del partido del atributo data-id
 
-    // Confirmar eliminación con el usuario
+    // Llama a la función en Utilidades.js para confirmar la eliminación
     mostrarDialogo("¿Estás seguro de eliminar este partido?")
         .then(() => {
-            // Si el usuario confirma, hacer una petición AJAX para eliminar el partido
+            // Si el usuario confirma, hace una petición AJAX para eliminar el partido
             $.ajax({
                 url: '/api/partido/' + idPartido,
                 type: 'DELETE',
                 success: function () {
                     // Eliminar el elemento del DOM
                     $('#partido-' + idPartido).remove();
-                    alert("El partido con id " + idPartido + " ha sido eliminado");
-                    // mostrarMensaje("Partido eliminado correctamente", ".exito-inscripcion");
+                    //alert("El partido con id " + idPartido + " ha sido eliminado");
+                    mostrarMensaje("Partido eliminado correctamente", ".mensaje-exito");
                 },
                 error: function (error) {
                     console.error("Error al eliminar el partido:", error);
-                    //mostrarMensaje("Error al eliminar el partido", ".error-inscripcion");
+                    mostrarMensaje("Error al eliminar el partido", ".mensaje-error");
                 }
             });
         })
@@ -126,11 +126,11 @@ $(document).on('click', '.eliminar-usuario', function () {
                     // Eliminar el usuario del DOM
                     $('#usuario-' + idUsuario).remove();
                     alert("El usuario " + idUsuario + " ha sido eliminado");
-                    //mostrarMensaje("Usuario eliminado correctamente", ".exito-inscripcion");
+                    mostrarMensaje("Usuario eliminado correctamente", ".mensaje-exito");
                 },
                 error: function (error) {
                     console.error("Error al eliminar el usuario:", error);
-                    //mostrarMensaje("Error al eliminar el usuario", ".error-inscripcion");
+                    mostrarMensaje("Error al eliminar el usuario", ".mensaje-error");
                 }
             });
         })
@@ -191,11 +191,10 @@ $('.listados-admin').on('click', '.eliminar-archivado', function () {
                 type: 'DELETE',
                 success: function () {
                     $(`#archivado-${idPartido}`).remove(); // Eliminar del DOM
-                    alert("Partido archivado eliminado con éxito.");
+                    mostrarMensaje("Partido archivado eliminado con éxito", ".mensaje-exito");                    
                 },
                 error: function (error) {
-                    console.error("Error al eliminar el partido archivado:", error);
-                    alert("Hubo un error al eliminar el partido archivado.");
+                    mostrarMensaje("Hubo un error al eliminar el partido archivado", ".mensaje-exito");                   
                 }
             });
         })
