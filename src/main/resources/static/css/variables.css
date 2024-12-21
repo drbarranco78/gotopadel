@@ -37,7 +37,8 @@
     box-sizing: border-box;
     user-select: none;
 }
-/* Tipo de fuente de los encabezados */
+
+/* Estilo de los encabezados */
 h1, h2, h3 {
     font-family: var(--fuente-titulos);
     text-align: center;
@@ -47,4 +48,8 @@ h1, h2, h3 {
 body {
     font-family: var(--fuente-principal);
     line-height: 1.6;
+}
+html{
+    width: 100%;
+    overflow-x: hidden;
 }

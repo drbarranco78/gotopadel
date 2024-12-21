@@ -1,44 +1,33 @@
 @import 'variables.css';
 
-/* 
-.subtitulos {
-    text-align: center;
-} */
-
-#subtitulo-noticias {
-    margin-top: 50px;
-    margin-bottom: 30px;
-}
-
+/* Estilo de color general del cuerpo  */
 body {    
     background-color: var(--color-azul);
-    color: var(--color-verde);
+    color: var(--color-verde);   
 }
-
-/* Header Styles */
+/* Estilos para la cabecera  */
 header {
     background-color: #333;
     color: #ffffff;
-    text-align: center;
+    text-align: center;    
 }
 .cabecera {
     display: flex;
     justify-content: space-around;
     align-items: center;
     padding: 20px 0;
+    width: 100vw;
 }
-
 .cabecera h1 {
     font-size: 50px;
 }
-
+/* Elementos de la cabecera  */
 .go {
-    animation: moveRigth 1.5s forwards;    
+    animation: desplazarDerecha 1.5s forwards;    
     opacity: 0;
 }
-
 .to {
-    animation: moveLeft 1.5s forwards 1.5s;    
+    animation: desplazarIzquierda 1.5s forwards 1.5s;    
     opacity: 0;
 }
 header .logo img {
@@ -48,6 +37,7 @@ header .logo img {
     animation: escalar 1.5s forwards 3s;
     opacity: 0%;
 }
+/* Menu de navegación */
 header nav {
     border: 2px solid whitesmoke;
     height: 5vh;
@@ -64,10 +54,12 @@ header nav ul li a {
     color: whitesmoke;
     text-decoration: none;
 }
+/* Zona de presentación de la página  */
 .intro {
     position: relative;   
     color:whitesmoke;
     height: 600px;
+    width: 100%;
     text-align: center;
     padding: 100px 0;
     border: 2px solid #f5f5f5;
@@ -99,6 +91,7 @@ header nav ul li a {
     margin: 100px 0px 150px 0px;
     font-size: 1.8rem;
 }
+/* Botones de login y registro  */
 .div-botones-acceso{
     display: flex;
     flex-direction: row;
@@ -117,9 +110,9 @@ header nav ul li a {
     font-weight: bold;
     border-radius: 15px;
 }
-fieldset{
-    width: fit-content;
-    margin: 0 auto;
+
+/* Estilos generales de los formularios de login y registro  */
+fieldset{       
     border: none;   
 }
 legend{
@@ -131,12 +124,6 @@ legend{
     border-radius: 15px;
     padding: 0 20px;
     border: 2px solid whitesmoke;
-}
-.login {
-    background: url('../img/pista2.png') no-repeat center center/cover;    
-    text-align: center;
-    padding: 100px 0;
-    display: none;    
 }
 #formulario-login,
 #formulario-registro {
@@ -151,30 +138,21 @@ legend{
     border: 2px solid var(--color-verde);
     color: whitesmoke;
 }
+/* Contenedor del formulario de login  */
+.login {
+    background: url('../img/pista2.png') no-repeat center center/cover;    
+    text-align: center;
+    padding: 100px 0;
+    display: none;    
+}
+
+/* Campos de entrada del formulario de login  */
 #formulario-login input {
     margin-bottom: 20px;
     border-radius: 10px;
     padding: 10px;    
 }
-/* #formulario-login label,
-#formulario-registro label {
-    color: white;
-} */
-.pie-formularios {
-    color: whitesmoke;
-    width: fit-content;
-    text-align: center;
-    font-weight: bold;
-    margin: 20px auto; /* Centrará horizontalmente */
-    background-color: var(--color-azul);
-    padding: 5px 30px;
-    border-radius: 15px;
-}
-
-.pie-formularios a{
-    margin-left: 10px;
-    color: var(--color-naranja);
-}
+/* Botón de acceso en el formulario de login  */
 .boton-login {
     margin-top: 1.5em;
     font-size: 20px;
@@ -182,27 +160,7 @@ legend{
     width: 50%;
     align-self: center;
 }
-.error-login, .error-registro, .exito-login, .exito-registro {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: black;
-    padding: 15px;
-    border-radius: 10px;
-    width: 80%;
-    max-width: 300px;
-    text-align: center;
-    display:none;
-}
-
-.error-login h3, .error-registro h3{
-    color:red;
-}
-.exito-login h3, .exito-registro h3 {
-    color:var(--color-verde);
-}
-
+/* Contenedor del formulario de registro  */
 .registro {
     background: url('../img/registro.png') no-repeat center center/cover;
     filter: blur(50%);
@@ -211,6 +169,7 @@ legend{
     text-align: center;    
     align-content: center;
 }
+/* Estilo de los campos del formulario de registro  */
 .registro input,
 .registro select {
     margin-bottom: 20px;
@@ -224,22 +183,18 @@ legend{
     gap: 5px; 
     align-items: center; 
 }
-
 .nuevoPassword label, .repetirPassword label {
     grid-column: span 2; 
 }
-
 .nuevoPassword input, .repetirPassword input {
     grid-column: 1 / 2; /* Coloca el input en la primera columna */  
 }
-
 .nuevoPassword img, .repetirPassword img {
     grid-column: 2 / 3;
     cursor: pointer;
     margin-bottom: 20px;
     justify-self: end; /* Alinea la imagen a la derecha */
 }
-
 .radio-genero {
     display: grid;
     grid-template-areas:
@@ -258,18 +213,56 @@ legend{
 .rd2{
     grid-area: rd2;
 }
+/* Contenedor de los botones del formulario de registro  */
 .botones-registro{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     margin-top: 10px;
 }
+/* Botones de limpiar y enviar del formulario de registro  */
 #limpiar, #enviar{
     font-size: 18px;
     display: inline;
     width: 30%;
     font-weight: bold;
 }
+/* Texto debajo de los formularios  */
+.pie-formularios {
+    color: whitesmoke;
+    width: fit-content;    
+    font-weight: bold;
+    margin: 20px auto; 
+    background-color: var(--color-azul);
+    padding: 5px 30px;
+    border-radius: 15px;
+}
+.pie-formularios a{
+    margin-left: 10px;
+    color: var(--color-naranja);
+}
+/* Mensajes de éxito y error de los formularios  */
+.error-login, .error-registro, .exito-login, .exito-registro {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: black;
+    padding: 15px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 300px;
+    text-align: center;
+    display:none;
+}
+.error-login h3, .error-registro h3{
+    color:red;
+}
+.exito-login h3, .exito-registro h3 {
+    color:var(--color-verde);
+}
+
+/* Zona de noticias  */
 .noticias {
     display: flex;
     flex-direction: column;
@@ -278,25 +271,26 @@ legend{
     border: 2px solid whitesmoke;
     border-radius: 15px;
 }
-.carrusel-noticias {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
-}
+/* Contenedor de los artículos  */
 #contenedor-noticias {   
     display: flex;
     justify-content: center;
     align-items: center;    
-    margin-top: 50px;
-    margin-bottom: 100px;
+    margin-top: 50px;    
     gap: 70px;    
 }
+
+#subtitulo-noticias {
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+/* Botones para cambiar de noticia  */
 #anterior,
 #siguiente {
     cursor: pointer;     
     margin: 50px;
 }
+/* Estilo para los artículos de noticia  */
 .noticia-articulo {
     flex: 0 0 30%;
     margin: 0 10px;
@@ -315,6 +309,7 @@ legend{
     height: 200px;
     margin: 10px 0;
 }
+/* Artículo que se encuentra en al centro  */
 .noticia-articulo.activo {
     opacity: 1;
     filter: grayscale(0%);
@@ -328,12 +323,15 @@ legend{
     text-align: center;
     margin: 0 auto;
 }
+
+/* Zona de visualización de pistas de pádel  */
 .pistas{
     border: 2px solid whitesmoke;
     border-radius: 15px;
     margin-top: 10px;
     padding-bottom: 20px;
 }
+/* Contenedor del selector de ciudades */
 #selector-ciudades {
     display: flex;
     flex-direction: row;
@@ -342,11 +340,13 @@ legend{
     margin-top: 50px;
     margin-bottom: 30px;
 }
+/* Selector para la ciudad */
 #ciudades {
     border-radius: 5px;
     margin-left: 2%;
     height: 30px;
 }
+/* Contenedor de pistas  */
 #contenedor-pistas {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -356,6 +356,7 @@ legend{
     margin: 0 auto;
     width: max-content; 
 }
+/* Estilo para cada ficha de pista  */
 .pista {
     display: flex;
     flex-direction: column;
@@ -383,12 +384,15 @@ legend{
 .pista p {
     margin: 5px 0;
 }
+/* Enlace para cargar más pistas  */
 #mas-pistas {
     text-align: center;
     cursor: pointer;
     color: #eea509;
     text-decoration: underline;
 }
+
+/* Zona de características  */
 .features {
     margin-top: 10px;
     display: grid;
@@ -406,6 +410,7 @@ legend{
     grid-area: cabecera;
     color: whitesmoke;    
 }
+/* Contenedor de item de características  */
 .feature-item {
     display: flex;
     flex-direction: row;
@@ -434,7 +439,8 @@ legend{
     height: auto;
     filter: invert(1) brightness(2);
 }
-/* Footer Styles */
+
+/* Estilo del pie de página */
 footer {
     background-color: #333;
     color: #fff;
@@ -459,7 +465,9 @@ footer ul li a {
     color: #fff;
     text-decoration: none;
 }
-@keyframes moveRigth {
+
+/* Animación de desplazamiento hacia la derecha  */
+/* @keyframes moveRigth {
     from {
         opacity: 0;
         transform: translateX(-200%);
@@ -469,9 +477,9 @@ footer ul li a {
         opacity: 1;
         transform: translateX(0);
     }
-}
-
-@keyframes moveLeft {
+} */
+/* Animación de desplazamiento hacia la izquierda */
+/* @keyframes moveLeft {
     from {
         opacity: 0;
         transform: translateX(200%);
@@ -481,8 +489,8 @@ footer ul li a {
         opacity: 1;
         transform: translateX(0);
     }
-}
-
+} */
+/* Animación de escalado para el logo  */
 @keyframes escalar {
     from {
         scale: 0;
@@ -493,7 +501,7 @@ footer ul li a {
         opacity: 1;
     }
 }
-
+/* Animación de desplazamiento hacia la derecha  */
 @keyframes desplazarDerecha {
     from {
         transform: translateX(-50vw);
@@ -507,7 +515,7 @@ footer ul li a {
         opacity: 1;
     }
 }
-
+/* Animación de desplazamiento hacia la izquierda */
 @keyframes desplazarIzquierda {
     from {
         transform: translateX(50vw);
@@ -522,6 +530,7 @@ footer ul li a {
     }
 }
 
+/* Clases para aplicar animación de desplazamiento en Javascript */
 .animacion-desplazar-derecha {
     animation: desplazarDerecha 1.5s ease-out forwards;
 }
@@ -529,7 +538,7 @@ footer ul li a {
 .animacion-desplazar-izquierda {
     animation: desplazarIzquierda 1.5s ease-out forwards;
 }
-/* Efecto de clic */
+/* Efecto de clic para los botones*/
 .boton-click {
     transform: scale(0.80);
     transition: transform 0.1s ease;

@@ -1,0 +1,77 @@
+
+/* CONFIGURACIÓN PARA DISPOSITIVOS INFERIORES A 620 PX DE ANCHO */
+
+@media (max-width: 620px) {
+    
+    /* Estilos responsive para index.html */
+
+    .intro p{
+        display: none;
+    }
+    #contenedor-noticias{
+        display: grid;
+        place-items: center;
+    }
+    .carrusel-noticias{
+        align-content: center;
+    }
+    .noticia-articulo {
+        display: none;
+    }
+    .noticia-articulo.activo {
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+        align-self: center;
+
+    }    
+    .features{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .features p{
+        display: none;
+    }
+
+
+}
+
+/* CONFIGURACIÓN PARA DISPOSITIVOS INFERIORES A 830 PX DE ANCHO */
+
+@media (max-width: 830px) {
+
+    /* Estilos responsive para index.html */
+    
+    .div-botones-acceso{
+        gap: 30px;
+    }
+    .botones-acceso {        
+        width: 160px; 
+        font-size: 16px;  
+        border-radius: 12px; 
+    }
+    #formulario-login, #formulario-registro {
+        width: 70vw;
+    }
+    .login, .registro{
+        padding: 50px 0;
+        height: 100%;
+    }
+    #contenedor-pistas{
+        display: flex;
+        flex-direction: column;
+    }
+    #selector-ciudades{
+        flex-direction: column;
+    }
+    .pista{
+        width: 80vw;
+        min-height: fit-content;
+    }
+    .pista a img {
+        width: 60vw;
+        height: 30vh;
+    }
+
+}
