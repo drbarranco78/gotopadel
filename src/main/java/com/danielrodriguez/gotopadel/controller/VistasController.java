@@ -17,20 +17,20 @@ public class VistasController {
         return "index";
     }
 
-    @GetMapping("/zonaPrivada")
+    @GetMapping("/private")
     public String mostrarZonaPrivada(HttpSession session) {
         Object usuario = session.getAttribute("usuarioAutenticado");
         //if (usuario != null) {
-            return "zonaPrivada";  // Usuario autenticado, mostrar zona privada
+            return "private";  // Usuario autenticado, mostrar zona privada
         //}
         //return "redirect:/";  // Redirigir a la página de inicio si no hay sesión
     }
 
-    @GetMapping("/administrador")
+    @GetMapping("/admin")
     public String mostrarZonaAdministrador(HttpSession session) {
         Object usuario = session.getAttribute("usuarioAutenticado");
         if (usuario != null && esAdmin(usuario)) {
-            return "administrador";  // Usuario autenticado y es admin
+            return "admin";  // Usuario autenticado y es admin
         }
         return "redirect:/";  // Redirigir a la página de inicio si no es admin o no está autenticado
     }

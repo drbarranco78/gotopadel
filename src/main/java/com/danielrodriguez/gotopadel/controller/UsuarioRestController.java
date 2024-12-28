@@ -48,7 +48,7 @@ public class UsuarioRestController {
             session.setAttribute("usuarioAutenticado" , usuario);
             if (email.equals("admin@email.com")) {
                 usuario.setRol("ADMIN");
-                return new ResponseEntity<>("Login exitoso, redirigiendo a administrador.html", HttpStatus.OK);
+                return new ResponseEntity<>("Login exitoso, redirigiendo a admin.html", HttpStatus.OK);
             }
             return new ResponseEntity<>("Login exitoso, redirigiendo a zonaPersonal.html", HttpStatus.OK);
         } else {

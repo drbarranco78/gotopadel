@@ -1,45 +1,56 @@
-//let idUsuario, organizador, tipo_partido, vacantes, nivel, fecha_partido;
-const selectCiudades = document.getElementById('ciudades');
-const contenedorPistas = document.getElementById('contenedor-pistas');
+// URL del archivo JSON que contiene las ciudades
 const urlCiudades = './json/ciudades.json';
-let ciudadSeleccionada;
-let formulario = document.getElementById('form-publicar');
-const selectPistas = document.getElementById('pista');
-let limpiarFormulario = document.getElementById('limpiar');
-//formulario.reset();
-let fechaPartido = document.getElementById('fechaPartido');
+
+// Selección de elementos del DOM
+let selectCiudades = document.getElementById('ciudades'); // Selector de ciudades
+let contenedorPistas = document.getElementById('contenedor-pistas'); // Contenedor de pistas
+let ciudadSeleccionada; // Variable para almacenar la ciudad seleccionada
+let formulario = document.getElementById('form-publicar'); // Formulario para publicar partidos
+let selectPistas = document.getElementById('pista'); // Selector de pistas
+let limpiarFormulario = document.getElementById('limpiar'); // Botón para limpiar el formulario
+let fechaPartido = document.getElementById('fechaPartido'); // Campo de fecha del partido
+
+// Establece la fecha mínima para el partido (hoy)
 fechaPartido.min = new Date().toISOString().split("T")[0];
 
-// Cargar ciudades al iniciar
-document.addEventListener('DOMContentLoaded', cargarCiudades , formulario.reset());
+// Cargar las ciudades al cargar la página
+document.addEventListener('DOMContentLoaded', cargarCiudades, formulario.reset());
 
+// Evento para limpiar el formulario y recargar las ciudades
 limpiarFormulario.addEventListener('click', function () {
     cargarCiudades();
 });
 
-//let tipoPartido = document.querySelector('input[name="modalidad"]:checked').value;
+// Selector de modalidad (Singles o Dobles) y número de vacantes
 let modalidadRadios = document.querySelectorAll('input[name="modalidad"]');
 let vacantes = document.getElementById('numVacantes');
+
+/**
+ * Función para actualizar el número máximo de vacantes según la modalidad
+ * 
+ */
 actualizarMaxVacantes();
 function actualizarMaxVacantes() {
     let tipoPartido = document.querySelector('input[name="modalidad"]:checked').value;
     if (tipoPartido === "Singles") {
         vacantes.max = 1;
         vacantes.value = 1;
-        //vacantes.value = Math.min(vacantes.value, 1); 
     } else {
         vacantes.max = 3;
         vacantes.value = 3;
-        //vacantes.value = Math.min(vacantes.value, 3); 
     }
 }
+
+// Escuchar cambios en las opciones de modalidad
 modalidadRadios.forEach(radio => {
     radio.addEventListener('change', actualizarMaxVacantes);
 });
 
-
+/**
+ * Función para cargar las ciudades desde el archivo JSON
+ * 
+ */
 function cargarCiudades() {
-
     fetch(urlCiudades)
         .then(response => {
             if (!response.ok) {
@@ -48,12 +59,13 @@ function cargarCiudades() {
             return response.json();
         })
         .then(data => {
-            const ciudadesFiltradas = data.filter(ciudad => ciudad.habitantes >= 50000);
-
+            // Filtrar ciudades con más de 50,000 habitantes
+            let ciudadesFiltradas = data.filter(ciudad => ciudad.habitantes >= 50000);
             ciudadesFiltradas.sort((a, b) => a.poblacion.localeCompare(b.poblacion));
 
+            // Agregar opciones al selector
             ciudadesFiltradas.forEach(ciudad => {
-                const opcion = document.createElement('option');
+                let opcion = document.createElement('option');
                 opcion.value = ciudad.poblacion.toLowerCase(); // Valor en minúsculas para la búsqueda
                 opcion.textContent = `${ciudad.poblacion}`; // Texto visible en el selector
                 if (ciudad.poblacion.toLowerCase() === "madrid") {
@@ -63,40 +75,42 @@ function cargarCiudades() {
             });
 
             ciudadSeleccionada = selectCiudades.value; // Actualizar la ciudad seleccionada
-            cargarPistas(ciudadSeleccionada); // Buscar pistas para la ciudad seleccionada por defecto
+            cargarPistas(ciudadSeleccionada); // Cargar pistas para la ciudad seleccionada por defecto
         })
         .catch(error => {
             console.error('Error al cargar las ciudades:', error);
         });
 }
-// Evento para cambiar la ciudad seleccionada (reutilizado)
+
+// Evento para actualizar las pistas al cambiar de ciudad
 selectCiudades.addEventListener('change', () => {
     ciudadSeleccionada = selectCiudades.value; // Actualizar la ciudad seleccionada
     selectPistas.innerHTML = ''; // Limpiar las pistas anteriores
-    cargarPistas(ciudadSeleccionada); // Cargar las pistas para la nueva ciudad seleccionada
+    cargarPistas(ciudadSeleccionada); // Cargar las pistas para la nueva ciudad
 });
 
+/**
+ * Función para cargar las pistas según la ciudad seleccionada 
+ * @param {string} ciudad - Nombre de la ciudad seleccionada
+ */
 async function cargarPistas(ciudad) {
     selectPistas.innerHTML = '';
-    //const urlBase = 'https://api.playtomic.io/v1/tenants';
-    //const parametros = `?user_id=me&playtomic_status=ACTIVE&with_properties=ALLOWS_CASH_PAYMENT&sport_id=PADEL&radius=50000&size=40&page=0&coordinate=`;
-
     try {
-        const responseCiudades = await fetch(urlCiudades);
+        let responseCiudades = await fetch(urlCiudades);
         if (!responseCiudades.ok) {
             throw new Error('Error al cargar el archivo JSON');
         }
-        const dataCiudades = await responseCiudades.json();
+        let dataCiudades = await responseCiudades.json();
 
-        const ciudadEncontrada = dataCiudades.find(item => item.poblacion.toLowerCase() === ciudad);
+        // Buscar la ciudad en el archivo JSON
+        let ciudadEncontrada = dataCiudades.find(item => item.poblacion.toLowerCase() === ciudad);
         if (!ciudadEncontrada) {
             throw new Error('Ciudad no encontrada en el archivo JSON');
         }
-        //const coordenadas = `${ciudadEncontrada.latitud},${ciudadEncontrada.longitud}`;
-        //const url = `${urlBase}${parametros}${coordenadas}`;
-        const urlBackend = `/api/pistas?latitud=${ciudadEncontrada.latitud}&longitud=${ciudadEncontrada.longitud}`;
 
-        const responsePistas = await fetch(urlBackend, {
+        // Solicitar las pistas al backend
+        let urlBackend = `/api/pistas?latitud=${ciudadEncontrada.latitud}&longitud=${ciudadEncontrada.longitud}`;
+        let responsePistas = await fetch(urlBackend, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -106,12 +120,13 @@ async function cargarPistas(ciudad) {
         if (!responsePistas.ok) {
             throw new Error('Error al hacer la solicitud a Playtomic');
         }
-        const dataPistas = await responsePistas.json();
-        // Agregar las pistas al select
+        let dataPistas = await responsePistas.json();
+
+        // Agregar las pistas al selector
         dataPistas.forEach(pista => {
-            const opcionPista = document.createElement('option');
+            let opcionPista = document.createElement('option');
             opcionPista.value = pista.tenant_name;
-            opcionPista.textContent = pista.tenant_name; // Mostrar el nombre de la pista
+            opcionPista.textContent = pista.tenant_name; // Nombre de la pista
             selectPistas.appendChild(opcionPista);
         });
 
@@ -120,10 +135,14 @@ async function cargarPistas(ciudad) {
     }
 }
 
-
+/**
+ * Manejar el envío del formulario para publicar el partido
+ * @event
+ */
 document.getElementById('form-publicar').addEventListener('submit', function (event) {
     event.preventDefault(); // Prevenir el comportamiento por defecto del formulario
 
+    // Obtener datos del usuario logueado
     fetch('/api/usuario/datosUsuario')
         .then(response => response.json())
         .then(usuario => {
@@ -131,14 +150,14 @@ document.getElementById('form-publicar').addEventListener('submit', function (ev
                 let nombreUbicacion = document.getElementById('pista').value;
                 let ciudadUbicacion = document.getElementById('ciudades').value;
 
+                // Capitalizar la primera letra de la ciudad
                 function capitalizarPrimeraLetra(cadena) {
                     return cadena.charAt(0).toUpperCase() + cadena.slice(1).toLowerCase();
                 }
-
                 let ciudadFormateada = capitalizarPrimeraLetra(ciudadUbicacion);
 
-                // Verificar o crear la ubicación antes de enviar los datos del partido
-                fetch('/api/ubicacion/check?nombre=' + encodeURIComponent(nombreUbicacion) + '&ciudad=' + encodeURIComponent(ciudadFormateada), {
+                // Verificar o crear la ubicación
+                fetch(`/api/ubicacion/check?nombre=${encodeURIComponent(nombreUbicacion)}&ciudad=${encodeURIComponent(ciudadFormateada)}`, {
                     method: 'POST'
                 })
                     .then(response => response.json())
@@ -146,9 +165,9 @@ document.getElementById('form-publicar').addEventListener('submit', function (ev
                         if (!ubicacion) {
                             mostrarMensaje("Ha habido un error al crear la ubicación. Inténtelo de nuevo", ".mensaje-error");
                             return;
-
                         }
-                        const partidoData = {
+                        // Preparar datos del partido
+                        let partidoData = {
                             usuario: usuario,
                             tipoPartido: document.querySelector('input[name="modalidad"]:checked').value,
                             vacantes: document.getElementById('numVacantes').value,
@@ -168,13 +187,12 @@ document.getElementById('form-publicar').addEventListener('submit', function (ev
                             },
                             body: JSON.stringify(partidoData)
                         })
-                            .then(res => res.json()) // Obtener el objeto del partido recién creado
+                            .then(res => res.json())
                             .then(partidoCreado => {
                                 mostrarMensaje("Partido publicado con éxito", ".mensaje-exito");
                                 console.log(partidoCreado);
 
-
-                                // Limpiar y recargar la interfaz después de unos segundos
+                                // Limpiar el formulario y recargar la interfaz
                                 setTimeout(() => {
                                     formulario.reset();
                                     cargarCiudades();
@@ -188,5 +206,4 @@ document.getElementById('form-publicar').addEventListener('submit', function (ev
             }
         })
         .catch(error => console.error('Error al obtener los datos del usuario:', error));
-
 });

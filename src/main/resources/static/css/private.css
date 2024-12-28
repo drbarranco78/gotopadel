@@ -1,5 +1,6 @@
 @import 'variables.css';
 
+/* Estilo de la cabecera  */
 header {
     background-color: #ccc;
     display: flex;
@@ -9,6 +10,7 @@ header {
     padding: 20px 40px;
 }
 
+/* Contenedores del logo y el usuario en la cabecera  */
 .logotipo,
 .usuario {
     display: flex;
@@ -16,6 +18,7 @@ header {
     margin: 0px 30px;
 }
 
+/* Texto con el nombre de la página  */
 .logotipo h3 {
     align-content: center;
     margin-left: 30px;
@@ -23,35 +26,42 @@ header {
     font-style: italic;
 }
 
+/* Iconos de logo y usuario  */
 .icono-cabecera {
     width: 50px;
     height: 50px;
     border-radius: 50%;
 }
 
+/* Mensaje de bienvenida al usuario  */
 #mensaje-bienvenida {
     align-content: center;
     margin-right: 20px;
-    font-weight: bold;    
+    font-weight: bold;
 }
-.opciones-usuario{
-    display: none;    
+
+/* Menú de opciones que aparece al pulsar el icono del usuario */
+.opciones-usuario {
+    display: none;
     flex-direction: column;
     position: absolute;
-    top:80px;
+    top: 80px;
     right: 20px;
     text-align: center;
     width: 150px;
     height: 200px;
-    background-color: whitesmoke;    
+    background-color: whitesmoke;
     align-items: center;
     justify-content: center;
     gap: 15px;
     border: 2px solid black;
     border-radius: 10px;
-    z-index: 2;    
+    z-index: 3;
 }
-.ver-perfil, .cerrar-sesion{
+
+/* Botones de opciones del usuario  */
+.ver-perfil,
+.cerrar-sesion {
     position: relative;
     margin: 10px;
     border-radius: 10px;
@@ -60,17 +70,19 @@ header {
     background-color: var(--color-azul);
     border-radius: 10px;
     color: whitesmoke;
-    align-content: center;    
+    align-content: center;
     border: 2px solid black;
 }
 
-.ficha-usuario{
-    display: flex;
+/* Ficha con los datos del usuario  */
+.ficha-usuario {
+    display: none;
     flex-direction: column;
     align-items: center;
-    justify-content:center;
-    width: 40%;
-    height: 80%;
+    overflow-y: auto !important;
+    justify-content: center;
+    width: 40% !important;
+    height: 80% !important;
     min-height: fit-content;
     gap: 20px;
     border: 2px solid whitesmoke;
@@ -80,14 +92,18 @@ header {
     color: var(--color-azul);
     font-weight: bold;
 }
-.ficha-usuario span{
+
+.ficha-usuario span {
     color: darkgreen;
 }
-.nombre-usuario-ficha{
+
+.nombre-usuario-ficha {
     font-size: 26px;
     font-weight: bold;
 }
-.botones-ficha-usuario button{
+
+/* Botones en la ficha del usuario  */
+.botones-ficha-usuario button {
     font-size: 20px;
     margin: 20px;
     width: 160px;
@@ -97,14 +113,15 @@ header {
     color: whitesmoke;
 }
 
+/* Menú de navegación  */
 nav {
+    position: relative;
     border: 2px solid white;
     height: 5vh;
     align-content: center;
     background-color: #333;
-    /* margin-top: 2vh; */
+    z-index: 2;
 }
-
 
 nav ul {
     display: flex;
@@ -127,6 +144,7 @@ nav ul li a.activo {
     transform: scale(1.2);
 }
 
+/* Contenedor general de contenido  */
 #contenedor-principal {
     height: 80vh;
     background-color: var(--color-terciario);
@@ -135,98 +153,113 @@ nav ul li a.activo {
     display: flex;
 }
 
+/* Estilo general para el contenido  */
 .contenido {
     width: 100%;
     height: 100%;
     border-radius: 10px;
-    /* background-color: #A9A9A9; */
+    overflow-y: scroll;
     text-align: center;
     align-items: center;
     justify-content: center;
-    display: flex;    
-    /* z-index: 1; */
+    display: flex;
 }
-.datos-usuario{
-    display: none;
-}
-/* .datos-usuario{
-    width: 70%;
-    height: 90%;
-    border-radius: 10px;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    background-color: rebeccapurple;
-    display: none;
-} */
 
+/* Zona de publicación de partidos  */
 #publicar-partidos {
-    position: relative; /* Necesario para que el pseudo-elemento se posicione dentro del contenedor */
+    position: relative;
 }
 
+/* Pseudoclase para poner un fondo con opacidad ajustada */
 #publicar-partidos::before {
-    content: ""; /* Necesario para que el pseudo-elemento funcione */
-    position: absolute;
+    content: "";
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('../img/registro.png') no-repeat center center/cover;
-    opacity: 0.2; /* Ajusta la opacidad de la imagen */
-    z-index: 0; /* Coloca la imagen detrás del contenido */
+    background: url('../img/registro.png') repeat-y center center/cover;
+    opacity: 0.2;
+    z-index: 0;
 }
 
+/* Estilos para el contenedor principal del formulario */
 fieldset {
     background-color: var(--color-secundario);
     border-radius: 10px;
-    width: 70%;
-    height: 90%;
+    width: 50%;
+    height: auto;
+    max-width: 90vw;
+    margin: auto;
+    padding: auto;
     color: whitesmoke;
     opacity: 0.95;
 }
 
-legend{
+/* Estilo para el título del formulario */
+legend {
     font-size: 20px;
-    font-weight: bold;    
-    color:whitesmoke;
+    font-weight: bold;
+    color: whitesmoke;
     margin-bottom: 20px;
     background-color: var(--color-azul);
     border-radius: 15px;
     padding: 0 20px;
+    margin: 0 auto 20px auto;
     border: 2px solid whitesmoke;
 }
 
-
+/* Diseño del formulario de publicación */
 #form-publicar {
     display: grid;
-    grid-template-areas: "modo modo" "nivel vacantes" "nivel ubicacion" "fecha ubicacion" "hora ubicacion" "comentarios comentarios" "botones botones";
+    grid-template-areas:
+        "modo modo"
+        "nivel vacantes"
+        "nivel ubicacion"
+        "fecha ubicacion"
+        "hora ubicacion"
+        "comentarios comentarios"
+        "botones botones";
 }
 
+/* Áreas de la cuadrícula */
 .radio-modalidad {
     grid-area: modo;
 }
+
 .div-vacantes {
     grid-area: vacantes;
 }
+
 .div-nivel {
     grid-area: nivel;
 }
+
 .div-ubicacion {
     grid-area: ubicacion;
 }
+
 .div-fecha {
     grid-area: fecha;
 }
+
 .div-hora {
     grid-area: hora;
 }
+
 .div-comentarios {
     grid-area: comentarios;
 }
+
 .botones-publicar {
+    display: flex;
+    justify-content: center;
     grid-area: botones;
-    margin-top: 20px;
+    gap: 20px;
+    margin: 40px;
 }
+
+/* Estilo general para las divisiones del formulario */
 .div-vacantes,
 .div-nivel,
 .div-ubicacion,
@@ -237,27 +270,23 @@ legend{
     flex-direction: column;
     align-items: center;
 }
+
+/* Estilos específicos para la modalidad */
 .radio-modalidad {
     display: grid;
-    grid-template-areas: "titulo titulo" "rd1 rd2";
+    grid-template-areas:
+        "titulo titulo"
+        "rd1 rd2";
     justify-content: center;
-    column-gap: 50px;
-    row-gap: 10px;
+    gap: 10px 50px;    
     height: 50px;
-    margin-bottom: 30px;
-    margin-top: 20px;
+    margin: 20px 0 30px;    
 }
 #lbModalidad {
     grid-area: titulo;
 }
-.rd1 {
-    grid-area: rd1;
-    width: fit-content;
-}
-.rd2 {
-    grid-area: rd2;
-    width: fit-content;
-}
+
+/* Estilo general para inputs y selects del formulario */
 #form-publicar input:not([type="radio"]),
 #form-publicar select {
     width: 20em;
@@ -267,6 +296,7 @@ legend{
     border-radius: 10px;
     margin-bottom: 20px;
 }
+/* Estilo para los botones del formulario */
 #form-publicar input[type="submit"],
 #form-publicar input[type="reset"] {
     width: 15%;
@@ -280,62 +310,64 @@ legend{
     color: whitesmoke;
     margin: 0 50px;
 }
+
+/* Estilo para el input de texto */
 #form-publicar input[type="text"] {
-    width: 80%;
+    width: 70%;
     height: 50px;
     margin-bottom: 20px;
 }
+
+/* Estilo general para etiquetas */
 #form-publicar label {
     font-size: 18px;
     font-weight: bold;
 }
+
+/* Contenedor para la zona de partidos publicados  */
 .ver-partidos {
-    position: relative; 
+    position: relative;
     width: 100%;
-    min-height: 600px;    
+    /* min-height: 80vh;     */
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 0.2fr auto;
     justify-items: center;
-    align-items: center;    
+    align-items: center;
     overflow-y: auto;
     padding: 20px;
 }
+/* Pseudoclase para poner un fondo con opacidad ajustada */
 .ver-partidos::before {
     content: "";
-    position: absolute;
-    
+    position: fixed;    
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('../img/pista2.webp') no-repeat center center/cover;
-    filter:opacity(0.3); 
-    z-index: 0;  
-}  
-
-.ver-partidos h2, .mis-partidos h2{
-    grid-column:  1 / -1;    
+    background: url('../img/pista2.webp') repeat-y center center/cover;    
+    opacity: 0.5;
+    z-index: 0;   
+    pointer-events: none;    
+}
+/* Títulos para las secciones de Partidos publicados y partidos del usuario  */
+.ver-partidos h2,
+.mis-partidos h2 {
+    grid-column: 1 / -1;
     background-color: var(--color-azul);
     color: whitesmoke;
     border-radius: 15px;
     padding: 0 20px;
     border: 2px solid whitesmoke;
     z-index: 1;
+    margin-bottom: 20px;
 }
-/* .mis-partidos h2{
-    grid-column: span 3; 
-} */
-
-
-
-#ficha-partido {
-    /* position: relative; */
-    z-index: 1; 
+/* Ficha del partido en la sección de "Ver partidos" */
+#ficha-partido {    
+    z-index: 1;
     width: 80%;
     filter: none;
-    height: auto;
-    /* min-width: fit-content; */
+    height: auto;    
     padding: 10px;
     background-color: var(--color-fondo-ficha);
     border: 2px solid whitesmoke;
@@ -353,14 +385,16 @@ legend{
     margin: 10px;
     display: none;
 }
+/* Texto dentro de la ficha de los partidos publicados  */
 #ficha-partido p {
     display: flex;
     align-items: center;
     gap: 10px;
     justify-content: start;
     padding: 0px 0px 0px 50px;
-    overflow:hidden;    
+    overflow: hidden;
 }
+/* Zona de la fecha dentro de la ficha */
 .partido-fecha {
     grid-area: fecha;
     background-color: var(--color-azul);
@@ -370,6 +404,7 @@ legend{
     justify-content: center !important;
     padding: 0px !important;
 }
+/* Posicionamiento en el grid de las diferentes áreas de la ficha */
 .partido-ciudad {
     grid-area: ciudad;
 }
@@ -384,10 +419,16 @@ legend{
     justify-self: center;
     padding: 0% !important;
 }
+/* Estilo de las estrellas que representan el nivel del partido  */
 .partido-estrellas {
     grid-area: estrellas;
     justify-self: center;
-    padding: 0% !important;    
+    padding: 0% !important;
+}
+.fas.fa-star {
+    color: gold;
+    text-shadow: 1px 1px 2px black;
+    margin-top: 0px;
 }
 .partido-tipo {
     grid-area: tipo;
@@ -398,27 +439,30 @@ legend{
 .partido-vacantes {
     grid-area: vacantes;
 }
+/* Botón para ver detalles del partido */
 #boton-detalles {
     position: sticky;
-    cursor: pointer;
     grid-area: boton;
     border-radius: 10px;
     font-weight: bold;
     width: 60%;
     margin: 0 auto;
 }
+/* Contenedor para la ficha detallada de los partidos */
 .ficha-detalles {
-    grid-column: 1 / -1;
-    grid-row: 1 / -1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     display: none;
-    flex-direction: column;    
+    flex-direction: column;
     padding: 20px 50px;    
-    align-self: center;   
-    background-color: var(--color-fondo-ficha);    
-    border-radius: 10px;    
+    background-color: var(--color-fondo-ficha);
+    border-radius: 10px;
     border: 3px solid #333;
     z-index: 1;
 }
+/* Elementos individuales dentro de la ficha detallada */
 .detalle-item {
     display: flex;
     align-items: center;
@@ -428,22 +472,16 @@ legend{
 .detalle-item span {
     font-weight: bold;
 }
-#detalle-mi-partido-id{
-    margin-bottom: 40px;
-}
 .comentarios-partido {
     max-width: 200px;
-    /* Limitar el ancho */
-    /* word-wrap: break-word; 
-    white-space: normal;  */
-
 }
-.detalle-botones{
+/* Contenedor de los botones de la ficha detallada  */
+.detalle-botones {
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
-
+/* Botones de la ficha detallada  */
 .detalle-botones button {
     width: 10em;
     height: auto;
@@ -455,15 +493,11 @@ legend{
     background-color: var(--color-azul);
     color: whitesmoke;
     font-weight: bold;
+}
 
-}
-.fas.fa-star {
-    color: gold;    
-    text-shadow: 1px 1px 2px black;
-    margin-top: 0px;
-}
+/* Contenedor para la zona de partidos del usuario  */
 .mis-partidos {
-    position: relative;    
+    position: relative;
     display: grid;
     align-items: self-start;
     grid-template-columns: repeat(3, 1fr);
@@ -471,19 +505,21 @@ legend{
     gap: 20px;
     padding: 20px;
     justify-items: center;
-    overflow-y: scroll;   
+    overflow-y: scroll;
 }
+/* Pseudoclase para poner un fondo con opacidad ajustada */
 .mis-partidos::before {
     content: '';
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('../img/vestuario.webp') no-repeat center center/cover;
+    background: url('../img/vestuario.webp') repeat-y center center/cover;
     opacity: 0.5;
     z-index: 0;
 }
+/* Estilo de la ficha de partidos del usuario  */
 #ficha-mis-partidos {
     width: 100%;
     border: 1px solid #ccc;
@@ -492,17 +528,20 @@ legend{
     background-color: var(--color-secundario);
     color: whitesmoke;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    font-size: 18px;    
+    font-size: 18px;
     transition: transform 0.2s ease;
-    position: relative;
-    filter: none;
+    position: relative;    
     opacity: 0.95;
 }
-
+/* Efecto al pasar el mouse sobre la ficha  */
 #ficha-mis-partidos:hover {
     transform: scale(1.02);
 }
-
+/* Id del partido dentro de la ficha  */
+#detalle-mi-partido-id {
+    margin-bottom: 40px;
+}
+/* Icono de "Organizador" o "Inscrito"  */
 .div-icono-ficha {
     position: absolute;
     top: 10px;
@@ -512,7 +551,8 @@ legend{
     align-items: center;
     text-align: center;
 }
-.lista-vacia{
+/* Imagen que se muestra cuando no hay partidos que mostrar  */
+.lista-vacia {
     height: auto;
     display: flex;
     flex-direction: column;
@@ -521,13 +561,14 @@ legend{
     font-size: 26px;
     font-weight: bold;
 }
+
 /* Estilo del pie de página */
 footer {
     border: 2px solid white;
     background-color: #333;
     color: #fff;
     text-align: center;
-    padding: 10px 0;   
+    padding: 10px 0;
 }
 
 footer ul {
@@ -544,21 +585,24 @@ footer ul li a {
     color: #fff;
     text-decoration: none;
 }
+
 /* Efecto de clic de los botones */
 .boton-click {
     transform: scale(0.80);
     transition: transform 0.1s ease;
 }
-button{
-    cursor: pointer;
-}
-.confirmar-accion, .confirmar-archivado{
+/* Estilo para los cuadros de diálogo */
+.confirmar-accion,
+.confirmar-archivado {
     position: fixed;
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);    
     display: none;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 10px;    
+    gap: 10px;
     border-radius: 10px;
     text-align: center;
     font-size: 20px;
@@ -569,10 +613,11 @@ button{
     padding: 20px;
     z-index: 2;
 }
-
-.aceptar-accion, .cancelar-accion, .opciones-archivado{
+.aceptar-accion,
+.cancelar-accion,
+.opciones-archivado {
     width: 70%;
-    height: auto;    
+    height: auto;
     margin: 20px;
     font-size: 18px;
     font-weight: bold;
@@ -580,18 +625,21 @@ button{
     padding: 10px;
     color: whitesmoke;
 }
-.aceptar-accion, .archivar-jugado{
+.aceptar-accion,
+.archivar-jugado {
     background-color: var(--color-verde);
-    
 }
-.cancelar-accion , .cancelar-archivado{
+.cancelar-accion,
+.cancelar-archivado {
     background-color: var(--color-rojo);
 }
-.archivar-cancelado{
+.archivar-cancelado {
     background-color: orange;
     color: whitesmoke;
 }
-.mensaje-exito, .mensaje-error {
+/* Estilo de los cuadros que muestran mensajes al usuario  */
+.mensaje-exito,
+.mensaje-error {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -605,11 +653,9 @@ button{
     display: none;
     z-index: 3;
 }
-
 .mensaje-exito h3 {
-    color: var(--color-verde);    
+    color: var(--color-verde);
 }
-
 .mensaje-error h3 {
     color: var(--color-rojo);
 }

@@ -1,0 +1,97 @@
+@import 'variables.css';
+
+/* Color de fondo geeral  */
+body{
+    background-color: #ccc;    
+}
+/* Estilo de la cabecera  */
+header {    
+    background-color: whitesmoke !important;
+    border: 2px solid black;
+}
+/* Altura del contenedor del botón para cerrar sesión */
+.opciones-usuario{      
+    height: 100px !important;    
+}
+/* Botón para cerrar la sesión del administrador */
+.cerrar-sesion{
+    position: relative;
+    cursor: pointer;
+    margin: 10px;
+    border-radius: 10px;
+    width: 120px;
+    height: 50px;
+    background-color: var(--color-azul);
+    border-radius: 10px;
+    color: whitesmoke;
+    align-content: center;    
+    border: 2px solid black;
+}
+/* Contenedor para los botones que dan acceso a las secciones */
+.botones-admin{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    cursor: pointer;
+    margin-top: 50px;
+}
+/* Botones de los listados a los que tiene acceso el administrador */
+.botones-admin button{
+    text-align: center;
+    background-color: var(--color-secundario);
+    color: whitesmoke;
+    padding: 10px 20px;
+    width: 200px;
+    height: auto;
+    border: 2px solid whitesmoke;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 15px;
+}
+/* Contenedor de los listados de partidos y usuarios */
+.listados-admin {    
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto 1fr; /* Primera fila para el título, segunda para los elementos */
+    gap: 20px;
+    align-items: center;
+    justify-items: center;
+    margin-top: 50px;
+    text-align: center;
+    background-color: var(--color-azul);
+    padding-bottom: 50px;
+}
+/* Título de las secciones */
+.listados-admin-titulo {
+    grid-column: span 3;
+    color: whitesmoke;  
+}
+/* Fichas individuales de partidos y usuarios */
+.usuario-item, .partido-item, .archivo-item{
+    background-color: var(--color-verde);
+    color: whitesmoke;
+    font-weight: bold;
+    font-size: 18px;
+    border: 2px solid black;
+    border-radius: 20px;
+    padding: 20px;
+    width: 70%;
+}
+/* Botones de "eliminar" en las fichas */
+.usuario-item button, .partido-item button, .archivo-item button{    
+    font-size: 16px;
+    border-radius: 15px;
+    margin-top: 20px;
+    font-weight: bold;
+    padding: 10px;
+}
+
+/* Estilo del contenedor proncipal de la página "error.html" */
+#pagina-error{
+    display: flex;
+    flex-direction: column;    
+    align-items: center;    
+    text-align: center;
+    margin-top: 40vh;
+    gap: 40px;
+}

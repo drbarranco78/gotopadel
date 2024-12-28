@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/zonaPrivada.css">
+    <link rel="stylesheet" href="/css/private.css">
+    <link rel="stylesheet" href="/css/responsive.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="HTTP://code.jquery.com/jquery-latest.js"></script>
     <title>GoToPadel Area Personal</title>
@@ -21,12 +22,13 @@
         <div class="usuario">
             <div id="mensaje-bienvenida"></div>
             <img src="img/ico_usuario_activo.png" id="icono-usuario" class="icono-cabecera" alt="Icono de usuario">
-            <div class="opciones-usuario">
-                <div id="ver-perfil" class="ver-perfil">Ver Perfil</div>
-                <div id="cerrar-sesion" class="cerrar-sesion">Cerrar Sesión</div>
-            </div>
+
         </div>
     </header>
+    <div class="opciones-usuario">
+        <div id="ver-perfil" class="ver-perfil">Ver Perfil</div>
+        <div id="cerrar-sesion" class="cerrar-sesion">Cerrar Sesión</div>
+    </div>
 
     <!-- MENÚ DE NAVEGACIÓN -->
     <nav>
@@ -34,7 +36,7 @@
             <li><a href="" id="enlace-inicio">Inicio</a></li>
             <li><a href="" id="enlace-ver">Ver Partidos</a></li>
             <li><a href="" id="enlace-publicar">Publicar Partidos</a></li>
-            <li><a href="" id="enlace-mispartidos">Mis Partidos</a></li>           
+            <li><a href="" id="enlace-mispartidos">Mis Partidos</a></li>
         </ul>
     </nav>
 
@@ -63,27 +65,27 @@
         </div>
 
         <!-- Ficha de datos del usuario  -->
-        <div class="contenido datos-usuario">
-            <div class="ficha-usuario">
-                <img class="icono-usuario-ficha icono-cabecera" src="img/ico_usuario.png" alt="Icono del usuario">
-                <p class="nombre-usuario-ficha">Carlos Martinez</p>
-                <p class="fecha-usuario-ficha">Miembro desde: <span></span></p>
-                <p class="id-usuario-ficha">Nº de Usuario: <span></span></p>
-                <p class="nacimiento-usuario-ficha">Fecha de Nacimiento: <span></span></p>
-                <p class="genero-usuario-ficha">Género: <span></span></p>
-                <p class="nivel-usuario-ficha">Nivel de Juego: <span></span></p>
-                <p class="publicados-usuario-ficha">Partidos Publicados: <span></span></p>
-                <p class="inscrito-usuario-ficha">Partidos Inscrito: <span></span></p>
-                <div class="botones-ficha-usuario">
-                    <button id="ver-partidos-usuario-ficha">Ver Partidos</button>
-                    <button id="eliminar-cuenta-usuario">Eliminar Cuenta</button>
-                </div>
+
+        <div class="contenido ficha-usuario">
+            <img class="icono-usuario-ficha icono-cabecera" src="img/ico_usuario.png" alt="Icono del usuario">
+            <p class="nombre-usuario-ficha">Carlos Martinez</p>
+            <p class="fecha-usuario-ficha">Miembro desde: <span></span></p>
+            <p class="id-usuario-ficha">Nº de Usuario: <span></span></p>
+            <p class="nacimiento-usuario-ficha">Fecha de Nacimiento: <span></span></p>
+            <p class="genero-usuario-ficha">Género: <span></span></p>
+            <p class="nivel-usuario-ficha">Nivel de Juego: <span></span></p>
+            <p class="publicados-usuario-ficha">Partidos Publicados: <span></span></p>
+            <p class="inscrito-usuario-ficha">Partidos Inscrito: <span></span></p>
+            <div class="botones-ficha-usuario">
+                <button id="ver-partidos-usuario-ficha">Ver Partidos</button>
+                <button id="eliminar-cuenta-usuario">Eliminar Cuenta</button>
             </div>
         </div>
 
+
         <!-- Area con fichas de partidos publicados  -->
         <div class="contenido ver-partidos" id="ver-partidos">
-            
+
             <div id="ficha-detalles" class="ficha-detalles">
                 <!-- Número de Partido -->
                 <div class="detalle-item">
@@ -164,7 +166,7 @@
                 <div class="detalle-item">
                     <i class="fa-solid fa-comment"></i>
                     <p class="detalles-comentarios">Comentarios:</p>
-                    <span class="comentarios-partido"></span>                  
+                    <span class="comentarios-partido"></span>
                 </div>
 
                 <!-- Botones -->
@@ -173,12 +175,12 @@
                     <button class="bt-cerrar-ficha">Cerrar</button>
                     <!-- Botón dinámico de inscripción -->
                     <button id="bt-inscribir">Inscribirse</button>
-                </div>              
+                </div>
             </div>
 
-            
-            <!-- Ficha detallada de un partido  -->
-            <div id="ficha-partido" class="partido-detalles">                
+
+            <!-- Ficha general de los partidos  -->
+            <div id="ficha-partido">
                 <p class="partido-fecha"></p>
                 <p class="partido-ciudad"></p>
                 <p class="partido-nivel"></p>
@@ -241,7 +243,7 @@
                     </div>
                     <div class="div-hora">
                         <label for="horaPartido">Hora</label>
-                        <input type="time" name="horaPartido" id="horaPartido" required min="08:00" max="22:00"/>
+                        <input type="time" name="horaPartido" id="horaPartido" required min="08:00" max="22:00" />
                     </div>
                     <div class="div-comentarios">
                         <label for="comentarios">Comentarios</label>
@@ -285,99 +287,6 @@
                     <button class="bt-ver-detalles">Ver detalles</button>
                 </div>
             </div>
-
-            <!-- Ficha con detalles de cada partido donde el usuario participa  -->
-            <div class="ficha-detalles" id="ficha-detalles-mis">
-                <!-- Número de Partido -->
-                <div class="detalle-item">
-                    <i class="fa-solid fa-hashtag"></i>
-                    <p class="detalles-partido">Partido N°:</p>
-                    <span class="numero-partido"></span>
-                </div>
-
-                <!-- Organizador -->
-                <div class="detalle-item">
-                    <i class="fa-solid fa-user"></i>
-                    <p class="detalles-organizador">Organizador:</p>
-                    <span class="organizador-partido"></span>
-                </div>
-
-                <!-- Fecha de Publicación -->
-                <div class="detalle-item">
-                    <i class="fa-solid fa-pencil-alt"></i>
-                    <p class="detalles-publicacion">Fecha de publicación:</p>
-                    <span class="fecha-publicacion"></span>
-                </div>
-
-                <!-- Fecha -->
-                <div class="detalle-item">
-                    <i class="fa-solid fa-calendar-days"></i>
-                    <p class="detalles-fecha">Fecha del partido:</p>
-                    <span class="fecha-partido"></span>
-                </div>
-
-                <!-- Hora -->
-                <div class="detalle-item">
-                    <i class="fa-solid fa-clock"></i>
-                    <p class="detalles-hora">Hora de inicio:</p>
-                    <span class="hora-partido"></span>
-                </div>
-
-                <!-- Lugar -->
-                <div class="detalle-item">
-                    <i class="fa-solid fa-location-dot"></i>
-                    <p class="detalles-lugar">Lugar:</p>
-                    <span class="lugar-partido"></span>
-                </div>
-
-                <!-- Ciudad -->
-                <div class="detalle-item">
-                    <i class="fa-solid fa-city"></i>
-                    <p class="detalles-ciudad">Ciudad:</p>
-                    <span class="ciudad-partido"></span>
-                </div>
-
-                <!-- Tipo de Partido -->
-                <div class="detalle-item">
-                    <i class="fa-solid fa-gamepad"></i>
-                    <p class="detalles-tipo">Tipo de partido:</p>
-                    <span class="tipo-partido"></span> 
-                </div>
-
-                <!-- Jugadores inscritos -->
-                <div class="detalle-item">
-                    <i class="fa-solid fa-users"></i>
-                    <p class="detalles-jugadores">Jugadores inscritos:</p>
-                    <span class="jugadores-inscritos"></span>
-                </div>
-
-                <!-- Vacantes -->
-                <div class="detalle-item">
-                    <i class="fa-solid fa-user-plus"></i>
-                    <p class="detalles-vacantes">Vacantes:</p>
-                    <span class="vacantes-partido"></span>
-                </div>
-                <!-- Nivel de Juego -->
-                <div class="detalle-item">
-                    <i class="fa-solid fa-chart-line"></i>
-                    <p class="detalles-nivel">Nivel de juego:</p>
-                    <span class="nivel-partido"></span>
-                </div>
-                <!-- Comentarios -->
-                <div class="detalle-item">
-                    <i class="fa-solid fa-comment"></i>
-                    <p class="detalles-comentarios">Comentarios:</p>
-                    <span class="comentarios-partido"></span>                    
-                </div>
-
-                <!-- Botones -->
-                <div class="detalle-botones">
-                    <!-- Botón para cerrar la ficha -->
-                    <button class="bt-cerrar-ficha">Cerrar</button>
-                    <!-- Botón dinámico de inscripción -->
-                    <button id="bt-inscribir-mis">Inscribirse</button>
-                </div>
-            </div>            
         </div>
     </section>
 
@@ -392,7 +301,7 @@
     </footer>
 
     <script src="/js/variables.js"></script>
-    <script src="/js/zonaPrivada.js"></script>
+    <script src="/js/private.js"></script>
     <script src="/js/publicar.js"></script>
     <script src="js/utilidades.js"></script>
     <script src="/js/mis-partidos.js"></script>

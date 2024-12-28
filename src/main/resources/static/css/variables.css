@@ -14,7 +14,7 @@
     --color-oscuro: #333;
     --color-secundario: #005573;
     --color-naranja: #eea509;
-    --color-formularios: #10537A;
+    /* --color-formularios: #10537A; */
     --color-terciario: #8ba4d1;
   
 }
@@ -52,4 +52,14 @@ body {
 html{
     width: 100%;
     overflow-x: hidden;
+}
+button, a, input[type="submit"], input[type="reset"]{
+    cursor: pointer;
+}
+header,
+footer {
+    position: relative;
+    
+    z-index: 1;
+    
 }

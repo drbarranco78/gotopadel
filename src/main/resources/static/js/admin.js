@@ -2,10 +2,14 @@
 $(document).ready(function () {
     $('#admin-ver-partidos').click();
 });
-// window.addEventListener('unload', function () {
-//     navigator.sendBeacon('/api/usuario/logout'); // Usa sendBeacon para asegurar que la solicitud se envía
-// });
+// Asegurar que el administrador cierra sesión al salir de la página 
+window.onbeforeunload = function (event) {
+    navigator.sendBeacon('/api/usuario/logout');        
+    event.preventDefault();
+    event.returnValue = '';
+};
 
+// Evento de click en el botón "Ver partidos"
 $('#admin-ver-partidos').click(function () {
     $.ajax({
         url: '/api/partido',  // URL del endpoint del backend
@@ -13,10 +17,13 @@ $('#admin-ver-partidos').click(function () {
         success: function (partidos) {
             // Limpiar el contenedor antes de cargar nuevos partidos
             $('.listados-admin').empty();
+            // Si no hay partidos se muestra la imagen de lista vacía 
             if (partidos.length === 0) {
                 mostrarListaVacia($('.listados-admin'), true);
             } else {
-
+                if ($('.listados-admin').hasClass("lista-vacia")) {
+                    $('.listados-admin').removeClass("lista-vacia");
+                }
                 let partidoHTML = `<h2 class="listados-admin-titulo">Partidos Disponibles</h2>`;
                 // Recorrer la lista de partidos y crear elementos HTML para mostrarlos
                 partidos.forEach(function (partido) {
@@ -38,7 +45,6 @@ $('#admin-ver-partidos').click(function () {
                     </div>
                 `;                   
                 });
-
                 // Agregar el partido al contenedor de la lista
                 $('.listados-admin').append(partidoHTML);
             }
@@ -49,7 +55,9 @@ $('#admin-ver-partidos').click(function () {
     });
 });
 $(document).on('click', '.eliminar-partido', function () {
-    let idPartido = $(this).data('id'); // Obtener el ID del partido del atributo data-id
+
+    // Obtener el ID del partido del atributo data-id
+    let idPartido = $(this).data('id');
 
     // Llama a la función en Utilidades.js para confirmar la eliminación
     mostrarDialogo("¿Estás seguro de eliminar este partido?")
@@ -60,12 +68,10 @@ $(document).on('click', '.eliminar-partido', function () {
                 type: 'DELETE',
                 success: function () {
                     // Eliminar el elemento del DOM
-                    $('#partido-' + idPartido).remove();
-                    //alert("El partido con id " + idPartido + " ha sido eliminado");
+                    $('#partido-' + idPartido).remove();                    
                     mostrarMensaje("Partido eliminado correctamente", ".mensaje-exito");
                 },
-                error: function (error) {
-                    console.error("Error al eliminar el partido:", error);
+                error: function () {                    
                     mostrarMensaje("Error al eliminar el partido", ".mensaje-error");
                 }
             });
@@ -74,6 +80,8 @@ $(document).on('click', '.eliminar-partido', function () {
             console.log("Eliminación cancelada por el usuario");
         });
 });
+
+// Evento de click en el botón "Ver usuarios"
 $('#admin-ver-usuarios').click(function () {
     $.ajax({
         url: '/api/usuario/listaUsuarios', // Endpoint para obtener usuarios
@@ -85,6 +93,9 @@ $('#admin-ver-usuarios').click(function () {
             if (usuarios.length === 0) {
                 mostrarListaVacia($('.listados-admin'), true);
             } else {
+                if ($('.listados-admin').hasClass("lista-vacia")) {
+                    $('.listados-admin').removeClass("lista-vacia");
+                }
                 // Generar el título y el contenido de los usuarios
                 let usuarioHTML = `<h2 class="listados-admin-titulo">Usuarios Registrados</h2>`;
                 for (let index = 1; index < usuarios.length; index++) { // Comienza en 1 para omitir al administrador
@@ -113,8 +124,9 @@ $('#admin-ver-usuarios').click(function () {
     });
 });
 
-
+// Acción de click en el botón de eliminar usuario 
 $(document).on('click', '.eliminar-usuario', function () {
+    // Obtiene el ID del usuario de la ficha 
     let idUsuario = $(this).data('id');
 
     mostrarDialogo("¿Estás seguro de eliminar este usuario?")
@@ -128,8 +140,7 @@ $(document).on('click', '.eliminar-usuario', function () {
                     alert("El usuario " + idUsuario + " ha sido eliminado");
                     mostrarMensaje("Usuario eliminado correctamente", ".mensaje-exito");
                 },
-                error: function (error) {
-                    console.error("Error al eliminar el usuario:", error);
+                error: function () {                    
                     mostrarMensaje("Error al eliminar el usuario", ".mensaje-error");
                 }
             });
@@ -139,6 +150,7 @@ $(document).on('click', '.eliminar-usuario', function () {
         });
 });
 
+// Evento de click en el botón "Ver archivo" 
 $('#admin-ver-archivo').click(function () {
     $.ajax({
         url: '/api/archivo/obtenerPartidosArchivados',
@@ -148,7 +160,10 @@ $('#admin-ver-archivo').click(function () {
             if (archivados.length === 0) {
                 mostrarListaVacia($('.listados-admin'), true);
             } else {
-                // Agregar título solo una vez
+                if ($('.listados-admin').hasClass("lista-vacia")) {
+                    $('.listados-admin').removeClass("lista-vacia");
+                }
+                // Agregar título y elementos de la ficha
                 let archivadoHTML = `<h2 class="listados-admin-titulo">Partidos Archivados</h2>`;
                 archivados.forEach(function (archivado) {
                     archivadoHTML += `
@@ -168,19 +183,17 @@ $('#admin-ver-archivo').click(function () {
                         </div>
                     `;
                 });
-                // Añadir todo el HTML generado de una vez
+                // Añadir el HTML generado al contenedor
                 $('.listados-admin').html(archivadoHTML);
             }
         },
-
-
-
         error: function (error) {
             console.error("Error al cargar los partidos archivados:", error);
         }
     });
 });
 
+// Click en el botón eliminar de la ficha del partido archivado 
 $('.listados-admin').on('click', '.eliminar-archivado', function () {
     const idPartido = $(this).data('id');
 
@@ -193,7 +206,7 @@ $('.listados-admin').on('click', '.eliminar-archivado', function () {
                     $(`#archivado-${idPartido}`).remove(); // Eliminar del DOM
                     mostrarMensaje("Partido archivado eliminado con éxito", ".mensaje-exito");                    
                 },
-                error: function (error) {
+                error: function () {
                     mostrarMensaje("Hubo un error al eliminar el partido archivado", ".mensaje-exito");                   
                 }
             });

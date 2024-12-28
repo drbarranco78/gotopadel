@@ -108,7 +108,7 @@ header nav ul li a {
     border: 2px solid whitesmoke;
     font-size: 20px;
     font-weight: bold;
-    border-radius: 15px;
+    border-radius: 15px;   
 }
 
 /* Estilos generales de los formularios de login y registro  */
@@ -119,7 +119,7 @@ legend{
     font-size: 1.2rem;
     font-weight: bold;    
     color:whitesmoke;
-    margin-bottom: 20px;
+    margin: 0 auto 20px auto;
     background-color: var(--color-azul);
     border-radius: 15px;
     padding: 0 20px;
@@ -247,7 +247,7 @@ legend{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: black;
+    background-color: var(--color-oscuro);
     padding: 15px;
     border-radius: 10px;
     width: 80%;
@@ -286,9 +286,9 @@ legend{
 }
 /* Botones para cambiar de noticia  */
 #anterior,
-#siguiente {
-    cursor: pointer;     
+#siguiente {         
     margin: 50px;
+    cursor: pointer;
 }
 /* Estilo para los artículos de noticia  */
 .noticia-articulo {
@@ -530,7 +530,7 @@ footer ul li a {
     }
 }
 
-/* Clases para aplicar animación de desplazamiento en Javascript */
+/* Clases para aplicar animación de desplazamiento en JavaScript */
 .animacion-desplazar-derecha {
     animation: desplazarDerecha 1.5s ease-out forwards;
 }

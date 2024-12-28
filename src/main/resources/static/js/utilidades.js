@@ -1,17 +1,39 @@
-
-function mostrarMensaje(mensaje, selector) {
-    $(selector).html(`<h3>${mensaje}</h3>`).fadeIn(500).delay(2500).fadeOut(500);
-
+/**
+ * Verifica si la URL de una imagen tiene una extensión válida.
+ * Esta función comprueba si la URL proporcionada termina con una de las extensiones de imagen válidas.
+ * @param {string} url - La URL de la imagen a verificar.
+ * @returns {boolean} Retorna true si la URL tiene una extensión válida (jpeg, jpg, png), de lo contrario, false.
+ */
+function esUrlImagenValida(url) {
+    // Lista de extensiones válidas para las imágenes
+    const extensionesValidas = ['jpeg', 'jpg', 'png'];
+    return extensionesValidas.some(ext => url.endsWith(ext)); // Comprueba si termina con una extensión permitida
 }
 
+/**
+ * Muestra un mensaje temporal en un elemento seleccionado, animándolo con fadeIn y fadeOut.
+ * @param {string} mensaje - El mensaje a mostrar.
+ * @param {string} selector - El selector del elemento donde mostrar el mensaje.
+ */
+function mostrarMensaje(mensaje, selector) {
+    $(selector).html(`<h3>${mensaje}</h3>`).fadeIn(500).delay(2000).fadeOut(500);
+}
+
+/**
+ * Formatea una fecha de formato 'yyyy-mm-dd' a 'dd/mm/yyyy'.
+ * @param {string} fecha - La fecha a formatear.
+ * @returns {string} - La fecha formateada.
+ */
 function formatearFecha(fecha) {
     let [anioNac, mesNac, diaNac] = fecha.split('-');
     fecha = `${diaNac}/${mesNac}/${anioNac}`;
     return fecha;
 }
 
-function limpiarContenedores() {
-    
+/**
+ * Limpia el contenido y elimina las clases específicas de los contenedores de partidos.
+ */
+function limpiarContenedores() {    
     if (fichaPartidoContainer) fichaPartidoContainer.innerHTML = '';
     fichaPartidoContainer.classList.remove('lista-vacia');
 
@@ -20,15 +42,18 @@ function limpiarContenedores() {
     fichaMiPartidoContainer.classList.remove('mis-partidos');
 }
 
-function mostrarListaVacia(container,esAdmin=false) {
+/**
+ * Muestra un mensaje visual indicando que la lista está vacía y estiliza el contenedor.
+ * @param {HTMLElement} container - El contenedor donde mostrar el mensaje.
+ * @param {boolean} esAdmin - Indica si el usuario es administrador (opcional).
+ */
+function mostrarListaVacia(container, esAdmin = false) {
     if (!esAdmin) {
-        limpiarContenedores(container);
-        
+        limpiarContenedores(container);        
     }
     let contenedor = container[0] || container;    
-    contenedor.classList.remove('ver-partidos');
-    //container.className = '';  // Esto elimina todas las clases previas del contenedor (ERA LO QUE CAUSABA EL PROBLEMA)
-    contenedor.classList.add('lista-vacia');  // Agrega la clase específica para lista vacía
+    contenedor.classList.remove('ver-partidos');  
+    contenedor.classList.add('lista-vacia');  
 
     // Crea la imagen y el mensaje para la lista vacía
     let imgListaVacia = document.createElement('img');
@@ -36,16 +61,18 @@ function mostrarListaVacia(container,esAdmin=false) {
     imgListaVacia.alt = 'No hay partidos disponibles';
     imgListaVacia.style.margin = '50px auto';
 
-
     let textoListaVacia = document.createElement('p');
     textoListaVacia.textContent = 'Aquí aparecerán los partidos publicados';
 
     // Agrega los elementos al contenedor
     contenedor.appendChild(imgListaVacia);
-    contenedor.appendChild(textoListaVacia);
-    //container.replaceChildren();
+    contenedor.appendChild(textoListaVacia);    
 }
 
+/**
+ * Añade un efecto visual de clic a un botón.
+ * @param {HTMLElement} boton - El botón al que aplicar el efecto.
+ */
 function efectoClick(boton) {
     boton.classList.add('boton-click');
     setTimeout(() => {
@@ -53,6 +80,11 @@ function efectoClick(boton) {
     }, 100);
 }
 
+/**
+ * Muestra un cuadro de diálogo de confirmación con una promesa.
+ * @param {string} pregunta - La pregunta a mostrar en el cuadro de diálogo.
+ * @returns {Promise} - Se resuelve si el usuario acepta, se rechaza si cancela.
+ */
 function mostrarDialogo(pregunta) {
     return new Promise((resolve, reject) => {
         const $dialogo = $('#confirmar-accion');
@@ -64,30 +96,29 @@ function mostrarDialogo(pregunta) {
         // Evento para capturar clics fuera del diálogo
         $(document).on('mousedown', function (e) {
             if (!$(e.target).closest('#confirmar-accion').length) {
-                $dialogo.css("display", "none");
-                //$(document).off('mousedown.dialogo'); // Desvincular el evento
+                $dialogo.css("display", "none");                
                 reject(); // Rechazar la promesa
             }
         });
 
         // Cuando el usuario hace clic en "Cancelar"
         $('#cancelar-accion').off('click').on('click', function () {
-            $dialogo.css("display", "none");
-            //$(document).off('mousedown.dialogo'); // Desvincular el evento
+            $dialogo.css("display", "none");            
             reject(); // Rechazar la promesa
         });
 
         // Cuando el usuario hace clic en "Aceptar"
         $('#aceptar-accion').off('click').on('click', function () {
-            $dialogo.css("display", "none");
-            //$(document).off('mousedown.dialogo'); // Desvincular el evento
+            $dialogo.css("display", "none");            
             resolve(); // Resolver la promesa
         });
     });
 }
 
-
-
+/**
+ * Muestra un cuadro de confirmación exclusivo para archivar partidos.
+ * @returns {Promise} - Se resuelve con un valor dependiendo de la selección del usuario.
+ */
 function mostrarConfirmacionArchivado() {
     return new Promise((resolve, reject) => {
         // Mostrar el contenedor
@@ -121,5 +152,3 @@ function mostrarConfirmacionArchivado() {
         });
     });
 }
-
-
