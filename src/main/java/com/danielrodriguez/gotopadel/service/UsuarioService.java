@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+/**
+ * Servicio que gestiona las operaciones relacionadas con los usuarios y sus credenciales.
+ */
 @Service
 public class UsuarioService {
 
@@ -25,7 +28,13 @@ public class UsuarioService {
     private static final Pattern patronEmail = Pattern.compile("^[a-zA-Z0-9._%+-]{1,40}@[a-zA-Z0-9.-]{2,20}\\.[a-zA-Z]{2,}$");
     private static final Pattern patronPassword = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,20}$");
 
-    // Método para iniciar sesión
+    /**
+     * Realiza el inicio de sesión de un usuario.
+     *
+     * @param email el email del usuario.
+     * @param password la contraseña del usuario.
+     * @return el objeto Usuario si las credenciales son correctas; de lo contrario, retorna null.
+     */
     public Usuario login(String email, String password) {
         Usuario usuario = usuarioRepository.findByEmail(email);
         if (usuario == null) {
@@ -36,7 +45,13 @@ public class UsuarioService {
         return credenciales.filter(cred -> cred.getPassword().equals(password)).map(cred -> usuario).orElse(null);
     }
 
-    // Método para registrar un nuevo usuario
+    /**
+     * Registra un nuevo usuario en la base de datos.
+     *
+     * @param usuario el objeto Usuario a registrar.
+     * @param password la contraseña del usuario.
+     * @return true si el registro fue exitoso; false si hubo un error o el email ya está registrado.
+     */
     public boolean registrarUsuario(Usuario usuario, String password) {
         try {
             if (!validarCampos(usuario, password) || usuarioRepository.existsByEmail(usuario.getEmail())) {
@@ -56,27 +71,45 @@ public class UsuarioService {
         }
     }
 
-    // Método para obtener todos los usuarios
+    /**
+     * Obtiene la lista de todos los usuarios registrados.
+     *
+     * @return una lista de objetos Usuario.
+     */
     public List<Usuario> obtenerTodosUsuarios() {
         return usuarioRepository.findAll();
     }
 
-    // Método para eliminar un usuario por ID
+    /**
+     * Elimina un usuario y sus credenciales asociados, dado su ID.
+     *
+     * @param idUsuario el ID del usuario a eliminar.
+     */
     public void eliminarUsuarioPorId(Integer idUsuario) {
         usuarioRepository.deleteById(idUsuario);
         credencialesRepository.deleteById(idUsuario);
     }
-    
 
-    // Validación de campos
+    /**
+     * Verifica si un email ya existe en la base de datos.
+     *
+     * @param email el email a verificar.
+     * @return true si el email ya existe; false de lo contrario.
+     */
+    public boolean emailExiste(String email) {
+        return usuarioRepository.existsByEmail(email);
+    }
+
+    /**
+     * Valida los campos de un usuario y su contraseña.
+     *
+     * @param usuario el objeto Usuario con los datos a validar.
+     * @param password la contraseña a validar.
+     * @return true si todos los campos son válidos; false de lo contrario.
+     */
     private boolean validarCampos(Usuario usuario, String password) {
         return patronNombre.matcher(usuario.getNombre()).matches() &&
                patronEmail.matcher(usuario.getEmail()).matches() &&
                patronPassword.matcher(password).matches();
-    }
-
-    // Método para verificar si un email ya existe
-    public boolean emailExiste(String email) {
-        return usuarioRepository.existsByEmail(email);
     }
 }

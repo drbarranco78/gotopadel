@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
 // Carga los partidos disponibles al hacer click en el enlace "Ver Partidos"
 document.getElementById('enlace-ver').addEventListener('click', function () {
     cargarPartidos();
-}, { once: true });
+});
 
 /**
  * Carga y muestra los partidos disponibles en el contenedor correspondiente.
@@ -28,6 +28,7 @@ function cargarPartidos() {
             }
             // Configura el contenedor principal para mostrar los partidos
             fichaPartidoContainer.classList.add('ver-partidos');
+            //fichaPartidoContainer.classList.remove('lista-vacia');
             fichaPartidoContainer.innerHTML = `<h2>Partidos publicados</h2>`
             // Itera sobre cada partido y genera su representación en el DOM
             data.forEach(partido => {

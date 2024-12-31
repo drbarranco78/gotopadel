@@ -607,7 +607,7 @@ footer ul li a {
     text-align: center;
     font-size: 20px;
     font-weight: bold;
-    background-color: var(--color-oscuro);
+    background-color: var(--color-fondo-oscuro);
     color: whitesmoke;
     border: 2px solid whitesmoke;
     padding: 20px;
@@ -644,7 +644,8 @@ footer ul li a {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: black;
+    background-color: var(--color-fondo-oscuro);
+    border: 2px solid whitesmoke;
     padding: 15px;
     border-radius: 10px;
     width: 80%;

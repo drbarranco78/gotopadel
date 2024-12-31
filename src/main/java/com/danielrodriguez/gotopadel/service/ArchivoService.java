@@ -13,8 +13,13 @@ import com.danielrodriguez.gotopadel.repository.PartidoRepository;
 
 import jakarta.transaction.Transactional;
 
+/**
+ * Servicio encargado de archivar partidos, gestionando la transferencia de datos entre la tabla
+ * PARTIDO y la tabla ARCHIVO, así como la recuperación de partidos archivados.
+ */
 @Service
 public class ArchivoService {
+    
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     private final ArchivoRepository archivoRepository;
@@ -26,17 +31,26 @@ public class ArchivoService {
         this.partidoRepository = partidoRepository;
     }
 
+    /**
+     * Archiva un partido moviéndolo de la tabla PARTIDO a la tabla ARCHIVO.
+     * 
+     * @param idPartido el id del partido a archivar.
+     * @param motivoArchivado el motivo por el cual el partido está siendo archivado.
+     *                         Se usa un valor de 1 para "Partido Jugado" y otro valor para "Partido Cancelado".
+     */
     @Transactional
     public void archivarPartido(Integer idPartido, Integer motivoArchivado) {
         // Buscar el partido por id
         Partido partido = partidoRepository.findById(idPartido).orElseThrow(() -> new IllegalArgumentException("Partido no encontrado"));
-        String motivo = motivoArchivado==1? "Partido Jugado" : "Partido Cancelado";
+        
+        // Determinar el motivo del archivado basado en el valor recibido
+        String motivo = motivoArchivado == 1 ? "Partido Jugado" : "Partido Cancelado";
+        
         // Crear el objeto Archivo con la información del partido y el motivo de archivado
         Archivo archivo = new Archivo();
         archivo.setIdPartido(partido.getIdPartido());
         archivo.setIdUsuario(partido.getUsuario().getIdUsuario());
         archivo.setTipoPartido(partido.getTipoPartido());
-        
         archivo.setNivel(partido.getNivel());
         archivo.setFechaPartido(partido.getFechaPartido());
         archivo.setFechaPublicacion(partido.getFechaPublicacion());
@@ -46,18 +60,28 @@ public class ArchivoService {
         archivo.setFechaArchivo(java.time.LocalDate.now().format(formatter).toString());  // Fecha de archivado
         archivo.setMotivoArchivado(motivo);
 
-        // Guardar el partido en la tabla ARCHIVO
+        // Guardar el partido archivado en la tabla ARCHIVO
         archivoRepository.save(archivo);
 
         // Eliminar el partido de la tabla PARTIDO
         partidoRepository.deleteById(idPartido);
     }
 
+    /**
+     * Obtiene una lista de todos los partidos archivados.
+     *
+     * @return una lista de partidos archivados.
+     */
     public List<Archivo> obtenerPartidosArchivados() {
         return archivoRepository.findAll();
     }
 
-    public void eliminarPartidoArchivadoPorId(Integer id){
+    /**
+     * Elimina un partido archivado por su id.
+     *
+     * @param id el id del partido archivado a eliminar.
+     */
+    public void eliminarPartidoArchivadoPorId(Integer id) {
         archivoRepository.deleteById(id);
     }
 }

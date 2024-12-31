@@ -93,7 +93,7 @@ function archivarPartido(idPartido, motivoArchivado, btInscribe) {
                 // Si el archivado es exitoso, muestra un mensaje y deshabilita el botón
                 mostrarMensaje('Partido archivado correctamente', ".mensaje-exito");
                 btInscribe.innerText = "Archivado"; // Cambia el texto del botón
-                btInscribe.style.color = 'blue'; // Cambia el color del texto
+                btInscribe.style.color = 'var(--color-resaltado)'; // Cambia el color del texto
                 btInscribe.disabled = true; // Deshabilita el botón
             } else {
                 // Muestra un mensaje de error si falla el archivado
