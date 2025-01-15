@@ -2,7 +2,7 @@
 
 /* Estilo de la cabecera  */
 header {
-    background-color: #ccc;
+    background-color: var(--color-fondo-claro);
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -87,7 +87,7 @@ header {
     gap: 20px;
     border: 2px solid whitesmoke;
     border-radius: 10px;
-    background-color: #ccc;
+    background-color: var(--color-fondo-claro);
     font-size: 20px;
     color: var(--color-azul);
     font-weight: bold;
@@ -522,7 +522,7 @@ legend {
 /* Estilo de la ficha de partidos del usuario  */
 #ficha-mis-partidos {
     width: 100%;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-fondo-claro);
     border-radius: 10px;
     padding: 10px;
     background-color: var(--color-secundario);

@@ -3,22 +3,16 @@
 /*=============================================================*/
 
 /*------ Definición de las variables de color --------*/
-:root {
-    /* --color-verde: #69f88d; */
-    /* --color-rojo:#f86969; */
+:root {   
     --color-rojo: #C33430;
-    --color-fondo-ficha: #ccc;
-    /* --color-azul: #17396C; */
+    --color-fondo-claro: #ccc;    
     --color-azul: #232D4B;
     --color-verde: #00AA9B;
     --color-fondo-oscuro: #333;
     --color-secundario: #005573;
-    --color-resaltado: #eea509;
-    /* --color-formularios: #10537A; */
-    --color-terciario: #8ba4d1;
-  
+    --color-resaltado: #eea509;    
+    --color-terciario: #8ba4d1;  
 }
-
 /*------ Definición de las variables de fuente --------*/
 @font-face {
     font-family: "fuente_principal";
@@ -58,8 +52,6 @@ button, a, input[type="submit"], input[type="reset"]{
 }
 header,
 footer {
-    position: relative;
-    
-    z-index: 1;
-    
+    position: relative;    
+    z-index: 1;    
 }

@@ -34,7 +34,7 @@
         display: none;
     }
 
-    /* Estilos responsive para zonaPrivada.html */
+    /* Estilos responsive para private.html */
     body{
         width: 100%;
     }
@@ -144,23 +144,13 @@
     }
     .mis-partidos {
         grid-template-columns: 1fr;
-
     }   
-
-
     body{
         width: 100%;
     }
     .listados-admin {
         display: flex;
         flex-direction: column;
-        /* display: block; */
-        /* margin: auto; */
-
     }
-    /* .usuario-item button, .partido-item button, .archivo-item button {
-        width: auto;
-
-    } */
 
 }
