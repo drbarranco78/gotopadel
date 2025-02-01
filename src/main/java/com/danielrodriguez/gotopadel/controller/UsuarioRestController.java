@@ -61,7 +61,7 @@ public class UsuarioRestController {
                 usuario.setRol("ADMIN"); // Asigna rol de administrador
                 return new ResponseEntity<>("Login exitoso, redirigiendo a admin.html", HttpStatus.OK);
             }
-            return new ResponseEntity<>("Login exitoso, redirigiendo a zonaPersonal.html", HttpStatus.OK);
+            return new ResponseEntity<>("Login exitoso, redirigiendo a private.html", HttpStatus.OK);
         } else {
             return new ResponseEntity<>("Credenciales inválidas", HttpStatus.UNAUTHORIZED);
         }

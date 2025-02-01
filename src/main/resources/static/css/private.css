@@ -369,7 +369,7 @@ legend {
     filter: none;
     height: auto;    
     padding: 10px;
-    background-color: var(--color-fondo-ficha);
+    background-color: var(--color-fondo-claro);
     border: 2px solid whitesmoke;
     border-radius: 10px;
     font-weight: bold;
@@ -457,7 +457,7 @@ legend {
     display: none;
     flex-direction: column;
     padding: 20px 50px;    
-    background-color: var(--color-fondo-ficha);
+    background-color: var(--color-fondo-claro);
     border-radius: 10px;
     border: 3px solid #333;
     z-index: 1;

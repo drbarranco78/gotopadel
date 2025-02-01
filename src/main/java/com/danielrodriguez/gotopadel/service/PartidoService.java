@@ -17,8 +17,8 @@ import java.util.Optional;
 public class PartidoService {
 
     private final PartidoRepository partidoRepository;
-    private final UbicacionService ubicacionService;
-    private final InscribeService inscribeService;
+    private UbicacionService ubicacionService;
+    private InscribeService inscribeService;
 
     @Autowired
     public PartidoService(PartidoRepository partidoRepository, UbicacionService ubicacionService,
@@ -26,6 +26,11 @@ public class PartidoService {
         this.partidoRepository = partidoRepository;
         this.ubicacionService = ubicacionService;
         this.inscribeService = inscribeService;
+    }
+
+    public PartidoService(PartidoRepository partidoRepository) {
+        this.partidoRepository = partidoRepository;
+        
     }
 
     /**
@@ -115,8 +120,12 @@ public class PartidoService {
      *
      * @param id el id del partido a eliminar.
      */
-    public void eliminarPartido(int id) {
-        partidoRepository.deleteById(id);
+    public boolean eliminarPartido(int id) {
+        if (partidoRepository.existsById(id)) {
+            partidoRepository.deleteById(id);
+            return true; // Indica que el partido existía y fue eliminado
+        }
+        return false; // Indica que el partido no existía
     }
 
     /**

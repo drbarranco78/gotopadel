@@ -10,11 +10,12 @@ import com.danielrodriguez.gotopadel.model.Inscribe;
 import com.danielrodriguez.gotopadel.repository.InscribeRepository;
 
 /**
- * Servicio encargado de gestionar las inscripciones de los usuarios a los partidos.
+ * Servicio encargado de gestionar las inscripciones de los usuarios a los
+ * partidos.
  */
 @Service
 public class InscribeService {
-    
+
     private final InscribeRepository inscribeRepository;
 
     @Autowired
@@ -29,11 +30,21 @@ public class InscribeService {
      * @return el objeto Inscribe guardado en la base de datos.
      */
     public Inscribe inscribir(Inscribe inscribe) {
+        boolean yaInscrito = inscribeRepository.existsByUsuario_idAndPartido_idPartido(
+                inscribe.getUsuario().getIdUsuario(),
+                inscribe.getPartido().getIdPartido());
+
+        if (yaInscrito) {
+            return null; // Ya está inscrito, devuelve -1
+        }
+        // Inscripción exitosa
         return inscribeRepository.save(inscribe);
+
     }
 
     /**
-     * Elimina la inscripción de un usuario a un partido por el id de la inscripción.
+     * Elimina la inscripción de un usuario a un partido por el id de la
+     * inscripción.
      *
      * @param id el id de la inscripción que se desea borrar.
      */
@@ -67,7 +78,8 @@ public class InscribeService {
      *
      * @param idUsuario el id del usuario.
      * @param idPartido el id del partido.
-     * @return true si la inscripción fue cancelada, false si no se encontró la inscripción.
+     * @return true si la inscripción fue cancelada, false si no se encontró la
+     *         inscripción.
      */
     public boolean cancelarInscripcionPorUsuarioYPartido(Integer idUsuario, Integer idPartido) {
         Optional<Inscribe> inscripcion = inscribeRepository.findByUsuario_idAndPartido_idPartido(idUsuario, idPartido);
@@ -76,5 +88,15 @@ public class InscribeService {
             return true;
         }
         return false; // Retorna false si no encontró la inscripción
+    }
+
+    /**
+     * Obtiene la cantidad de partidos en los que un usuario está inscrito.
+     *
+     * @param idUsuario el ID del usuario.
+     * @return el número de partidos en los que el usuario está inscrito.
+     */
+    public int obtenerCantidadDeInscripciones(int idUsuario) {
+        return inscribeRepository.countByUsuario_id(idUsuario);
     }
 }

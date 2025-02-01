@@ -36,14 +36,13 @@ public class ArchivoRestController {
      * Endpoint para archivar un partido.
      *
      * @param idPartido       ID del partido que se quiere archivar.
-     * @param motivoArchivado Motivo del archivado: 1 para "Partido Jugado", cualquier otro valor para "Partido Cancelado".
+     * @param motivoArchivado Motivo del archivado: 1 para "Partido Jugado",
+     *                        cualquier otro valor para "Partido Cancelado".
      * @return ResponseEntity con un mensaje de éxito o error.
      */
     @PostMapping
     public ResponseEntity<String> archivarPartido(@RequestParam Integer idPartido,
-            @RequestParam Integer motivoArchivado) {
-        System.out.println("ID Partido: " + idPartido);
-        System.out.println("Motivo Archivado: " + motivoArchivado);
+            @RequestParam Integer motivoArchivado) {        
 
         try {
             archivoService.archivarPartido(idPartido, motivoArchivado);

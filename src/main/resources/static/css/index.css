@@ -189,7 +189,7 @@ legend{
 .nuevoPassword input, .repetirPassword input {
     grid-column: 1 / 2; /* Coloca el input en la primera columna */  
 }
-.nuevoPassword img, .repetirPassword img {
+.nuevoPassword i, .repetirPassword i {
     grid-column: 2 / 3;
     cursor: pointer;
     margin-bottom: 20px;

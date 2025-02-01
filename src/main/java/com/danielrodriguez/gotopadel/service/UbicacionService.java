@@ -33,6 +33,9 @@ public class UbicacionService {
      * @return el objeto Ubicacion creado y guardado en la base de datos.
      */
     public Ubicacion createUbicacion(String nombre, String ciudad) {
+        if (findUbicacion(nombre, ciudad) != null) {
+            return null;
+        }
         Ubicacion nuevaUbicacion = new Ubicacion();
         nuevaUbicacion.setNombre(nombre);
         nuevaUbicacion.setCiudad(ciudad);
