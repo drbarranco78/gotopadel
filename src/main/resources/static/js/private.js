@@ -1,31 +1,150 @@
 //let idUsuario; // Almacena el ID del usuario actual
 let usuario;   // Almacena los datos del usuario actual
 let opUsuario = $(".opciones-usuario"); // Referencia al menú de opciones del usuario
+let notificacionesObtenidas;
 
 $(document).ready(function () {
     // Asegurar que el usuario cierra sesión al salir de la página   
     window.onbeforeunload = function (event) {
-        navigator.sendBeacon('/api/usuario/logout');        
+        navigator.sendBeacon('/api/usuario/logout');
         event.preventDefault();
         event.returnValue = ''; // Necesario en algunos navegadores como Chrome
     };
+
     // Obtener datos del usuario desde el backend
     $.ajax({
-        url: '/api/usuario/datosUsuario', // Endpoint para obtener datos del usuario
+        url: '/api/usuario/datosUsuario',
         type: 'GET',
         success: function (response) {
-            // Mostrar mensaje de bienvenida con el nombre y género del usuario
-            $("#mensaje-bienvenida").html("Bienvenid" + (response.genero === "Hombre" ? "o, " : "a, ") + response.nombre + " con id " + response.idUsuario);
-
-            // Guardar los datos completos del usuario
             usuario = response;
+            $("#mensaje-bienvenida").html("Bienvenid" + (usuario.genero === "Hombre" ? "o, " : "a, ") + usuario.nombre + " con id " + usuario.idUsuario);
+            obtenerNotificaciones(usuario);
         },
         error: function (error) {
             console.error('Error:', error);
-            // Redirigir al login si ocurre un error de autenticación
-            // window.location.href = '/';
         }
     });
+    function obtenerNotificaciones(usuario) {
+        console.log("ID de usuario en la app web:", usuario.idUsuario);
+
+        $.ajax({
+            url: '/api/inscripciones/notificar/' + usuario.idUsuario,
+            type: 'POST',
+            success: function (response) {
+                notificacionesObtenidas = response; // Asignamos el valor globalmente
+
+                // Eliminar solo las notificaciones previas, no el header
+                $('.detalle-notificaciones .notificacion').remove();
+
+                if (notificacionesObtenidas.length > 0) {
+                    $(".notificaciones").show();
+                    console.log("Inscripciones notificadas: ", notificacionesObtenidas);
+                } else {
+                    console.log("No hay notificaciones pendientes.");
+                    $(".notificaciones").hide();
+                }
+            },
+            error: function (error) {
+                console.error('Error:', error);
+            }
+        });
+    }
+    // Evento de clic para mostrar notificaciones
+    $(".notificaciones").click(function (event) {
+        event.preventDefault();
+        cargarNotificaciones(notificacionesObtenidas);
+        marcarNotificacionesComoLeidas(usuario);
+
+    });
+    function marcarNotificacionesComoLeidas(usuario) {
+        $.ajax({
+            url: '/api/inscripciones/marcarComoLeidas/' + usuario.idUsuario,
+            type: 'POST',
+            success: function (response) {
+                console.log("Notificaciones marcadas como leídas");
+            },
+            error: function (error) {
+                console.error('Error al marcar notificaciones:', error);
+            }
+        });
+    }
+
+
+    function cargarNotificaciones(notificacionesObtenidas) {
+        $('.detalle-notificaciones .notificacion').remove();
+        let html = '';
+
+        notificacionesObtenidas.forEach((notificacion, index) => {
+            let idNotificacion = `user-${notificacion.usuario.idUsuario}-partido-${notificacion.partido.idPartido}`;
+
+            console.log("Notificación recibida:", notificacion);
+
+            html += `
+                <div class="notificacion" data-id="${idNotificacion}">
+                    <p><strong>${notificacion.usuario.nombre}</strong> se ha inscrito en tu partido<i class="ver-perfil-inscrito fas fa-eye" data-usuario='${JSON.stringify(notificacion.usuario)}'></i></p>
+                    <p>Email: ${notificacion.usuario.email}</p>
+                    <p>Partido: ${notificacion.partido.tipoPartido} en ${notificacion.partido.ubicacion.nombre} el ${notificacion.partido.fechaPartido} a las ${notificacion.partido.horaPartido}</p>
+                    
+                    <!-- Botón para ver perfil con el objeto usuario completo -->
+                    
+                    
+                    <button class="btn-aceptar" data-id="${idNotificacion}">Aceptar</button>
+                    <button class="btn-rechazar" data-id="${idNotificacion}">Rechazar</button>
+                </div>
+            `;
+
+        });
+
+        $('.detalle-notificaciones').append(html);
+        $('.detalle-notificaciones').show();
+    }
+
+    // Delegación de eventos para manejar elementos dinámicos
+    $(document).on('click', '.btn-aceptar', function () {
+        let idNotificacion = $(this).attr("data-id");
+        console.log("Aceptando notificación:", idNotificacion);
+        $(`.notificacion[data-id="${idNotificacion}"]`).remove();
+
+        // Verificamos si no hay más notificaciones y ocultamos el contenedor si es necesario
+        if ($('.detalle-notificaciones .notificacion').length === 0) {
+            $(".notificaciones").hide();
+            $(".detalle-notificaciones").hide();
+        }
+    });
+    $(document).on('click', '.btn-rechazar', function () {
+        let idNotificacion = $(this).attr("data-id");
+        // Extraer idUsuario e idPartido del data-id
+        let partes = idNotificacion.split("-");
+        let idUsuario = partes[1];
+        let idPartido = partes[3];
+        $(`.notificacion[data-id="${idNotificacion}"]`).remove();
+
+        cancelarInscripcion(idUsuario, idPartido);
+
+        if ($('.detalle-notificaciones .notificacion').length === 0) {
+            $(".notificaciones").hide();
+            $(".detalle-notificaciones").hide();
+        }
+    });
+
+    // Cerrar notificaciones
+    $(document).on('click', '#cerrar-notificaciones', function () {
+        $('.detalle-notificaciones').hide();
+        $('.ficha-usuario').hide();
+    });
+    $(document).on('click', '.ver-perfil-inscrito', function () {
+        // Recuperar el objeto usuario completo desde el atributo 'data-usuario'
+        let usuario = JSON.parse($(this).attr("data-usuario"));
+        console.log("Ver perfil del usuario:", usuario);
+        $(".detalle-notificaciones").hide();
+        // Llamamos a la función cargarDatosUsuario pasando el objeto usuario completo
+        cargarDatosUsuario(usuario);
+    });
+
+
+
+
+
 
     // Añadir clase activa al enlace predeterminado
     $("#enlace-ver").addClass("activo");
@@ -99,7 +218,7 @@ $(document).ready(function () {
     $('#ver-perfil').click(function () {
         efectoClick(this);
         opUsuario.slideUp(300);
-        mostrarSeccion('.ficha-usuario');
+
         cargarDatosUsuario(usuario); // Cargar datos del usuario en la ficha
     });
 
@@ -131,16 +250,26 @@ $(document).ready(function () {
      * Carga los datos del usuario en su ficha.
      * @param {Object} usuario - Los datos del usuario a cargar
      */
-    function cargarDatosUsuario(usuario) {
-        $('.icono-usuario-ficha').attr('src', usuario.genero === "Mujer" ? '../img/ico_usuaria.png' : '../img/ico_usuario.png');
-        $('.nombre-usuario-ficha').text(usuario.nombre);
-        $('.fecha-usuario-ficha span').text(usuario.fechaInscripcion);
-        $('.id-usuario-ficha span').text(usuario.idUsuario);
-        $('.nacimiento-usuario-ficha span').text(usuario.fechaNac);
-        $('.genero-usuario-ficha span').text(usuario.genero);
-        $('.nivel-usuario-ficha span').text(usuario.nivel);
-        $.get(`/api/usuario/${usuario.idUsuario}/publicados/count`, function (count) {
+    function cargarDatosUsuario(user) {
+        $('.ficha-usuario').show();
+        //mostrarSeccion('.ficha-usuario');
+        if (usuario.idUsuario !== user.idUsuario) {
+            $('.botones-ficha-usuario').hide();
+        } else {
+            $('.botones-ficha-usuario').show();
+        }
+        $('.icono-usuario-ficha').attr('src', user.genero === "Mujer" ? '../img/ico_usuaria.png' : '../img/ico_usuario.png');
+        $('.nombre-usuario-ficha').text(user.nombre);
+        $('.ficha-usuario-fecha span').text(user.fechaInscripcion);
+        $('.id-usuario-ficha span').text(user.idUsuario);
+        $('.nacimiento-usuario-ficha span').text(user.fechaNac);
+        $('.genero-usuario-ficha span').text(user.genero);
+        $('.nivel-usuario-ficha span').text(user.nivel);
+        $.get(`/api/usuario/${user.idUsuario}/publicados/count`, function (count) {
             $('.publicados-usuario-ficha span').text(count);
+        });
+        $.get(`/api/inscripciones/cantidad/${user.idUsuario}`,function (count) {
+            $('.inscrito-usuario-ficha span').text(count);
         });
     }
 
@@ -177,4 +306,6 @@ $(document).ready(function () {
                 console.log("El usuario canceló la eliminación de la cuenta.");
             });
     });
+
+
 });

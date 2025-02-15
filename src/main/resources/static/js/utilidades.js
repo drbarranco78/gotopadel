@@ -33,7 +33,7 @@ function formatearFecha(fecha) {
 /**
  * Limpia el contenido y elimina las clases específicas de los contenedores de partidos.
  */
-function limpiarContenedores() {    
+function limpiarContenedores() {
     if (fichaPartidoContainer) fichaPartidoContainer.innerHTML = '';
     fichaPartidoContainer.classList.remove('lista-vacia');
 
@@ -49,11 +49,11 @@ function limpiarContenedores() {
  */
 function mostrarListaVacia(container, esAdmin = false) {
     if (!esAdmin) {
-        limpiarContenedores(container);        
+        limpiarContenedores(container);
     }
-    let contenedor = container[0] || container;    
-    contenedor.classList.remove('ver-partidos');  
-    contenedor.classList.add('lista-vacia');  
+    let contenedor = container[0] || container;
+    contenedor.classList.remove('ver-partidos');
+    contenedor.classList.add('lista-vacia');
 
     // Crea la imagen y el mensaje para la lista vacía
     let imgListaVacia = document.createElement('img');
@@ -66,7 +66,7 @@ function mostrarListaVacia(container, esAdmin = false) {
 
     // Agrega los elementos al contenedor
     contenedor.appendChild(imgListaVacia);
-    contenedor.appendChild(textoListaVacia);    
+    contenedor.appendChild(textoListaVacia);
 }
 
 /**
@@ -88,7 +88,7 @@ function efectoClick(boton) {
 function mostrarDialogo(pregunta) {
     return new Promise((resolve, reject) => {
         const $dialogo = $('#confirmar-accion');
-        
+
         // Mostrar el diálogo
         $dialogo.css("display", "flex");
         $dialogo.find('p').text(pregunta);
@@ -96,20 +96,20 @@ function mostrarDialogo(pregunta) {
         // Evento para capturar clics fuera del diálogo
         $(document).on('mousedown', function (e) {
             if (!$(e.target).closest('#confirmar-accion').length) {
-                $dialogo.css("display", "none");                
+                $dialogo.css("display", "none");
                 reject(); // Rechazar la promesa
             }
         });
 
         // Cuando el usuario hace clic en "Cancelar"
         $('#cancelar-accion').off('click').on('click', function () {
-            $dialogo.css("display", "none");            
+            $dialogo.css("display", "none");
             reject(); // Rechazar la promesa
         });
 
         // Cuando el usuario hace clic en "Aceptar"
         $('#aceptar-accion').off('click').on('click', function () {
-            $dialogo.css("display", "none");            
+            $dialogo.css("display", "none");
             resolve(); // Resolver la promesa
         });
     });
@@ -152,3 +152,52 @@ function mostrarConfirmacionArchivado() {
         });
     });
 }
+
+// Cuando el usuario haga clic en los enlaces de "privacidad", "ayuda" o "acerca-de", 
+// se evita la acción predeterminada y se muestra la información correspondiente.
+$('#privacidad , #ayuda, #acerca-de').click(function (event) {
+    event.preventDefault();
+    mostrarInfo($(this).data('tipo'));
+});
+
+// Cuando el usuario haga clic en los botones de cerrar (cerrar-info o btn-cerrar-info), 
+// se quita la clase 'activo' del elemento de bloqueo de pantalla para cerrar la ventana emergente.
+$('.cerrar-info, .btn-cerrar-info').click(function (event) {
+    event.preventDefault();
+    $('.bloqueo-pantalla').removeClass('activo');
+});
+
+/**
+ * Muestra el contenido correspondiente según la sección seleccionada.
+ * 
+ * @param {string} seccion - El tipo de sección a mostrar. Puede ser "privacidad", "ayuda" o "acerca-de".
+ */
+function mostrarInfo(seccion) {
+    let contenido = $('.contenido-info');
+    contenido.empty();
+    $('.btn-cerrar-info').show();
+    contenido.removeClass('align-center');
+    if (seccion === "privacidad") {
+        contenido.html(`<h2>Política de Privacidad</h2>`);
+        contenido.append(privacidad);
+    } else if (seccion === "ayuda") {
+        contenido.html(`<h2>Ayuda</h2>`); 
+        contenido.append(ayuda);              
+    } else if (seccion === "acerca-de") {
+        $('.btn-cerrar-info').hide();
+        contenido.addClass('align-center');
+        contenido.html(`
+            <h2>Acerca de</h2>
+            <h3><strong>GoToPádel</strong></h3>
+            <p>Proyecto final del Ciclo Formativo de Grado Superior de Desarrollo de Aplicaciones Web.</p>
+            <p>Curso académico 2024/2025.</p>
+            <p><strong>Autor:</strong><br>Daniel Rodríguez Barranco.</p>
+            <p><strong>Tutor:</strong><br>José Javier Bermúdez Hernández.</p><br>            
+        `);
+        contenido.append(licencia);
+    }
+
+    $('.bloqueo-pantalla').addClass('activo');
+
+}
+

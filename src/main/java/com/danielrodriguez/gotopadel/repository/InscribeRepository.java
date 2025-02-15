@@ -1,15 +1,20 @@
 package com.danielrodriguez.gotopadel.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
 import com.danielrodriguez.gotopadel.model.Inscribe;
+import com.danielrodriguez.gotopadel.model.Usuario;
 
 /**
  * Repositorio de la entidad Inscribe que extiende JpaRepository.
  * Proporciona métodos personalizados para acceder y manipular los datos de
  * inscripciones en los partidos.
  */
+@Repository
 public interface InscribeRepository extends JpaRepository<Inscribe, Integer> {
 
     /**
@@ -36,8 +41,19 @@ public interface InscribeRepository extends JpaRepository<Inscribe, Integer> {
     /**
      * Cuenta el número de partidos en los que un usuario está inscrito.
      * 
-     * @param idUsuario el ID del usuario cuya cantidad de inscripciones se desea contar.
+     * @param idUsuario el ID del usuario cuya cantidad de inscripciones se desea
+     *                  contar.
      * @return el número de partidos en los que el usuario está inscrito.
      */
     int countByUsuario_id(int idUsuario);
+
+    /**
+     * Busca todas las inscripciones en las que el organizador del partido coincida
+     * con el usuario dado y el campo de notificación esté marcado como falso.
+     *
+     * @param organizador El usuario que es el organizador del partido.
+     * @return Una lista de inscripciones donde el partido tiene como organizador
+     *         al usuario proporcionado y el campo 'notificado' es falso.
+     */
+    List<Inscribe> findByPartido_UsuarioAndNotificadoFalse(Usuario usuario);
 }

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/private.css">
     <link rel="stylesheet" href="/css/responsive.css">
+    <link rel="stylesheet" href="/css/footer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="HTTP://code.jquery.com/jquery-latest.js"></script>
     <title>GoToPadel Area Personal</title>
@@ -17,6 +18,15 @@
         <div class="logotipo">
             <img src="img/logo.png" id="logo-cabecera" class="icono-cabecera" alt="Logotipo de GoToPádel">
             <h3>GoToPádel</h3>
+        </div>
+        <div class="notificaciones">
+            <!-- <img src="img/ico_sobre2.png" alt="Icono de notificación"> -->
+            <i class="fas fa-bell"></i>
+            <h3>Tienes notificaciones nuevas</h3>
+            <div id="detalle-notificaciones" class="detalle-notificaciones">
+                <ul></ul>
+
+            </div>
         </div>
 
         <div class="usuario">
@@ -58,24 +68,37 @@
 
         <!-- Cuadro de diálogo de confirmación de archivado de partidos -->
         <div id="confirmar-archivado" class="confirmar-archivado">
-            <p>Seleccione el motivo del archivado:</p>
-            <button id="archivar-jugado" class="archivar-jugado opciones-archivado">Partido jugado</button>
-            <button id="archivar-cancelado" class="archivar-cancelado opciones-archivado">Partido cancelado</button>
-            <button id="cancelar-archivado" class="cancelar-archivado opciones-archivado">Cancelar</button>
+            <div class="cabecera-archivado">
+                <p>Seleccione el motivo del archivado:</p>
+                <span id="cerrar-notificaciones">&times;</span>
+            </div>
+            <div class="botones-accion">
+                <button id="archivar-jugado" class="archivar-jugado opciones-archivado">Partido jugado</button>
+                <button id="archivar-cancelado" class="archivar-cancelado opciones-archivado">Partido cancelado</button>
+            </div>
+            <!-- <button id="cancelar-archivado" class="cancelar-archivado opciones-archivado">Cancelar</button> -->
+
         </div>
 
         <!-- Ficha de datos del usuario  -->
 
         <div class="contenido ficha-usuario">
-            <img class="icono-usuario-ficha icono-cabecera" src="img/ico_usuario.png" alt="Icono del usuario">
-            <p class="nombre-usuario-ficha">Carlos Martinez</p>
-            <p class="fecha-usuario-ficha">Miembro desde: <span></span></p>
-            <p class="id-usuario-ficha">Nº de Usuario: <span></span></p>
-            <p class="nacimiento-usuario-ficha">Fecha de Nacimiento: <span></span></p>
-            <p class="genero-usuario-ficha">Género: <span></span></p>
-            <p class="nivel-usuario-ficha">Nivel de Juego: <span></span></p>
-            <p class="publicados-usuario-ficha">Partidos Publicados: <span></span></p>
-            <p class="inscrito-usuario-ficha">Partidos Inscrito: <span></span></p>
+            <div class="ficha-usuario-header">
+                <img class="icono-usuario-ficha icono-cabecera" src="img/ico_usuario.png" alt="Icono del usuario">
+                <div class="ficha-usuario-nombre">
+                    <p class="nombre-usuario-ficha">Carlos Martinez</p>
+                    <p class="ficha-usuario-fecha">Miembro desde <span></span></p>
+                </div>
+                <span id="cerrar-notificaciones">&times;</span>
+            </div>
+            <div class="ficha-usuario-body">
+                <p class="id-usuario-ficha">Nº de Usuario: <span></span></p>
+                <p class="nacimiento-usuario-ficha">Fecha de Nacimiento: <span></span></p>
+                <p class="genero-usuario-ficha">Género: <span></span></p>
+                <p class="nivel-usuario-ficha">Nivel de Juego: <span></span></p>
+                <p class="publicados-usuario-ficha">Partidos Publicados: <span></span></p>
+                <p class="inscrito-usuario-ficha">Partidos Inscrito: <span></span></p>
+            </div>
             <div class="botones-ficha-usuario">
                 <button id="ver-partidos-usuario-ficha">Ver Partidos</button>
                 <button id="eliminar-cuenta-usuario">Eliminar Cuenta</button>
@@ -289,14 +312,27 @@
             </div>
         </div>
     </section>
+    <div class="detalle-notificaciones">
 
+        <div class="header-notificaciones">
+            <h3>Notificaciones</h3>
+            <span id="cerrar-notificaciones">&times;</span>
+        </div>
+    </div>
+    <div id="contenedor-info" class="bloqueo-pantalla">
+        <div class="informacion">
+            <button class="cerrar-info"><span id="cerrar-info">&times;</span></button>
+            <div class="contenido-info"></div>
+            <button class="btn-cerrar-info">Aceptar</button>            
+        </div>
+    </div>
     <!-- Pie de página  -->
     <footer>
         <p>2024 GoToPadel. Todos los derechos reservados.</p>
         <ul>
-            <li><a href="/privacy">Política de Privacidad</a></li>
-            <li><a href="/contact">Contacto</a></li>
-            <li><a href="/about">Acerca de</a></li>
+            <li><a id="privacidad" data-tipo="privacidad" href="#">Política de Privacidad</a></li>
+            <li><a id="ayuda" data-tipo="ayuda" href="#">Ayuda</a></li>
+            <li><a id="acerca-de" data-tipo="acerca-de" href="#">Acerca de</a></li>
         </ul>
     </footer>
 

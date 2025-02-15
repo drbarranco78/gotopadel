@@ -441,7 +441,7 @@ legend{
     filter: invert(1) brightness(2);
 }
 
-/* Estilo del pie de página */
+/* Estilo del pie de página
 footer {
     background-color: #333;
     color: #fff;
@@ -465,7 +465,7 @@ footer ul li {
 footer ul li a {
     color: #fff;
     text-decoration: none;
-}
+} */
 
 /* Animación de desplazamiento hacia la derecha  */
 /* @keyframes moveRigth {

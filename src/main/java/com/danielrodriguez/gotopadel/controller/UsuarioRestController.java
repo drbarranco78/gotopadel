@@ -186,4 +186,5 @@ public class UsuarioRestController {
     public int contarPartidosPublicados(@PathVariable Integer idUsuario) {
         return partidoService.contarPartidosPublicadosPorUsuario(idUsuario);
     }
+    
 }

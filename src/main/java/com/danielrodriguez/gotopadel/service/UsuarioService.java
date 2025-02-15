@@ -112,4 +112,13 @@ public class UsuarioService {
                patronEmail.matcher(usuario.getEmail()).matches() &&
                patronPassword.matcher(password).matches();
     }
+
+    /**
+     * Busca un usuario por su ID.
+     * @param idUsuario El ID del usuario.
+     * @return Un Optional<Usuario> con el usuario encontrado o vacío si no existe.
+     */
+    public Optional<Usuario> findById(Integer idUsuario) {
+        return usuarioRepository.findById(idUsuario);
+    }
 }

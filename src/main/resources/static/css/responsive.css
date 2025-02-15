@@ -61,6 +61,12 @@
         height: 100%;
         max-height: fit-content;
     }
+
+    /* Estilo responsive de la ventana emergente de informacion de privacidad */
+    .informacion{
+        padding: 10px !important;
+        max-height: 90% !important;
+    }
 }
 
 /* CONFIGURACIÓN PARA DISPOSITIVOS INFERIORES A 830 PX DE ANCHO */

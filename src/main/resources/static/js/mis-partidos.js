@@ -111,7 +111,7 @@ function archivarPartido(idPartido, motivoArchivado, btInscribe) {
  * @param {number} idPartido - El ID del partido en el cual el usuario está inscrito.
  * @param {HTMLElement} btInscribe - El botón que se actualizará tras la cancelación.
  */
-function cancelarInscripcion(idUsuario, idPartido, btInscribe) {
+function cancelarInscripcion(idUsuario, idPartido, btInscribe = null) {
     // Muestra un diálogo de confirmación para la cancelación
     mostrarDialogo("¿Seguro que quieres cancelar la inscripción a este partido?")
         .then(() => {
@@ -121,9 +121,12 @@ function cancelarInscripcion(idUsuario, idPartido, btInscribe) {
                     if (response.ok) {
                         // Si se cancela correctamente, actualiza el botón y muestra un mensaje
                         mostrarMensaje('Inscripción cancelada correctamente', ".mensaje-exito");
-                        btInscribe.innerText = "Inscripción Cancelada";
-                        btInscribe.style.color = 'var(--color-rojo)';
-                        btInscribe.disabled = true;
+                        if (btInscribe) {
+                            btInscribe.innerText = "Inscripción Cancelada";
+                            btInscribe.style.color = 'var(--color-rojo)';
+                            btInscribe.disabled = true;
+                        }
+
                     } else {
                         // Muestra un mensaje de error si no se puede cancelar la inscripción
                         mostrarMensaje('No se ha podido cancelar la inscripción. Inténtalo de nuevo', ".mensaje-error");

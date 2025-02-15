@@ -300,6 +300,7 @@ function inscribirJugador(idUsuario, idPartido, organizador) {
         })
     }).then(res => {
         if (res.ok) {
+            console.log("Objeto inscripcion: " + res.json());
             // Si la respuesta es exitosa:
             // Comprueba si el usuario es el organizador
             // Si no lo es, muestra un mensaje de éxito y actualiza el botón

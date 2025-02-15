@@ -88,14 +88,14 @@ public class InscribeServiceTest {
     }
 
     @Test
-    void testObtenerCantidadDeInscripciones() {
+    void testObtenerCantidadInscripciones() {
         int idUsuario = 1;
 
         // Simular que el usuario está inscrito en 3 partidos
         when(inscribeRepository.countByUsuario_id(idUsuario)).thenReturn(3);
 
         // Verificar la cantidad de inscripciones
-        int cantidadInscripciones = inscribeService.obtenerCantidadDeInscripciones(idUsuario);
+        int cantidadInscripciones = inscribeService.obtenerCantidadInscripciones(idUsuario);
         assertEquals(3, cantidadInscripciones, "El usuario debería estar inscrito en 3 partidos.");
     }
 }

@@ -5,12 +5,15 @@ import java.io.Serializable;
 import jakarta.persistence.*;
 
 /**
- * Representa la relación entre un usuario y un partido, indicando que un usuario se ha inscrito en un partido.
+ * Representa la relación entre un usuario y un partido, indicando que un
+ * usuario se ha inscrito en un partido.
  * Esta entidad está mapeada a la tabla "INSCRIBE" en la base de datos.
  */
 @Entity
 @Table(name = "INSCRIBE")
-public class Inscribe implements Serializable{
+public class Inscribe implements Serializable {
+
+    
 
     /**
      * Identificador único de la inscripción.
@@ -23,7 +26,8 @@ public class Inscribe implements Serializable{
 
     /**
      * Usuario que se ha inscrito en el partido.
-     * Es una relación @ManyToOne, ya que un usuario puede inscribirse en varios partidos.
+     * Es una relación @ManyToOne, ya que un usuario puede inscribirse en varios
+     * partidos.
      */
     @ManyToOne
     @JoinColumn(name = "id_usuario", nullable = false)
@@ -31,7 +35,8 @@ public class Inscribe implements Serializable{
 
     /**
      * Partido en el que el usuario se ha inscrito.
-     * Es una relación @ManyToOne, ya que un partido puede tener varias inscripciones.
+     * Es una relación @ManyToOne, ya que un partido puede tener varias
+     * inscripciones.
      */
     @ManyToOne
     @JoinColumn(name = "id_partido", nullable = false)
@@ -44,15 +49,24 @@ public class Inscribe implements Serializable{
     @Column(name = "fecha_ins")
     private String fechaIns;
 
+    /**
+     * Indica si el organizador del partido ha sido notificado de la inscripción.
+     * Este campo se inicializa en {@code false} y se actualiza a {@code true}
+     * cuando la notificación ha sido enviada.
+     */
+    private boolean notificado = false;
+
     // Constructores, getters y setters
 
     /**
      * Constructor vacío requerido para JPA.
      */
-    public Inscribe() {}
+    public Inscribe() {
+    }
 
     /**
-     * Constructor que permite inicializar una inscripción con el usuario, el partido y la fecha de inscripción.
+     * Constructor que permite inicializar una inscripción con el usuario, el
+     * partido y la fecha de inscripción.
      *
      * @param usuario  Usuario que se inscribe.
      * @param partido  Partido en el que se inscribe el usuario.
@@ -134,5 +148,24 @@ public class Inscribe implements Serializable{
      */
     public void setFechaIns(String fechaIns) {
         this.fechaIns = fechaIns;
+    }
+
+    /**
+     * Obtiene el estado de notificación de la inscripción.
+     *
+     * @return true si el organizador ha sido notificado, false en caso contrario.
+     */
+    public boolean isNotificado() {
+        return notificado;
+    }
+
+    /**
+     * Establece el estado de notificación de la inscripción.
+     *
+     * @param notificado true si el organizador ha sido notificado, false en caso
+     *                   contrario.
+     */
+    public void setNotificado(boolean notificado) {
+        this.notificado = notificado;
     }
 }

@@ -7,12 +7,13 @@
     <title>GoToPadel - Encuentra tu Partido de Padel</title>
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="/css/responsive.css">
+    <link rel="stylesheet" href="/css/footer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="HTTP://code.jquery.com/jquery-latest.js"></script>
 </head>
 
 <body>
-  
+
     <!-- ZONA DE CABECERA -->
     <header>
         <div class="cabecera">
@@ -75,12 +76,12 @@
                 <div class="nuevoPassword">
                     <label for="contrasena1">Contraseña:</label>
                     <input type="password" name="contrasena1" id="contrasena1" maxlength="20" required />
-                    <i class="fas fa-eye"  id="mostrarPassword1"></i>
+                    <i class="fas fa-eye" id="mostrarPassword1"></i>
                 </div>
                 <div class="repetirPassword">
                     <label for="contrasena2">Repetir Contraseña:</label>
                     <input type="password" name="contrasena2" id="contrasena2" maxlength="20" required />
-                    <i class="fas fa-eye"  id="mostrarPassword2"></i>
+                    <i class="fas fa-eye" id="mostrarPassword2"></i>
                 </div>
                 <label for="nivel">Nivel de Juego:</label>
                 <select id="nivel" name="nivel">
@@ -117,19 +118,19 @@
         <div class="error-registro"></div>
     </section>
 
-  
+
     <!--ZONA DE NOTICIAS -->
     <div class="noticias">
         <h2 id="subtitulo-noticias" class="subtitulos">Noticias de Pádel</h2>
-        
-            <div id="contenedor-noticias"></div>
-        
+
+        <div id="contenedor-noticias"></div>
+
         <div class="controles">
             <img id="anterior" src="img/ico_left.png" alt="Anterior">
             <img id="siguiente" src="img/ico_right.png" alt="Siguiente">
         </div>
     </div>
-    
+
 
     <!--ZONA DE PISTAS DE PÁDEL-->
     <div class="pistas">
@@ -166,19 +167,25 @@
             <p>Encuentra sitios donde jugar en tu ciudad</p>
         </div>
     </section>
-
+    <div id="contenedor-info" class="bloqueo-pantalla">
+        <div class="informacion">
+            <button class="cerrar-info"><span id="cerrar-info">&times;</span></button>
+            <div class="contenido-info"></div>
+            <button class="btn-cerrar-info">Aceptar</button>            
+        </div>
+    </div>
     <!-- PIE DE PÁGINA -->
     <footer>
-        <p>2024 GoToPadel. Todos los derechos reservados.</p>
+        <p>2025 GoToPadel. Todos los derechos reservados.</p>
         <ul>
-            <li><a href="/privacy">Política de Privacidad</a></li>
-            <li><a href="/contact">Contacto</a></li>
-            <li><a href="/about">Acerca de</a></li>
+            <li><a id="privacidad" data-tipo="privacidad" href="#">Política de Privacidad</a></li>
+            <li><a id="ayuda" data-tipo="ayuda" href="#">Ayuda</a></li>
+            <li><a id="acerca-de" data-tipo="acerca-de" href="#">Acerca de</a></li>
         </ul>
     </footer>
-    
+    <script src="js/variables.js"></script>
     <script src="js/formularios.js"></script>
-    <script src="js/index.js"></script>    
+    <script src="js/index.js"></script>
     <script src="js/utilidades.js"></script>
 </body>
 

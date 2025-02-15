@@ -6,8 +6,10 @@ header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items: center;    
     padding: 20px 40px;
+    z-index: 3;
+    
 }
 
 /* Contenedores del logo y el usuario en la cabecera  */
@@ -31,6 +33,130 @@ header {
     width: 50px;
     height: 50px;
     border-radius: 50%;
+}
+.notificaciones{
+    display: none;
+    position:relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center; 
+    border: 2px solid black;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color:var(--color-secundario);
+    /* padding: 15px; */
+    cursor: pointer;
+    color: whitesmoke;
+   
+}
+
+.notificaciones i{
+    animation: campana 0.5s infinite ease-in-out;
+    transform-origin: top center;
+    display: inline-block;
+    margin-right: 20px;
+    color: goldenrod;
+    font-size: 20px;
+}
+/* 
+.detalle-notificaciones{
+    display: none;
+   
+    background-color: var(--color-azul);
+    padding: 15px;
+    border-top: 1px solid #ddd;
+    border: 2px solid black;
+    border-radius: 10px;
+    max-height: 40vh;
+    overflow-y: auto;
+    
+    font-weight: 500 !important;
+     
+    position: absolute; 
+    left: 0;
+    top: 100%;
+    width: 100%; 
+    height: 200px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+} */
+.detalle-notificaciones {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30vw;
+    height: auto;
+    max-height: 80vh;
+    overflow-y: auto;
+    background-color: #33517D;
+    padding: 15px 15px;
+    border: 1px solid black;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    display: none;
+    text-align: center;
+    z-index: 4;
+}
+.detalle-notificaciones h3{
+    font-weight: bold;
+    color: whitesmoke;
+}
+
+.header-notificaciones {
+    display: flex;   
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid white;
+    height: 50px;
+   
+}
+
+#cerrar-notificaciones {
+    position: relative;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    color: whitesmoke;
+    height: 20px;
+    /* float: right !important; */
+    /* margin-bottom: 20px; */
+}
+
+#cerrar-notificaciones:hover {
+    color: red;
+}
+
+.fa-eye{
+    float: right;
+    cursor: pointer;
+}
+
+.notificacion {
+    background: white;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+.btn-aceptar, .btn-rechazar{
+    padding: 5px 10px;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+
+
+.btn-aceptar {
+    background-color: #198754;
+    color: white;
+}
+
+.btn-rechazar {
+    background-color: #DC3545;
+    color: white;
 }
 
 /* Mensaje de bienvenida al usuario  */
@@ -77,39 +203,83 @@ header {
 /* Ficha con los datos del usuario  */
 .ficha-usuario {
     display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    padding: 20px 40px;
+    transform: translate(-50%, -50%);
     flex-direction: column;
     align-items: center;
     overflow-y: auto !important;
-    justify-content: center;
-    width: 40% !important;
-    height: 80% !important;
+    justify-content: flex-start;
+    width: 30% !important;
+    height: 50% !important;
     min-height: fit-content;
     gap: 20px;
     border: 2px solid whitesmoke;
     border-radius: 10px;
-    background-color: var(--color-fondo-claro);
+    background-color: var(--color-azul);
     font-size: 20px;
-    color: var(--color-azul);
+    color: whitesmoke;
     font-weight: bold;
+    z-index: 4;
+}
+.ficha-usuario-header{
+    display: grid;
+    grid-template-columns: 0.5fr 2fr 0.1fr;
+    text-align: center;
+    /* gap: 40px; */
+    width: 100%;
+    border-bottom: 1px solid whitesmoke;
+    margin-bottom: 10px;
+}
+.ficha-usuario-fecha{
+    font-size: 16px;
+    width: 100% !important;
+    margin-right: 5px;
+    /* display: inline;
+    white-space: nowrap;
+    float: right; */
+}
+/* .ficha-usuario-fecha span{
+    float: right;
+} */
+.ficha-usuario-body{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: start;
+    width: 100%;
+}
+.ficha-usuario-body p{
+    border-bottom: 1px solid whitesmoke;
+}
+.ficha-usuario-nombre{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0px 30px;
+    text-align: start;
 }
 
 .ficha-usuario span {
-    color: darkgreen;
+    color: var(--color-verde);
+    float: right;
 }
 
 .nombre-usuario-ficha {
-    font-size: 26px;
+    font-size: 22px;
     font-weight: bold;
 }
 
 /* Botones en la ficha del usuario  */
 .botones-ficha-usuario button {
-    font-size: 20px;
+    font-size: 16px;
     margin: 20px;
-    width: 160px;
-    height: 50px;
-    border-radius: 10px;
-    background-color: var(--color-azul);
+    width: 150px;
+    height: 40px;
+    border-radius: 5px;
+    background-color: var(--color-verde);
     color: whitesmoke;
 }
 
@@ -369,11 +539,12 @@ legend {
     filter: none;
     height: auto;    
     padding: 10px;
-    background-color: var(--color-fondo-claro);
+    background-color: var(--color-secundario);
     border: 2px solid whitesmoke;
+    color: whitesmoke;
     border-radius: 10px;
-    font-weight: bold;
-    font-size: 16px;
+    /* font-weight: bold; */
+    font-size: 20px;
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
     grid-template-areas:
@@ -399,7 +570,7 @@ legend {
     grid-area: fecha;
     background-color: var(--color-azul);
     color: whitesmoke;
-    border: 2px solid black;
+    border: 2px solid whitesmoke;
     border-radius: 10px;
     justify-content: center !important;
     padding: 0px !important;
@@ -438,6 +609,7 @@ legend {
 }
 .partido-vacantes {
     grid-area: vacantes;
+    font-weight: bolder;
 }
 /* Botón para ver detalles del partido */
 #boton-detalles {
@@ -457,7 +629,11 @@ legend {
     display: none;
     flex-direction: column;
     padding: 20px 50px;    
-    background-color: var(--color-fondo-claro);
+    background-color: var(--color-secundario);
+    color: whitesmoke;
+    font-size: 20px;
+    font-weight: bold;
+    opacity: 0.90;
     border-radius: 10px;
     border: 3px solid #333;
     z-index: 1;
@@ -521,10 +697,10 @@ legend {
 }
 /* Estilo de la ficha de partidos del usuario  */
 #ficha-mis-partidos {
-    width: 100%;
+    width: 90%;
     border: 1px solid var(--color-fondo-claro);
     border-radius: 10px;
-    padding: 10px;
+    padding: 30px;
     background-color: var(--color-secundario);
     color: whitesmoke;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
@@ -544,8 +720,8 @@ legend {
 /* Icono de "Organizador" o "Inscrito"  */
 .div-icono-ficha {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 25px;
+    right: 25px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -563,7 +739,7 @@ legend {
 }
 
 /* Estilo del pie de página */
-footer {
+/* footer {
     border: 2px solid white;
     background-color: #333;
     color: #fff;
@@ -584,7 +760,7 @@ footer ul li {
 footer ul li a {
     color: #fff;
     text-decoration: none;
-}
+} */
 
 /* Efecto de clic de los botones */
 .boton-click {
@@ -602,20 +778,44 @@ footer ul li a {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 10px;
-    border-radius: 10px;
+    /* gap: 10px; */
+    border-radius: 5px;
     text-align: center;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: bold;
-    background-color: var(--color-fondo-oscuro);
-    color: whitesmoke;
-    border: 2px solid whitesmoke;
+    background-color: whitesmoke;
+    border: 2px solid black;
+    /* color: whitesmoke;     */
     padding: 20px;
-    z-index: 2;
+    z-index: 5;
+}
+.botones-accion{
+    display: flex;
+    flex-direction: row;
 }
 .aceptar-accion,
 .cancelar-accion,
 .opciones-archivado {
+    padding: 5px 10px;
+    /* width: 50%;
+    height: 30px; */
+    margin: 20px;
+    /* font-size: 16px; */
+    font-weight: bold;
+    border-radius: 5px;
+    
+    color: whitesmoke;
+}
+
+.cabecera-archivado{
+    display: flex;   
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid white;
+    height: 50px;
+}
+
+/* .opciones-archivado {
     width: 70%;
     height: auto;
     margin: 20px;
@@ -624,7 +824,7 @@ footer ul li a {
     border-radius: 10px;
     padding: 10px;
     color: whitesmoke;
-}
+} */
 .aceptar-accion,
 .archivar-jugado {
     background-color: var(--color-verde);
@@ -659,4 +859,41 @@ footer ul li a {
 }
 .mensaje-error h3 {
     color: var(--color-rojo);
+}
+
+@-webkit-keyframes mover {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes mover {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(-10px);
+    }
+}
+@keyframes campana {
+    0% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(-15deg);
+    }
+    50% {
+        transform: rotate(10deg);
+    }
+    75% {
+        transform: rotate(-10deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
 }

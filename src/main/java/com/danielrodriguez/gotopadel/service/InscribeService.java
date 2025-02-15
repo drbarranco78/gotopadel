@@ -1,12 +1,17 @@
 package com.danielrodriguez.gotopadel.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.danielrodriguez.gotopadel.dto.InscripcionDTO;
 import com.danielrodriguez.gotopadel.model.Inscribe;
+import com.danielrodriguez.gotopadel.model.Partido;
+import com.danielrodriguez.gotopadel.model.Usuario;
 import com.danielrodriguez.gotopadel.repository.InscribeRepository;
 
 /**
@@ -38,8 +43,45 @@ public class InscribeService {
             return null; // Ya está inscrito, devuelve -1
         }
         // Inscripción exitosa
+
+        inscribe.setNotificado(false);
         return inscribeRepository.save(inscribe);
 
+    }
+
+    /**
+     * Obtiene una lista de inscripciones que aún no han sido notificadas
+     * para los partidos organizados por un usuario específico.
+     *
+     * @param organizador El usuario organizador de los partidos.
+     * @return Lista de inscripciones no notificadas a los partidos organizados por
+     *         el usuario.
+     */
+    public List<Inscribe> obtenerInscripcionesPendientes(Usuario organizador) {
+        return inscribeRepository.findByPartido_UsuarioAndNotificadoFalse(organizador);
+    }
+
+    /**
+     * Actualiza el estado de la notificación para un conjunto de inscripciones
+     * que no han sido notificadas aún, según el organizador del partido, y devuelve
+     * la lista de usuarios que se han inscrito.
+     * 
+     * @param organizador El usuario organizador del partido.
+     * @return Lista de usuarios que se han inscrito en los partidos del
+     *         organizador.
+     */
+    public List<InscripcionDTO> notificarInscripciones(Usuario organizador) {
+        List<Inscribe> inscripciones = inscribeRepository.findByPartido_UsuarioAndNotificadoFalse(organizador);
+        List<InscripcionDTO> inscripcionesDTO = new ArrayList<>();
+
+        for (Inscribe inscribe : inscripciones) {
+            if (organizador.getIdUsuario() != inscribe.getUsuario().getIdUsuario()) {
+                inscribe.setNotificado(true);
+                inscribeRepository.save(inscribe); // Marca las inscripciones como notificadas
+                inscripcionesDTO.add(new InscripcionDTO(inscribe.getUsuario(), inscribe.getPartido()));                
+            }            
+        }
+        return inscripcionesDTO; // Devuelve la lista de DTOs con usuario y partido
     }
 
     /**
@@ -96,7 +138,9 @@ public class InscribeService {
      * @param idUsuario el ID del usuario.
      * @return el número de partidos en los que el usuario está inscrito.
      */
-    public int obtenerCantidadDeInscripciones(int idUsuario) {
+    public int obtenerCantidadInscripciones(int idUsuario) {
         return inscribeRepository.countByUsuario_id(idUsuario);
     }
+
+    
 }
