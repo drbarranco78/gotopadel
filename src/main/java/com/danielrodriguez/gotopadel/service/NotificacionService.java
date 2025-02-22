@@ -37,19 +37,17 @@ public class NotificacionService {
             if (organizador.getIdUsuario() != inscribe.getUsuario().getIdUsuario()) {
                 //inscribe.setNotificado(true);
                 //inscribeRepository.save(inscribe); // Marca las inscripciones como notificadas
-                inscripcionesDTO.add(new InscripcionDTO(inscribe.getUsuario(), inscribe.getPartido()));                
+                inscripcionesDTO.add(new InscripcionDTO(inscribe.getUsuario(), inscribe.getPartido(),null));                
             }            
         }
         return inscripcionesDTO; // Devuelve la lista de DTOs con usuario y partido
     }
 
-    public void marcarTodasComoLeidas(Usuario organizador) {
-        List<Inscribe> inscripciones = inscribeRepository.findByPartido_UsuarioAndNotificadoFalse(organizador);
+    public void marcarTodasComoLeidas(Usuario usuario) {
+        List<Inscribe> inscripciones = inscribeRepository.findByPartido_UsuarioAndNotificadoFalse(usuario);
         for (Inscribe inscribe : inscripciones) {
             inscribe.setNotificado(true);
             inscribeRepository.save(inscribe); // Marca la inscripción como leída
         }
     }
-    
-
 }

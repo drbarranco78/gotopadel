@@ -7,10 +7,12 @@ public class InscripcionDTO {
 
     private Usuario usuario;
     private Partido partido;
+    private String estado; // Campo añadido para el estado
 
-    public InscripcionDTO(Usuario usuario, Partido partido) {
+    public InscripcionDTO(Usuario usuario, Partido partido, String estado) {
         this.usuario = usuario;
         this.partido = partido;
+        this.estado = (estado != null) ? estado : null;
     }
 
     public Usuario getUsuario() {
@@ -29,4 +31,11 @@ public class InscripcionDTO {
         this.partido = partido;
     }
 
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
 }

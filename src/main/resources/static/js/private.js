@@ -5,11 +5,11 @@ let notificacionesObtenidas;
 
 $(document).ready(function () {
     // Asegurar que el usuario cierra sesión al salir de la página   
-    window.onbeforeunload = function (event) {
-        navigator.sendBeacon('/api/usuario/logout');
-        event.preventDefault();
-        event.returnValue = ''; // Necesario en algunos navegadores como Chrome
-    };
+    // window.onbeforeunload = function (event) {
+    //     navigator.sendBeacon('/api/usuario/logout');
+    //     event.preventDefault();
+    //     event.returnValue = ''; // Necesario en algunos navegadores como Chrome
+    // };
 
     // Obtener datos del usuario desde el backend
     $.ajax({
@@ -28,7 +28,7 @@ $(document).ready(function () {
         console.log("ID de usuario en la app web:", usuario.idUsuario);
 
         $.ajax({
-            url: '/api/inscripciones/notificar/' + usuario.idUsuario,
+            url: '/api/inscripciones/notificar-inscripciones/' + usuario.idUsuario,
             type: 'POST',
             success: function (response) {
                 notificacionesObtenidas = response; // Asignamos el valor globalmente
@@ -53,10 +53,10 @@ $(document).ready(function () {
     $(".notificaciones").click(function (event) {
         event.preventDefault();
         cargarNotificaciones(notificacionesObtenidas);
-        marcarNotificacionesComoLeidas(usuario);
+
 
     });
-    function marcarNotificacionesComoLeidas(usuario) {
+    window.marcarNotificacionesComoLeidas=function(usuario) {
         $.ajax({
             url: '/api/inscripciones/marcarComoLeidas/' + usuario.idUsuario,
             type: 'POST',
@@ -110,21 +110,30 @@ $(document).ready(function () {
             $(".notificaciones").hide();
             $(".detalle-notificaciones").hide();
         }
+        marcarNotificacionesComoLeidas(usuario);
     });
     $(document).on('click', '.btn-rechazar', function () {
         let idNotificacion = $(this).attr("data-id");
+
+        console.log("Aceptando notificación:", idNotificacion);
         // Extraer idUsuario e idPartido del data-id
         let partes = idNotificacion.split("-");
-        let idUsuario = partes[1];
-        let idPartido = partes[3];
+        let idUsuario = parseInt(partes[1], 10); // Parsear a número
+        let idPartido = parseInt(partes[3], 10);
         $(`.notificacion[data-id="${idNotificacion}"]`).remove();
-
-        cancelarInscripcion(idUsuario, idPartido);
+        mostrarDialogo("¿Seguro que quieres cancelar esta inscripción?")
+        .then(() => {
+            modificarEstadoInscripcion(idUsuario, idPartido, "rechazada");
+        })
+        .catch(() => {
+            console.log("Acción cancelada");
+        });       
 
         if ($('.detalle-notificaciones .notificacion').length === 0) {
             $(".notificaciones").hide();
             $(".detalle-notificaciones").hide();
         }
+        //marcarNotificacionesComoLeidas(usuario);
     });
 
     // Cerrar notificaciones
@@ -140,11 +149,6 @@ $(document).ready(function () {
         // Llamamos a la función cargarDatosUsuario pasando el objeto usuario completo
         cargarDatosUsuario(usuario);
     });
-
-
-
-
-
 
     // Añadir clase activa al enlace predeterminado
     $("#enlace-ver").addClass("activo");
@@ -268,7 +272,7 @@ $(document).ready(function () {
         $.get(`/api/usuario/${user.idUsuario}/publicados/count`, function (count) {
             $('.publicados-usuario-ficha span').text(count);
         });
-        $.get(`/api/inscripciones/cantidad/${user.idUsuario}`,function (count) {
+        $.get(`/api/inscripciones/cantidad/${user.idUsuario}`, function (count) {
             $('.inscrito-usuario-ficha span').text(count);
         });
     }

@@ -13,8 +13,6 @@ import jakarta.persistence.*;
 @Table(name = "INSCRIBE")
 public class Inscribe implements Serializable {
 
-    
-
     /**
      * Identificador único de la inscripción.
      * Generado automáticamente por la base de datos.
@@ -55,6 +53,24 @@ public class Inscribe implements Serializable {
      * cuando la notificación ha sido enviada.
      */
     private boolean notificado = false;
+
+    /**
+     * Motivo por el cual la inscripción ha sido cancelada o rechazada.
+     * Si la inscripción está activa, este campo será {@code null}.
+     * Cuando un usuario se desinscribe, es rechazado o el partido se cancela,
+     * este campo almacena la razón de la cancelación.
+     */
+    @Column(name = "motivo_cancelacion")
+    private String motivoCancelacion;
+
+    @Column(name = "estado")
+    private String estado;
+
+    /**
+     * Obtiene la fecha en la que el usuario se inscribió en el partido.
+     *
+     * @return Fecha de inscripción como cadena de texto.
+     */
 
     // Constructores, getters y setters
 
@@ -168,4 +184,23 @@ public class Inscribe implements Serializable {
     public void setNotificado(boolean notificado) {
         this.notificado = notificado;
     }
+
+    /**
+     * Obtiene el estado de la inscripción.
+     *
+     * @return Estado de la inscripción (por ejemplo, "Inscrito", "Cancelado").
+     */
+    public String getEstado() {
+        return estado;
+    }
+
+    /**
+     * Establece el estado de la inscripción.
+     *
+     * @param estado Estado de la inscripción
+     */
+    public void setEstado(String estado) {
+        this.estado =  estado;  // Evita valores nulos
+    }
+
 }

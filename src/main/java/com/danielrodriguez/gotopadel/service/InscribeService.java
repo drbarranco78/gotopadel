@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.danielrodriguez.gotopadel.dto.InscripcionDTO;
 import com.danielrodriguez.gotopadel.model.Inscribe;
@@ -78,8 +79,8 @@ public class InscribeService {
             if (organizador.getIdUsuario() != inscribe.getUsuario().getIdUsuario()) {
                 inscribe.setNotificado(true);
                 inscribeRepository.save(inscribe); // Marca las inscripciones como notificadas
-                inscripcionesDTO.add(new InscripcionDTO(inscribe.getUsuario(), inscribe.getPartido()));                
-            }            
+                inscripcionesDTO.add(new InscripcionDTO(inscribe.getUsuario(), inscribe.getPartido(),null));
+            }
         }
         return inscripcionesDTO; // Devuelve la lista de DTOs con usuario y partido
     }
@@ -142,5 +143,46 @@ public class InscribeService {
         return inscribeRepository.countByUsuario_id(idUsuario);
     }
 
-    
+    // @Transactional
+    // public boolean modificarEstadoInscripcion(Inscribe inscribe) {
+    // // Buscar la inscripción por usuario y partido
+    // Optional<Inscribe> inscripcionOpt =
+    // inscribeRepository.findByUsuario_idAndPartido_idPartido(
+    // inscribe.getUsuario().getIdUsuario(), inscribe.getPartido().getIdPartido());
+    // System.out.println("Usuario ID recibido: " +
+    // inscribe.getUsuario().getIdUsuario());
+    // System.out.println("Partido ID recibido: " +
+    // inscribe.getPartido().getIdPartido());
+    // System.out.println("Inscripción encontrada: " + inscripcionOpt.isPresent());
+    // System.out.println("Nuevo Estado: " + inscribe.getEstado());
+    // if (inscripcionOpt.isPresent()) {
+    // Inscribe inscripcion = inscripcionOpt.get();
+    // System.out.println("Inscripcion: " + inscripcion);
+    // // Asignar directamente el nuevo estado
+    // inscripcion.setEstado(inscribe.getEstado()); // Modificar el estado
+    // // Puedes actualizar otros campos como 'motivoCancelacion', si es necesario
+    // inscribeRepository.save(inscripcion);
+    // inscribeRepository.flush();
+    // return true;
+    // }
+    // return false;
+    // }
+
+    @Transactional
+    public boolean modificarEstadoInscripcion(Integer idUsuario, Integer idPartido, String estado) {
+        // Buscar la inscripción por usuario y partido
+        Optional<Inscribe> inscripcionOpt = inscribeRepository.findByUsuario_idAndPartido_idPartido(idUsuario,
+                idPartido);
+
+        if (inscripcionOpt.isPresent()) {
+            Inscribe inscripcion = inscripcionOpt.get();
+
+            // Asignar directamente el nuevo estado
+            inscripcion.setEstado(estado); // Modificar el estado
+            inscribeRepository.save(inscripcion);
+            return true;
+        }
+        return false;
+    }
+
 }

@@ -8,6 +8,14 @@ document.getElementById('enlace-ver').addEventListener('click', function () {
     cargarPartidos();
 });
 
+const nivelesEstrellas = {
+    'Principiante': 1,
+    'Intermedio': 2,
+    'Avanzado': 3,
+    'Experto': 4,
+    'Profesional': 5
+};
+
 /**
  * Carga y muestra los partidos disponibles en el contenedor correspondiente.
  * Realiza una solicitud GET al backend para obtener los partidos y luego genera 
@@ -82,13 +90,13 @@ function cargarPartidos() {
                 // Configura la ubicación del partido o muestra un mensaje por defecto
                 nuevoPartido.querySelector('.partido-ubicacion').innerHTML = `<img src="img/ico_pista.png"> ${partido.ubicacion?.nombre || 'Ubicación no disponible'}`;
                 // Genera las estrellas correspondientes al nivel del partido
-                const nivelesEstrellas = {
-                    'Principiante': 1,
-                    'Intermedio': 2,
-                    'Avanzado': 3,
-                    'Experto': 4,
-                    'Profesional': 5
-                };
+                // const nivelesEstrellas = {
+                //     'Principiante': 1,
+                //     'Intermedio': 2,
+                //     'Avanzado': 3,
+                //     'Experto': 4,
+                //     'Profesional': 5
+                // };
                 let nivel = partido.nivel;
                 let numeroEstrellas = nivelesEstrellas[nivel] || 0; // Usa 0 si el nivel no está definido
                 let estrellasHTML = '';
@@ -187,16 +195,28 @@ function verDetalles(partido, inscrito, organizador) {
                 // Si el partido está completo, muestra un mensaje al usuario
                 mostrarMensaje("Este partido está completo", ".mensaje-error");
             } else if (btInscribe.innerText !== 'Inscrito') {
+                if (nivelesEstrellas[usuario.nivel] >= nivelesEstrellas[partido.nivel]) {
+                    // Si el nivel es adecuado, muestra el diálogo de confirmación
+                    mostrarDialogo("Te apuntas al partido de " + partido.usuario.nombre + " ?")
+                        .then(() => {
+                            // Inscribe al usuario en el partido 
+                            inscribirJugador(idUsuarioActivo, partido.idPartido, false);
+                        });
+                } else {
+                    // Si el nivel del usuario es inferior, muestra un mensaje de error
+                    mostrarMensaje("No puedes inscribirte. Tu nivel es inferior al requerido.", ".mensaje-error");
+                }
                 // Si no está inscrito, muestra un diálogo de confirmación
-                mostrarDialogo("Te apuntas al partido de " + partido.usuario.nombre + " ?")
-                    .then(() => {
-                        // Inscribe al usuario en el partido 
-                        inscribirJugador(idUsuarioActivo, partido.idPartido, false);
-                    })
-                    .catch(() => {
-                        // Si el usuario cancela la acción
-                        console.log("El usuario canceló la inscripción");
-                    });
+                // mostrarDialogo("Te apuntas al partido de " + partido.usuario.nombre + " ?")
+                //     .then(() => {
+
+                //         // Inscribe al usuario en el partido 
+                //         inscribirJugador(idUsuarioActivo, partido.idPartido, false);
+                //     })
+                //     .catch(() => {
+                //         // Si el usuario cancela la acción
+                //         console.log("El usuario canceló la inscripción");
+                //     });
 
             } else {
                 mostrarMensaje("Ya estás inscrito en el partido. Si quieres cancelarlo, ve a 'Mis Partidos'.", ".mensaje-exito");

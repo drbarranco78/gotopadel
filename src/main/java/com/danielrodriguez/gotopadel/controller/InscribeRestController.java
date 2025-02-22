@@ -7,8 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -67,7 +69,7 @@ public class InscribeRestController {
      * @param organizadorId El ID del usuario organizador del partido.
      * @return Lista de usuarios inscritos en los partidos del organizador.
      */
-    @PostMapping("/notificar/{organizadorId}")
+    @PostMapping("/notificar-inscripciones/{organizadorId}")
     public ResponseEntity<?> notificarInscripciones(@PathVariable Integer organizadorId) {
         // Buscar el usuario en la base de datos
         Usuario organizador = usuarioService.findById(organizadorId)
@@ -80,6 +82,15 @@ public class InscribeRestController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error al notificar inscripciones: " + e.getMessage());
         }
+    }
+
+    @PostMapping("/notificar-cancelaciones/{jugadorId}")
+    public ResponseEntity<?> notificarCancelaciones(@PathVariable Integer jugadorId) {
+        Usuario jugador = usuarioService.findById(jugadorId)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        return null;
+
     }
 
     @PostMapping("/marcarComoLeidas/{organizadorId}")
@@ -158,4 +169,28 @@ public class InscribeRestController {
     public int obtenerCantidadInscripciones(@PathVariable int idUsuario) {
         return inscribeService.obtenerCantidadInscripciones(idUsuario);
     }
+ 
+
+    @PutMapping("/modificarEstado")
+    public ResponseEntity<String> modificarEstadoInscripcion(@RequestBody InscripcionDTO inscripcionDTO) {
+        try {
+            // Extraer los IDs del usuario y el partido
+            Integer idUsuario = inscripcionDTO.getUsuario().getIdUsuario();
+            Integer idPartido = inscripcionDTO.getPartido().getIdPartido();
+            String estado = inscripcionDTO.getEstado(); 
+
+            // Llamar al servicio con los parámetros extraídos
+            boolean resultado = inscribeService.modificarEstadoInscripcion(idUsuario, idPartido, estado);
+
+            if (resultado) {
+                return ResponseEntity.ok("Estado de la inscripción actualizado correctamente");
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body("No se pudo actualizar el estado de la inscripción");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al procesar la solicitud");
+        }
+    }
+
 }

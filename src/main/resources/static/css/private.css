@@ -118,7 +118,7 @@ header {
     font-weight: bold;
     cursor: pointer;
     color: whitesmoke;
-    height: 20px;
+    /* height: 20px; */
     /* float: right !important; */
     /* margin-bottom: 20px; */
 }

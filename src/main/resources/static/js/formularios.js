@@ -34,21 +34,21 @@ $(document).ready(function () {
      * Valida los campos del formulario de login
      * @returns {boolean} true si los campos son válidos, false si hay errores
      */
-    function validarLogin() {
+    function validarLogin() {  //  ---------------------------------    COMENTADO PARA PRUEBAS ----------------------------//
         emailLogin = $("#username").val();
         passwordLogin = $("#current-password").val();
         // Valida el email y la contraseña
-        if (patronEmail.test(emailLogin) && patronPassword.test(passwordLogin)) {
+        //if (patronEmail.test(emailLogin) && patronPassword.test(passwordLogin)) {
             return true;
-        } else {
-            if (!patronEmail.test(emailLogin)) {
-                // Cambiamos el texto del div de error antes de mostrarlo
-                mostrarMensaje("Introduzca una dirección de correo válida", ".error-login");
-            } else if (!patronPassword.test(passwordLogin)) {
-                mostrarMensaje("La contraseña debe tener entre 8 y 20 caracteres, y al menos una mayúscula, una minúscula y un número", ".error-login");
-            }
-            return false;
-        }
+        // } else {
+        //     if (!patronEmail.test(emailLogin)) {
+        //         // Cambiamos el texto del div de error antes de mostrarlo
+        //         mostrarMensaje("Introduzca una dirección de correo válida", ".error-login");
+        //     } else if (!patronPassword.test(passwordLogin)) {
+        //         mostrarMensaje("La contraseña debe tener entre 8 y 20 caracteres, y al menos una mayúscula, una minúscula y un número", ".error-login");
+        //     }
+        //     return false;
+        // }
     }
 
     /**

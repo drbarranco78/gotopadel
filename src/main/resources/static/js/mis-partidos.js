@@ -141,3 +141,30 @@ function cancelarInscripcion(idUsuario, idPartido, btInscribe = null) {
             console.log("Acción cancelada");
         });
 }
+
+function modificarEstadoInscripcion(idUsuario, idPartido, estado) {
+    const data = {
+        usuario: {
+            idUsuario: idUsuario
+        },
+        partido: {
+            idPartido: idPartido
+        },
+        estado: estado
+    };
+
+    $.ajax({
+        url: '/api/inscripciones/modificarEstado',
+        method: 'PUT',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function(response) {
+            mostrarMensaje("Estado de la inscripción actualizado",".mensaje-exito");
+            console.log('Estado de la inscripción actualizado', response);
+            marcarNotificacionesComoLeidas(usuario);
+        },
+        error: function(error) {
+            console.error('Error al modificar el estado de la inscripción', error);
+        }
+    });
+}
