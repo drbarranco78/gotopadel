@@ -182,6 +182,9 @@ public class InscribeRestController {
             boolean resultado = inscribeService.modificarEstadoInscripcion(idUsuario, idPartido, estado);
 
             if (resultado) {
+                if (estado == "cancelada" || estado == "rechazada") {
+                    partidoService.aumentarVacante(idPartido);
+                }
                 return ResponseEntity.ok("Estado de la inscripción actualizado correctamente");
             } else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)

@@ -121,16 +121,20 @@ function cancelarInscripcion(idUsuario, idPartido, btInscribe = null) {
                     if (response.ok) {
                         // Si se cancela correctamente, actualiza el botón y muestra un mensaje
                         mostrarMensaje('Inscripción cancelada correctamente', ".mensaje-exito");
+
                         if (btInscribe) {
                             btInscribe.innerText = "Inscripción Cancelada";
                             btInscribe.style.color = 'var(--color-rojo)';
                             btInscribe.disabled = true;
                         }
+                        $('#enlace-ver').click();
+                        cargarPartidos();
 
                     } else {
                         // Muestra un mensaje de error si no se puede cancelar la inscripción
                         mostrarMensaje('No se ha podido cancelar la inscripción. Inténtalo de nuevo', ".mensaje-error");
                     }
+
                 })
                 .catch(error => {
                     console.error('Ha habido un error al cancelar la inscripción, inténtalo de nuevo', error);
@@ -158,12 +162,15 @@ function modificarEstadoInscripcion(idUsuario, idPartido, estado) {
         method: 'PUT',
         contentType: 'application/json',
         data: JSON.stringify(data),
-        success: function(response) {
-            mostrarMensaje("Estado de la inscripción actualizado",".mensaje-exito");
+        success: function (response) {
+            mostrarMensaje("Estado de la inscripción actualizado", ".mensaje-exito");
             console.log('Estado de la inscripción actualizado', response);
             marcarNotificacionesComoLeidas(usuario);
+            //$('#enlace-ver').click();
+            cargarPartidos(); // NO ACTUALIZA VACANTES, A PESAR DE QUE EN INSCRIBERESTCONTROLLER SE DESCUENTAN POR SER "rechazada" . COMPROBAR Y ARREGLAR
+            // LA ACCION VIENE DE PRIVATE, btn-rechazar
         },
-        error: function(error) {
+        error: function (error) {
             console.error('Error al modificar el estado de la inscripción', error);
         }
     });

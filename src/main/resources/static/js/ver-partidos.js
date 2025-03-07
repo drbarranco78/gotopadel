@@ -328,6 +328,7 @@ function inscribirJugador(idUsuario, idPartido, organizador) {
                 mostrarMensaje("Jugador inscrito en el partido", ".mensaje-exito");
                 btInscribe.innerText = 'Inscrito';
                 btInscribe.style.color = 'var(--color-verde)';
+                cargarPartidos();
             }
         } else {
             mostrarMensaje("No se ha podido inscribir al jugador, inténtalo de nuevo", ".mensaje-error");

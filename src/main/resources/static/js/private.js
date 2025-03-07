@@ -114,8 +114,7 @@ $(document).ready(function () {
     });
     $(document).on('click', '.btn-rechazar', function () {
         let idNotificacion = $(this).attr("data-id");
-
-        console.log("Aceptando notificación:", idNotificacion);
+        
         // Extraer idUsuario e idPartido del data-id
         let partes = idNotificacion.split("-");
         let idUsuario = parseInt(partes[1], 10); // Parsear a número
