@@ -121,4 +121,5 @@ public class UsuarioService {
     public Optional<Usuario> findById(Integer idUsuario) {
         return usuarioRepository.findById(idUsuario);
     }
+    
 }

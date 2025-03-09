@@ -105,6 +105,16 @@ public class InscribeService {
     }
 
     /**
+     * Obtiene una lista de inscripciones para un partido específico.
+     *
+     * @param idPartido ID del partido.
+     * @return una lista de inscripciones para ese partido.
+     */
+    public List<Inscribe> obtenerInscripcionesPorPartido(Integer idPartido) {
+        return inscribeRepository.findByPartidoIdPartido(idPartido);
+    }
+
+    /**
      * Verifica si un usuario está inscrito en un partido específico.
      *
      * @param idUsuario el id del usuario a verificar.

@@ -56,4 +56,6 @@ public interface InscribeRepository extends JpaRepository<Inscribe, Integer> {
      *         al usuario proporcionado y el campo 'notificado' es falso.
      */
     List<Inscribe> findByPartido_UsuarioAndNotificadoFalse(Usuario usuario);
+
+    List<Inscribe> findByPartidoIdPartido(Integer idPartido);
 }

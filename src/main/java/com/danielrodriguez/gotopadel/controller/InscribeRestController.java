@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.danielrodriguez.gotopadel.dto.InscripcionDTO;
 import com.danielrodriguez.gotopadel.model.Inscribe;
@@ -62,35 +63,47 @@ public class InscribeRestController {
     }
 
     /**
-     * Notifica las inscripciones no notificadas de un organizador de partido y
-     * devuelve la lista de usuarios que se han inscrito.
-     * 
-     * @param organizadorId El ID del usuario organizador del partido.
-     * @return Lista de usuarios inscritos en los partidos del organizador.
+     * Obtiene los IDs de los usuarios inscritos a un partido específico.
+     *
+     * @param idPartido ID del partido.
+     * @return Lista de IDs de usuarios inscritos.
      */
-    @PostMapping("/notificar-inscripciones/{organizadorId}")
-    public ResponseEntity<?> notificarInscripciones(@PathVariable Integer organizadorId) {
-        // Buscar el usuario en la base de datos
-        Usuario organizador = usuarioService.findById(organizadorId)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+    @GetMapping("/partido/{idPartido}/usuarios")
+    public ResponseEntity<List<Integer>> obtenerIdsUsuariosInscritos(@PathVariable Integer idPartido) {
+        List<Inscribe> inscripciones = inscribeService.obtenerInscripcionesPorPartido(idPartido);
+        
+        // Extraer los IDs de los usuarios de las inscripciones
+        List<Integer> idsUsuarios = inscripciones.stream()
+            .map(inscribe -> inscribe.getUsuario().getIdUsuario())
+            .collect(Collectors.toList());
 
-        try {
-            List<InscripcionDTO> inscripciones = notificacionService.notificarInscripciones(organizador);
-            return ResponseEntity.ok(inscripciones); // Devuelve la lista en JSON
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error al notificar inscripciones: " + e.getMessage());
-        }
+        return ResponseEntity.ok(idsUsuarios);
     }
 
-    @PostMapping("/notificar-cancelaciones/{jugadorId}")
-    public ResponseEntity<?> notificarCancelaciones(@PathVariable Integer jugadorId) {
-        Usuario jugador = usuarioService.findById(jugadorId)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+    
+    // @PostMapping("/notificar-inscripciones/{organizadorId}")
+    // public ResponseEntity<?> notificarInscripciones(@PathVariable Integer organizadorId) {
+    //     // Buscar el usuario en la base de datos
+    //     Usuario organizador = usuarioService.findById(organizadorId)
+    //             .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        return null;
+    //     try {
+    //         List<InscripcionDTO> inscripciones = notificacionService.notificarInscripciones(organizador);
+    //         return ResponseEntity.ok(inscripciones); // Devuelve la lista en JSON
+    //     } catch (Exception e) {
+    //         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+    //                 .body("Error al notificar inscripciones: " + e.getMessage());
+    //     }
+    // }
 
-    }
+    // @PostMapping("/notificar-cancelaciones/{jugadorId}")
+    // public ResponseEntity<?> notificarCancelaciones(@PathVariable Integer jugadorId) {
+    //     Usuario jugador = usuarioService.findById(jugadorId)
+    //             .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+    //     return null;
+
+    // }
 
     @PostMapping("/marcarComoLeidas/{organizadorId}")
     public ResponseEntity<?> marcarNotificacionesComoLeidas(@PathVariable Integer organizadorId) {
