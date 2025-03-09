@@ -1,7 +1,7 @@
-//let idUsuario; // Almacena el ID del usuario actual
 let usuario;   // Almacena los datos del usuario actual
 let opUsuario = $(".opciones-usuario"); // Referencia al menú de opciones del usuario
 let notificacionesObtenidas;
+let detallePartido;
 
 $(document).ready(function () {
     // Asegurar que el usuario cierra sesión al salir de la página   
@@ -51,182 +51,127 @@ $(document).ready(function () {
         });
     }
 
-    function obtenerNotificacionesCancelaciones(idUsuario) {
-        $.get(`/api/notificaciones/usuario/${idUsuario}`)
-        .done(function (notificaciones) {
-            console.log("Notificaciones recibidas:", notificaciones);
-            //mostrarNotificaciones(notificaciones); 
-        })
-        .fail(function (error) {
-            console.error("Error al obtener notificaciones:", error.responseText);
-        });
-    }
-    
     // Evento de clic para mostrar notificaciones
     $(".notificaciones").click(function (event) {
         event.preventDefault();
         cargarNotificaciones(notificacionesObtenidas);
-
-
     });
-    window.marcarNotificacionesComoLeidas=function(usuario) {
-        $.ajax({
-            url: '/api/inscripciones/marcarComoLeidas/' + usuario.idUsuario,
-            type: 'POST',
-            success: function (response) {
-                console.log("Notificaciones marcadas como leídas");
-            },
-            error: function (error) {
-                console.error('Error al marcar notificaciones:', error);
-            }
-        });
-    }
-
 
     function cargarNotificaciones(notificacionesObtenidas) {
         $('.detalle-notificaciones .notificacion').remove();
         let html = '';
-    
+
         notificacionesObtenidas.forEach((notificacion, index) => {
             let idNotificacion = notificacion.id;
             let emisor = notificacion.emisor || {};
             let partido = notificacion.partido || {};
-            let organizador = partido.usuario || {}; // Usamos partido.usuario como el organizador
-            let mensaje = '';
-    
-            console.log("Notificación recibida:", notificacion);
-    
-            switch (notificacion.tipo) {
-                case "inscripción":
-                    mensaje = `<strong>${emisor.nombre || 'Usuario desconocido'}</strong> se ha inscrito en tu partido
-                    <i class="ver-perfil-inscrito fas fa-eye" data-usuario='${JSON.stringify(notificacion.emisor || {})}'></i>`;
-                    break;
-                case "rechazo":
-                    mensaje = `Tu inscripción al partido <strong>${partido.tipoPartido || 'desconocido'}</strong> ha sido rechazada por el organizador <strong>${emisor.nombre || 'Usuario desconocido'}</strong>.`;
-                    break;
-                case "cancelación":
-                    mensaje = `El partido <strong>${partido.tipoPartido || 'desconocido'}</strong> ha sido cancelado por el organizador <strong>${emisor.nombre || 'Usuario desconocido'}</strong>.`;
-                    break;
-                case "cancelado-usuario":
-                    mensaje = `<strong>${emisor.nombre || 'Usuario desconocido'}</strong> ha cancelado su inscripción al partido <strong>${partido.tipoPartido || 'desconocido'}</strong> organizado por <strong>${organizador.nombre || 'Organizador desconocido'}</strong>.`;
-                    break;
-            }
-    
+            let organizador = partido.usuario || {}; 
+            let mensaje = notificacion.mensaje;
             html += `
-                <div class="notificacion" data-id="${idNotificacion}" data-usuario-id="${emisor.idUsuario || ''}" data-partido-id="${partido.idPartido || ''}">
+                <div class="notificacion" data-id="${idNotificacion}" data-usuario="${emisor.idUsuario || ''}" data-partido="${partido.idPartido || ''}">
                     <p>${mensaje}</p>
                     <p>Fecha: ${new Date(notificacion.fechaCreacion).toLocaleString()}</p>
             `;
-    
-            if (notificacion.tipo === "inscripción") {
-                html += `
-                    <p>Email: ${emisor.email || 'No disponible'}</p>
-                    <p>Partido: ${partido.tipoPartido || 'desconocido'} en ${partido.ubicacion?.nombre || 'ubicación desconocida'} el ${partido.fechaPartido || 'fecha desconocida'} a las ${partido.horaPartido || 'hora desconocida'}</p>
+
+            if (notificacion.tipo === "inscripcion") {
+                html += `                    
                     <button class="btn-aceptar" data-id="${idNotificacion}">Aceptar</button>
                     <button class="btn-rechazar" data-id="${idNotificacion}">Rechazar</button>
                 `;
-            } else if (notificacion.tipo === "rechazo" || notificacion.tipo === "cancelación") {
-                html += `
-                    <p>Organizador: ${emisor.nombre || 'Usuario desconocido'} (${emisor.email || 'No disponible'})</p>
-                    <p>Partido: ${partido.tipoPartido || 'desconocido'} en ${partido.ubicacion?.nombre || 'ubicación desconocida'}</p>
-                    <p>Fecha original: ${partido.fechaPartido || 'fecha desconocida'} a las ${partido.horaPartido || 'hora desconocida'}</p>
+            } else {
+                html += `                    
                     <button class="btn-aceptar" data-id="${idNotificacion}">Aceptar</button>
                 `;
-            } else if (notificacion.tipo === "cancelado-usuario") {
-                html += `
-                    <p>Usuario: ${emisor.nombre || 'Usuario desconocido'} (${emisor.email || 'No disponible'})</p>
-                    <p>Organizador: ${organizador.nombre || 'Organizador desconocido'} (${organizador.email || 'No disponible'})</p>
-                    <p>Partido: ${partido.tipoPartido || 'desconocido'} en ${partido.ubicacion?.nombre || 'ubicación desconocida'}</p>
-                    <p>Fecha original: ${partido.fechaPartido || 'fecha desconocida'} a las ${partido.horaPartido || 'hora desconocida'}</p>
-                    <button class="btn-aceptar" data-id="${idNotificacion}">Aceptar</button>
-                `;
-            }
-    
+            } 
             html += `</div>`;
         });
-    
+
         $('.detalle-notificaciones').append(html);
         $('.detalle-notificaciones').show();
     }
-    
+
     // Delegación de eventos para manejar elementos dinámicos
     $(document).on('click', '.btn-aceptar', function () {
         let idNotificacion = $(this).attr("data-id");
         console.log("Aceptando notificación:", idNotificacion);
-        // $(`.notificacion[data-id="${idNotificacion}"]`).remove();
-
-        // // Verificamos si no hay más notificaciones y ocultamos el contenedor si es necesario
-        // if ($('.detalle-notificaciones .notificacion').length === 0) {
-        //     $(".notificaciones").hide();
-        //     $(".detalle-notificaciones").hide();
-        // }
-        eliminarNotificacion(idNotificacion);
-        //marcarNotificacionesComoLeidas(usuario);
+        eliminarNotificacion(idNotificacion);        
     });
     $(document).on('click', '.btn-rechazar', function () {
-        let idNotificacion = $(this).attr("data-id");
+        let idNotificacion = $(this).attr("data-id");    
+        $.ajax({
+            url: `/api/notificaciones/${idNotificacion}`,
+            method: 'GET',
+            success: function (notificacion) {
+                let mensajeRecibido = notificacion.mensaje;
     
-        // Buscar la notificación en el DOM y obtener los datos
-        let notificacionElement = $(`.notificacion[data-id="${idNotificacion}"]`);
-        let idUsuario = notificacionElement.data("usuario-id");
-        let idPartido = notificacionElement.data("partido-id");
+                // Creamos un contenedor temporal para convertir el string HTML en elementos jQuery
+                let $tempContainer = $('<div>').html(mensajeRecibido);
     
-        //$(`.notificacion[data-id="${idNotificacion}"]`).remove();
-        
-        mostrarDialogo("¿Seguro que quieres cancelar esta inscripción?")
-        .then(() => {
-            let idEmisor = usuario.idUsuario; 
+                // Buscamos el párrafo que contiene el atributo data-partido
+                let $partidoP = $tempContainer.find('p[data-partido]');
+                let idPartido = null;
+                let detallePartido = "Información no disponible";
     
-            // Primero creamos la notificación
-            $.post("/api/notificaciones/crear", {
-                idEmisor: idEmisor,
-                idReceptor: idUsuario,
-                idPartido: idPartido,
-                tipo: "rechazo"
-            }).done(() => {
-                eliminarNotificacion(idNotificacion);
-                console.log("Notificación creada con éxito.");
-                // Luego cancelamos la inscripción
-                cancelarInscripcion(idUsuario, idPartido);
-            }).fail((error) => {
-                console.error("Error al crear la notificación:", error.responseText);
-            });
-        })
-        .catch(() => {
-            console.log("Acción cancelada");
+                if ($partidoP.length > 0) {
+                    // Obtenemos el atributo data-partido y lo parseamos como JSON
+                    let dataPartidoAttr = $partidoP.attr('data-partido');
+                    try {
+                        let dataPartido = JSON.parse(dataPartidoAttr);
+                        idPartido = dataPartido.idPartido;
+                    } catch (error) {
+                        console.error("Error al parsear data-partido:", error);
+                    }
+                    // Extraemos el contenido HTML del párrafo (la descripción del partido)
+                    detallePartido = $partidoP.html().trim();
+                }
+    
+                let mensajeNotificacion = `
+                    Tu inscripción al partido <strong>${detallePartido}</strong> 
+                    ha sido rechazada por el organizador <strong>${notificacion.receptor.nombre || 'Usuario desconocido'}</strong>.
+                    <p>Organizador: ${notificacion.receptor.nombre || 'Usuario desconocido'} (${notificacion.receptor.email || 'No disponible'})</p>
+                `;
+    
+                console.log("Mensaje de notificación: ", mensajeNotificacion);
+                console.log("ID del partido extraído: ", idPartido);
+    
+                // Llamar a la función cancelar inscripción y crear la notificación de rechazo
+                if (idPartido) {
+                    cancelarInscripcion(notificacion.emisor.idUsuario, idPartido);
+                    crearNotificacion(notificacion.receptor.idUsuario, notificacion.emisor.idUsuario, mensajeNotificacion, "rechazo");
+                    eliminarNotificacion(idNotificacion);
+                } else {
+                    console.log("No se encontró el ID del partido.");
+                }
+            },
+            error: function () {
+                alert("Error al obtener la notificación.");
+            }
         });
-    
-        // if ($('.detalle-notificaciones .notificacion').length === 0) {
-        //     $(".notificaciones").hide();
-        //     $(".detalle-notificaciones").hide();
-        // }
-    });
+    });   
 
     function eliminarNotificacion(idNotificacion) {
         $.ajax({
             url: `/api/notificaciones/eliminar/${idNotificacion}`,
             type: 'DELETE',
-            success: function(response) {
+            success: function (response) {
                 // Eliminar la notificación del DOM
                 $(`.notificacion[data-id="${idNotificacion}"]`).remove();
-                
+
                 // Opcional: Verificar si ya no hay notificaciones
                 if ($('.detalle-notificaciones .notificacion').length === 0) {
                     $(".notificaciones").hide();
                     $('.detalle-notificaciones').hide();
                 }
-                
+
                 console.log(`Notificación ${idNotificacion} eliminada con éxito`);
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error('Error al eliminar la notificación:', error);
                 // Opcional: Mostrar mensaje de error al usuario
                 alert('No se pudo eliminar la notificación. Por favor, intenta de nuevo.');
             }
         });
     }
-    
-    
 
     // Cerrar notificaciones
     $(document).on('click', '#cerrar-notificaciones', function () {

@@ -49,18 +49,18 @@ public class NotificacionService {
      *                   "partido_cancelado", etc.)
      * @return La notificación creada o null si ya existe una equivalente.
      */
-    public Notificacion crearNotificacion(Integer idEmisor, Integer idReceptor, Integer idPartido, String tipo) {
+    public Notificacion crearNotificacion(Integer idEmisor, Integer idReceptor, String mensaje, String tipo ) {
         Usuario emisor = usuarioService.findById(idEmisor)
                 .orElseThrow(() -> new RuntimeException("Usuario emisor no encontrado"));
         Usuario receptor = usuarioService.findById(idReceptor)
                 .orElseThrow(() -> new RuntimeException("Usuario receptor no encontrado"));
-        Partido partido = partidoService.obtenerPartidoPorId(idPartido)
-                .orElseThrow(() -> new RuntimeException("Partido no encontrado"));
+        // Partido partido = partidoService.obtenerPartidoPorId(idPartido)
+        //         .orElseThrow(() -> new RuntimeException("Partido no encontrado"));
 
         // Verificar si ya existe una notificación con el mismo emisor, receptor,
         // partido y tipo
         Optional<Notificacion> notificacionExistente = notificacionRepository
-                .findByEmisorAndReceptorAndPartidoAndTipo(emisor, receptor, partido, tipo);
+                .findByEmisorAndReceptorAndMensaje(emisor, receptor, mensaje);
 
         if (notificacionExistente.isPresent()) {
             // Si ya existe una notificación idéntica, no creamos una nueva
@@ -68,7 +68,7 @@ public class NotificacionService {
         }
 
         // Si no existe, crear una nueva notificación
-        Notificacion notificacion = new Notificacion(emisor, receptor, partido, tipo);
+        Notificacion notificacion = new Notificacion(emisor, receptor, mensaje, tipo);
         return notificacionRepository.save(notificacion);
     }
 
@@ -92,6 +92,12 @@ public class NotificacionService {
         notificacionRepository.deleteById(idNotificacion);
     }
 
+    public Notificacion obtenerNotificacionCompleta(Integer id) {
+        return notificacionRepository.findById(id)
+                // .map(this::completarNotificacion)
+                .orElse(null);
+    }
+
     /**
      * Actualiza el estado de la notificación para un conjunto de inscripciones
      * que no han sido notificadas aún, según el organizador del partido, y devuelve
@@ -101,35 +107,35 @@ public class NotificacionService {
      * @return Lista de usuarios que se han inscrito en los partidos del
      *         organizador.
      */
-    public List<NotificacionDTO> notificarInscripciones(Usuario organizador) {
-        List<Inscribe> inscripciones = inscribeRepository.findByPartido_UsuarioAndNotificadoFalse(organizador);
-        List<NotificacionDTO> notificacionesDTO = new ArrayList<>();
+    // public List<NotificacionDTO> notificarInscripciones(Usuario organizador) {
+    //     List<Inscribe> inscripciones = inscribeRepository.findByPartido_UsuarioAndNotificadoFalse(organizador);
+    //     List<NotificacionDTO> notificacionesDTO = new ArrayList<>();
 
-        for (Inscribe inscribe : inscripciones) {
-            if (!organizador.getIdUsuario().equals(inscribe.getUsuario().getIdUsuario())) {
-                // Aquí se puede crear una notificación con tipo "inscripcion"
-                Notificacion notificacion = new Notificacion(
-                        inscribe.getUsuario(), // Emisor: el usuario que se inscribió
-                        organizador, // Receptor: el organizador
-                        inscribe.getPartido(),
-                        "inscripción");
-                // Suponiendo que modificamos el constructor o establecemos el tipo
-                // posteriormente:
-                // notificacion.setTipo("inscripcion");
-                notificacionRepository.save(notificacion);
+    //     for (Inscribe inscribe : inscripciones) {
+    //         if (!organizador.getIdUsuario().equals(inscribe.getUsuario().getIdUsuario())) {
+    //             // Aquí se puede crear una notificación con tipo "inscripcion"
+    //             Notificacion notificacion = new Notificacion(
+    //                     inscribe.getUsuario(), // Emisor: el usuario que se inscribió
+    //                     organizador, // Receptor: el organizador
+    //                     inscribe.getPartido(),
+    //                     "inscripción");
+    //             // Suponiendo que modificamos el constructor o establecemos el tipo
+    //             // posteriormente:
+    //             // notificacion.setTipo("inscripcion");
+    //             notificacionRepository.save(notificacion);
 
-                // Convertir a DTO
-                NotificacionDTO dto = new NotificacionDTO(
-                        notificacion.getId(),
-                        inscribe.getUsuario(), // Emisor
-                        inscribe.getPartido(), // Partido
-                        notificacion.getTipo(), // Tipo
-                        notificacion.getFechaCreacion());
-                notificacionesDTO.add(dto);
-            }
-        }
-        return notificacionesDTO;
-    }
+    //             // Convertir a DTO
+    //             NotificacionDTO dto = new NotificacionDTO(
+    //                     notificacion.getId(),
+    //                     inscribe.getUsuario(), // Emisor
+    //                     inscribe.getPartido(), // Partido
+    //                     notificacion.getTipo(), // Tipo
+    //                     notificacion.getFechaCreacion());
+    //             notificacionesDTO.add(dto);
+    //         }
+    //     }
+    //     return notificacionesDTO;
+    // }
 
     public void marcarTodasComoLeidas(Usuario usuario) {
         List<Inscribe> inscripciones = inscribeRepository.findByPartido_UsuarioAndNotificadoFalse(usuario);

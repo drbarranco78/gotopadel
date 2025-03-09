@@ -12,6 +12,6 @@ import org.springframework.stereotype.Repository;
 public interface NotificacionRepository extends JpaRepository<Notificacion, Integer> {
     List<Notificacion> findByReceptor_Id(Integer idReceptor);
 
-    Optional<Notificacion> findByEmisorAndReceptorAndPartidoAndTipo(Usuario emisor, Usuario receptor, Partido partido, String tipo);
-    // Optional<Notificacion> findByEmisorAndReceptorAndMensaje(Usuario emisor, Usuario receptor, String mensaje);
+    // Optional<Notificacion> findByEmisorAndReceptorAndPartidoAndTipo(Usuario emisor, Usuario receptor, Partido partido, String tipo);
+    Optional<Notificacion> findByEmisorAndReceptorAndMensaje(Usuario emisor, Usuario receptor, String mensaje);
 }

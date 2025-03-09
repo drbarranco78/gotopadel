@@ -9,16 +9,18 @@ public class NotificacionDTO {
     private Integer id;
     private Usuario emisor;
     private Partido partido;
-    private String tipo; // Nuevo campo para el tipo de notificación
+    private String tipo;
+    private String mensaje;
     private LocalDateTime fechaCreacion;
 
-    public NotificacionDTO(Integer id, Usuario emisor, Partido partido, String tipo, LocalDateTime fechaCreacion) {
+    public NotificacionDTO(Integer id, Usuario emisor, String mensaje, String tipo, LocalDateTime fechaCreacion) {
         this.id = id;
         this.emisor = emisor;
-        this.partido = partido;
+        this.mensaje = mensaje;
         this.tipo = tipo;
         this.fechaCreacion = fechaCreacion;
     }
+    
 
     public Integer getId() {
         return id;
@@ -34,6 +36,10 @@ public class NotificacionDTO {
 
     public String getTipo() {
         return tipo;
+    }
+
+    public String getMensaje() {
+        return mensaje;
     }
 
     public LocalDateTime getFechaCreacion() {

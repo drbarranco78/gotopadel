@@ -1,19 +1,20 @@
 document.addEventListener('DOMContentLoaded', function () {
     // Obtiene el ID del usuario actual
-    getIdUsuario()
-    .then(idUsuario => {
-        // Almacena el ID del usuario activo
-        idUsuarioActivo = idUsuario;
-        // Carga los partidos del usuario
-        
-    })
-    .catch(error => console.error('Error al obtener el id del usuario:', error));
+    getUsuarioActivo()
+        .then(response => {
+            usuarioActivo = response;
+            // Almacena el ID del usuario activo
+            idUsuarioActivo = response.idUsuario;
+            // Carga los partidos del usuario
+
+        })
+        .catch(error => console.error('Error al obtener el id del usuario:', error));
     // Carga los partidos al cargarse el DOM
     cargarPartidos();
     // Añade un evento al hacer clic en el enlace "Mis Partidos"
     $("#enlace-mispartidos").click(function () {
         cargarMisPartidos(idUsuarioActivo);
-        
+
     });
 });
 
@@ -104,7 +105,7 @@ function cargarPartidos() {
                 // Configura la ubicación del partido o muestra un mensaje por defecto
                 nuevoPartido.querySelector('.partido-ubicacion').innerHTML = `<img src="img/ico_pista.png"> ${partido.ubicacion?.nombre || 'Ubicación no disponible'}`;
                 // Genera las estrellas correspondientes al nivel del partido
-                
+
                 let nivel = partido.nivel;
                 let numeroEstrellas = nivelesEstrellas[nivel] || 0; // Usa 0 si el nivel no está definido
                 let estrellasHTML = '';
@@ -171,7 +172,7 @@ function verDetalles(partido, inscrito, organizador) {
             mostrarConfirmacionArchivado()
                 .then(motivo => {
                     // Si el usuario confirma, archiva el partido con el motivo proporcionado
-                    archivarPartido(partido.idPartido, motivo, btInscribe);
+                    archivarPartido(partido, motivo, btInscribe);
                 })
                 .catch(() => {
                     // Si el usuario cancela la acción
@@ -186,13 +187,13 @@ function verDetalles(partido, inscrito, organizador) {
         });
     } else {
         // Si no es un partido propio, permite inscribirse si hay vacantes
-        // getIdUsuario().then(idUsuario => {
+        // getUsuarioActivo().then(idUsuario => {
         //     idUsuarioActivo = idUsuario;
-            if (!comprobarInscripcion(idUsuarioActivo, partido.idPartido) && partido.vacantes === 0) {
-                // Si el partido está completo, desactiva el botón y muestra un mensaje
-                btInscribe.innerText = 'Completo';
-                btInscribe.style.color = 'red';
-            }
+        if (!comprobarInscripcion(idUsuarioActivo, partido.idPartido) && partido.vacantes === 0) {
+            // Si el partido está completo, desactiva el botón y muestra un mensaje
+            btInscribe.innerText = 'Completo';
+            btInscribe.style.color = 'red';
+        }
         // }).catch(error => {
         //     console.error('Error al obtener el ID del usuario:', error);
         // });
@@ -209,23 +210,12 @@ function verDetalles(partido, inscrito, organizador) {
                         .then(() => {
                             // Inscribe al usuario en el partido 
                             inscribirJugador(idUsuarioActivo, partido, false);
-                            
+
                         });
                 } else {
                     // Si el nivel del usuario es inferior, muestra un mensaje de error
                     mostrarMensaje("No puedes inscribirte. Tu nivel es inferior al requerido.", ".mensaje-error");
-                }
-                // Si no está inscrito, muestra un diálogo de confirmación
-                // mostrarDialogo("Te apuntas al partido de " + partido.usuario.nombre + " ?")
-                //     .then(() => {
-
-                //         // Inscribe al usuario en el partido 
-                //         inscribirJugador(idUsuarioActivo, partido.idPartido, false);
-                //     })
-                //     .catch(() => {
-                //         // Si el usuario cancela la acción
-                //         console.log("El usuario canceló la inscripción");
-                //     });
+                }    
 
             } else {
                 mostrarMensaje("Ya estás inscrito en el partido. Si quieres cancelarlo, ve a 'Mis Partidos'.", ".mensaje-exito");
@@ -244,7 +234,7 @@ function verDetalles(partido, inscrito, organizador) {
  * o se rechaza con un error si el ID no está disponible.
  * @returns {Promise<number>} Una promesa que resuelve el ID del usuario.
  */
-function getIdUsuario() {
+function getUsuarioActivo() {
     // Retorna una promesa que intenta obtener el ID del usuario actual
     return new Promise((resolve, reject) => {
         $.ajax({
@@ -254,7 +244,7 @@ function getIdUsuario() {
             success: function (response) {
                 // Si la respuesta contiene un ID de usuario válido, resuelve la promesa
                 if (response && response.idUsuario) {
-                    resolve(response.idUsuario);
+                    resolve(response);
                 } else {
                     // Si no se encuentra el ID de usuario, rechaza la promesa con un error
                     reject(new Error("ID de usuario no disponible"));
@@ -335,10 +325,19 @@ function inscribirJugador(idUsuario, partido, organizador) {
             // Comprueba si el usuario es el organizador
             // Si no lo es, muestra un mensaje de éxito y actualiza el botón
             if (!organizador) {
+                let mensajeNotificacion = `<strong>${usuarioActivo.nombre || 'Usuario desconocido'}</strong> se ha inscrito en tu partido
+                    <i class="ver-perfil-inscrito fas fa-eye" data-usuario='${JSON.stringify(usuarioActivo || {})}'></i>
+                    <p>Email: ${usuarioActivo.email || 'No disponible'}</p>
+                    <p data-partido='${JSON.stringify({ idPartido: partido.idPartido })}'>
+                        Partido: ${partido.tipoPartido || 'desconocido'} en ${partido.ubicacion?.nombre || 'ubicación desconocida'} 
+                        el ${partido.fechaPartido || 'fecha desconocida'} a las ${partido.horaPartido || 'hora desconocida'}
+                    </p>`;
+
+                //let mensajeEncoded = encodeURIComponent(mensajeNotificacion);
                 mostrarMensaje("Jugador inscrito en el partido", ".mensaje-exito");
                 btInscribe.innerText = 'Inscrito';
                 btInscribe.style.color = 'var(--color-verde)';
-                crearNotificacion(idUsuarioActivo, partido.usuario.idUsuario, idPartido, "inscripción");
+                crearNotificacion(idUsuarioActivo, partido.usuario.idUsuario, mensajeNotificacion, "inscripcion");
                 cargarPartidos();
             }
         } else {
@@ -348,8 +347,8 @@ function inscribirJugador(idUsuario, partido, organizador) {
     }).catch(error => console.error('Error al inscribir al jugador en el partido:', error));
 
 }
-function crearNotificacion(idEmisor, idReceptor, idPartido, tipo) {
-    console.log(`Enviando notificación: idEmisor=${idEmisor}, idReceptor=${idReceptor}, idPartido=${idPartido}, tipo=${tipo}`);
+function crearNotificacion(idEmisor, idReceptor, mensaje, tipo) {
+    //console.log(`Enviando notificación: idEmisor=${idEmisor}, idReceptor=${idReceptor}, idPartido=${idPartido}, tipo=${tipo}`);
     return fetch("/api/notificaciones/crear", {
         method: "POST",
         headers: {
@@ -358,25 +357,25 @@ function crearNotificacion(idEmisor, idReceptor, idPartido, tipo) {
         body: new URLSearchParams({
             idEmisor: idEmisor,
             idReceptor: idReceptor,
-            idPartido: idPartido,
+            mensaje: mensaje,
             tipo: tipo
         })
     })
-    .then(response => {
-        console.log(`Respuesta del servidor: ${response.status} ${response.statusText}`);
-        if (response.ok) {
-            console.log("Notificación generada con éxito");
-            return;
-        } else {
-            return response.text().then(text => {
-                throw new Error(`Error al generar la notificación: ${response.status} ${response.statusText} - ${text}`);
-            });
-        }
-    })
-    .catch(error => {
-        console.error("Error al generar la notificación:", error);
-        throw error;
-    });
+        .then(response => {
+            console.log(`Respuesta del servidor: ${response.status} ${response.statusText}`);
+            if (response.ok) {
+                console.log("Notificación generada con éxito");
+                return;
+            } else {
+                return response.text().then(text => {
+                    throw new Error(`Error al generar la notificación: ${response.status} ${response.statusText} - ${text}`);
+                });
+            }
+        })
+        .catch(error => {
+            console.error("Error al generar la notificación:", error);
+            throw error;
+        });
 }
 
 /**
@@ -448,15 +447,19 @@ function cargarMisPartidos(idUsuario) {
  * @param {string} motivoArchivado - El motivo por el cual el partido es archivado.
  * @param {HTMLElement} btInscribe - El botón que se deshabilitará al archivar el partido.
  */
-function archivarPartido(idPartido, motivoArchivado, btInscribe) {
-    obtenerInscritos(idPartido)
+function archivarPartido(partido, motivoArchivado, btInscribe) {
+    obtenerInscritos(partido.idPartido)
         .then((usuariosInscritos) => {
             console.log("IDs de los usuarios inscritos:", usuariosInscritos);
-
+            let mensajeNotificacion = `El partido <strong>${partido.tipoPartido || 'desconocido'}</strong> 
+            ha sido cancelado por el organizador <strong>${usuarioActivo.nombre || 'Usuario desconocido'}</strong>.
+            <p>Organizador: ${usuarioActivo.nombre || 'Usuario desconocido'} (${usuarioActivo.email || 'No disponible'})</p>
+            <p>Partido: ${partido.tipoPartido || 'desconocido'} en ${partido.ubicacion?.nombre || 'ubicación desconocida'}</p>
+            <p>Fecha original: ${partido.fechaPartido || 'fecha desconocida'} a las ${partido.horaPartido || 'hora desconocida'}</p>`;
             if (usuariosInscritos.length > 0) {
                 let promesas = usuariosInscritos
                     .filter(inscrito => idUsuarioActivo !== inscrito) // Evita que el creador se notifique a sí mismo
-                    .map(inscrito => crearNotificacion(idUsuarioActivo, inscrito, idPartido, "cancelación"));
+                    .map(inscrito => crearNotificacion(idUsuarioActivo, inscrito, mensajeNotificacion, "cancelacion"));
 
                 // Esperar a que todas las notificaciones se envíen antes de archivar el partido
                 return Promise.all(promesas).then(() => usuariosInscritos);
@@ -467,7 +470,7 @@ function archivarPartido(idPartido, motivoArchivado, btInscribe) {
         })
         .then(() => {
             // Ahora se archiva el partido después de enviar las notificaciones
-            const url = `/api/archivo?idPartido=${idPartido}&motivoArchivado=${motivoArchivado}`;
+            const url = `/api/archivo?idPartido=${partido.idPartido}&motivoArchivado=${motivoArchivado}`;
             return fetch(url, { method: 'POST' });
         })
         .then(response => {
@@ -510,7 +513,7 @@ function obtenerInscritos(idPartido) {
  * @param {number} idPartido - El ID del partido en el cual el usuario está inscrito.
  * @param {HTMLElement} btInscribe - El botón que se actualizará tras la cancelación.
  */
-function cancelarInscripcion(idUsuario, idPartido, partido=null, btInscribe = null) {
+function cancelarInscripcion(idUsuario, idPartido, partido = null, btInscribe = null) {
     // Muestra un diálogo de confirmación para la cancelación
     mostrarDialogo("¿Seguro que quieres cancelar la inscripción a este partido?")
         .then(() => {
@@ -521,11 +524,19 @@ function cancelarInscripcion(idUsuario, idPartido, partido=null, btInscribe = nu
                         // Si se cancela correctamente, actualiza el botón y muestra un mensaje
                         mostrarMensaje('Inscripción cancelada correctamente', ".mensaje-exito");
 
-                        if (btInscribe) {
+                        if (partido) {
+                            let mensajeNotificacion = `<strong>${usuarioActivo.nombre || 'Usuario desconocido'}</strong> ha cancelado su inscripción al partido 
+                            <strong>${partido.tipoPartido || 'desconocido'}</strong> organizado por <strong>${partido.usuario.nombre || 'Organizador desconocido'}</strong>.
+                            <p>Usuario: ${usuarioActivo.nombre || 'Usuario desconocido'} (${usuarioActivo.email || 'No disponible'})</p>
+                            <p>Organizador: ${partido.usuario.nombre || 'Organizador desconocido'} (${partido.usuario.email || 'No disponible'})</p>
+                            <p>Partido: ${partido.tipoPartido || 'desconocido'} en ${partido.ubicacion?.nombre || 'ubicación desconocida'}</p>
+                            <p>Fecha original: ${partido.fechaPartido || 'fecha desconocida'} a las ${partido.horaPartido || 'hora desconocida'}</p>`;
+                            crearNotificacion(idUsuario, partido.usuario.idUsuario, mensajeNotificacion, "cancelado-usuario");
+                        }
+                        if (btInscribe) {                        
                             btInscribe.innerText = "Inscripción Cancelada";
                             btInscribe.style.color = 'var(--color-rojo)';
-                            btInscribe.disabled = true;
-                            crearNotificacion(idUsuario, partido.usuario.idUsuario, idPartido, "cancelado-usuario");
+                            btInscribe.disabled = true;                            
                         }
                         $('#enlace-ver').click();
                         cargarPartidos();
@@ -545,35 +556,5 @@ function cancelarInscripcion(idUsuario, idPartido, partido=null, btInscribe = nu
             console.log("Acción cancelada");
         });
 }
-
-// function modificarEstadoInscripcion(idUsuario, idPartido, estado) {
-//     const data = {
-//         usuario: {
-//             idUsuario: idUsuario
-//         },
-//         partido: {
-//             idPartido: idPartido
-//         },
-//         estado: estado
-//     };
-
-//     $.ajax({
-//         url: '/api/inscripciones/modificarEstado',
-//         method: 'PUT',
-//         contentType: 'application/json',
-//         data: JSON.stringify(data),
-//         success: function (response) {
-//             mostrarMensaje("Estado de la inscripción actualizado", ".mensaje-exito");
-//             console.log('Estado de la inscripción actualizado', response);
-//             marcarNotificacionesComoLeidas(usuario);
-//             //$('#enlace-ver').click();
-//             cargarPartidos(); // NO ACTUALIZA VACANTES, A PESAR DE QUE EN INSCRIBERESTCONTROLLER SE DESCUENTAN POR SER "rechazada" . COMPROBAR Y ARREGLAR
-//             // LA ACCION VIENE DE PRIVATE, btn-rechazar
-//         },
-//         error: function (error) {
-//             console.error('Error al modificar el estado de la inscripción', error);
-//         }
-//     });
-// }
 
 

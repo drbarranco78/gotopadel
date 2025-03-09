@@ -1,5 +1,5 @@
 let verDetallesFicha, fichaPartidoContainer, fichaMiPartidoContainer, fichaPartidoTemplate,
-    fichaMiPartidoTemplate,  btInscribeVer, btInscribe, contenedorPrincipal, idUsuarioActivo, licencia, privacidad, ayuda;
+    fichaMiPartidoTemplate,  btInscribeVer, btInscribe, contenedorPrincipal, usuarioActivo, idUsuarioActivo, licencia, privacidad, ayuda;
 document.addEventListener("DOMContentLoaded", () => {
     // Inicialización de variables
     verDetallesFicha = document.getElementById('ficha-detalles');

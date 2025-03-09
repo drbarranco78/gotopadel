@@ -24,7 +24,8 @@ public class NotificacionController {
     private final PartidoService partidoService;
 
     @Autowired
-    public NotificacionController(NotificacionService notificacionService, UsuarioService usuarioService, PartidoService partidoService) {
+    public NotificacionController(NotificacionService notificacionService, UsuarioService usuarioService,
+            PartidoService partidoService) {
         this.notificacionService = notificacionService;
         this.usuarioService = usuarioService;
         this.partidoService = partidoService;
@@ -36,30 +37,30 @@ public class NotificacionController {
     @PostMapping("/crear")
     public ResponseEntity<Notificacion> crearNotificacion(
             @RequestParam Integer idEmisor,
-            @RequestParam Integer idReceptor,
-            @RequestParam Integer idPartido,
+            @RequestParam Integer idReceptor,          
+            @RequestParam String mensaje,
             @RequestParam String tipo) {
 
-        Notificacion notificacion = notificacionService.crearNotificacion(idEmisor, idReceptor, idPartido, tipo);
+        Notificacion notificacion = notificacionService.crearNotificacion(idEmisor, idReceptor, mensaje, tipo);
         return ResponseEntity.ok(notificacion);
     }
 
     /**
-     * Obtiene las notificaciones de un usuario receptor con datos sobre el emisor y el partido.
+     * Obtiene las notificaciones de un usuario receptor con datos sobre el emisor y
+     * el partido.
      */
     @PostMapping("/usuario/{idReceptor}")
     public ResponseEntity<List<NotificacionDTO>> obtenerNotificaciones(@PathVariable Integer idReceptor) {
         List<Notificacion> notificaciones = notificacionService.obtenerNotificacionesPorReceptor(idReceptor);
 
-        List<NotificacionDTO> notificacionesDTO = notificaciones.stream().map(notif -> 
-            new NotificacionDTO(
+        List<NotificacionDTO> notificacionesDTO = notificaciones.stream().map(notif -> new NotificacionDTO(
                 notif.getId(),
-                notif.getEmisor(),    
-                notif.getPartido(),  
+                notif.getEmisor(),
+                // notif.getPartido(),
+                notif.getMensaje(),
                 notif.getTipo(),
-                notif.getFechaCreacion()
-            )
-        ).collect(Collectors.toList());
+                
+                notif.getFechaCreacion())).collect(Collectors.toList());
 
         return ResponseEntity.ok(notificacionesDTO);
     }
@@ -71,5 +72,15 @@ public class NotificacionController {
     public ResponseEntity<Void> eliminarNotificacion(@PathVariable Integer idNotificacion) {
         notificacionService.eliminarNotificacion(idNotificacion);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Notificacion> obtenerNotificacionPorID(@PathVariable Integer id) {
+        Notificacion notificacion = notificacionService.obtenerNotificacionCompleta(id);
+        if (notificacion != null) {
+            return ResponseEntity.ok(notificacion);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
