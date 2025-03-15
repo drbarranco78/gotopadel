@@ -53,20 +53,32 @@
         display: none !important;
     }
     .partido-estrellas{
-        position: relative;
-        /* left: 50px; */
+        position: relative;        
     }
     .ficha-detalles{        
         width: 90vw;
         height: 100%;
         max-height: fit-content;
     }
+    .notificaciones{
+        flex-direction: column;
+    }
+    .logotipo h3{
+        display: none;
+    }
+    header{
+        padding: 10px;
+    }
 
     /* Estilo responsive de la ventana emergente de informacion de privacidad */
     .informacion{
         padding: 10px !important;
         max-height: 90% !important;
+        width: 70% !important;
     }
+    .mis-partidos {
+        grid-template-columns: 1fr !important;
+    }   
 }
 
 /* CONFIGURACIÓN PARA DISPOSITIVOS INFERIORES A 830 PX DE ANCHO */
@@ -106,7 +118,7 @@
         height: 30vh;
     }
 
-    /* Estilos responsive para zonaPrivada.html */
+    /* Estilos responsive para private.html */
 
     .html{
         min-height: fit-content;
@@ -127,12 +139,20 @@
         gap: 0px;
     }
     
+    .fichas-container{
+        grid-template-columns: 1fr !important;
+        place-items: center;
+    }
+    .ficha-usuario-inscrito {
+        width: 70% !important;
+    }
+    
     
 
 }
 @media (max-width: 1300px) {
 
-    /* Estilos responsive para zonaPrivada.html */
+    /* Estilos responsive para private.html */
 
     #ficha-partido p {
         padding: 0;
@@ -149,7 +169,7 @@
         max-width: 100%;         
     }
     .mis-partidos {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
     }   
     body{
         width: 100%;
@@ -157,6 +177,19 @@
     .listados-admin {
         display: flex;
         flex-direction: column;
+    }
+    .ficha-usuario-header{
+        display: flex;
+        flex-direction: column;
+        align-items: center !important;
+        text-align: center;
+        justify-content: center;
+    }
+    .ficha-usuario-header *{
+        text-align: center;
+    }
+    .ficha-usuario-fecha-span {
+        align-self: center;
     }
 
 }

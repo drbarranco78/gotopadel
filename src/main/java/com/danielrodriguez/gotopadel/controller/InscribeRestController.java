@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,8 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import com.danielrodriguez.gotopadel.dto.InscripcionDTO;
 import com.danielrodriguez.gotopadel.model.Inscribe;
 import com.danielrodriguez.gotopadel.model.Usuario;
 import com.danielrodriguez.gotopadel.service.InscribeService;
@@ -40,6 +37,18 @@ public class InscribeRestController {
     private final UsuarioService usuarioService;
     private final NotificacionService notificacionService;
 
+    /**
+     * Constructor de la clase InscribeRestController.
+     * 
+     * Este constructor se utiliza para inyectar las dependencias necesarias para
+     * gestionar las inscripciones, partidos, usuarios y notificaciones a través de los
+     * respectivos servicios.
+     *
+     * @param inscribeService El servicio encargado de gestionar las inscripciones.
+     * @param partidoService El servicio encargado de gestionar los partidos.
+     * @param usuarioService El servicio encargado de gestionar los usuarios.
+     * @param notificacionService El servicio encargado de gestionar las notificaciones.
+     */
     @Autowired
     public InscribeRestController(InscribeService inscribeService, PartidoService partidoService,
             UsuarioService usuarioService, NotificacionService notificacionService) {
@@ -69,56 +78,16 @@ public class InscribeRestController {
      * @return Lista de IDs de usuarios inscritos.
      */
     @GetMapping("/partido/{idPartido}/usuarios")
-    public ResponseEntity<List<Integer>> obtenerIdsUsuariosInscritos(@PathVariable Integer idPartido) {
+    public ResponseEntity<List<Usuario>> obtenerIdsUsuariosInscritos(@PathVariable Integer idPartido) {
         List<Inscribe> inscripciones = inscribeService.obtenerInscripcionesPorPartido(idPartido);
         
         // Extraer los IDs de los usuarios de las inscripciones
-        List<Integer> idsUsuarios = inscripciones.stream()
-            .map(inscribe -> inscribe.getUsuario().getIdUsuario())
+        List<Usuario> usuarios = inscripciones.stream()
+            .map(inscribe -> inscribe.getUsuario())
             .collect(Collectors.toList());
 
-        return ResponseEntity.ok(idsUsuarios);
-    }
-
-    
-    // @PostMapping("/notificar-inscripciones/{organizadorId}")
-    // public ResponseEntity<?> notificarInscripciones(@PathVariable Integer organizadorId) {
-    //     // Buscar el usuario en la base de datos
-    //     Usuario organizador = usuarioService.findById(organizadorId)
-    //             .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-
-    //     try {
-    //         List<InscripcionDTO> inscripciones = notificacionService.notificarInscripciones(organizador);
-    //         return ResponseEntity.ok(inscripciones); // Devuelve la lista en JSON
-    //     } catch (Exception e) {
-    //         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-    //                 .body("Error al notificar inscripciones: " + e.getMessage());
-    //     }
-    // }
-
-    // @PostMapping("/notificar-cancelaciones/{jugadorId}")
-    // public ResponseEntity<?> notificarCancelaciones(@PathVariable Integer jugadorId) {
-    //     Usuario jugador = usuarioService.findById(jugadorId)
-    //             .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-
-    //     return null;
-
-    // }
-
-    @PostMapping("/marcarComoLeidas/{organizadorId}")
-    public ResponseEntity<?> marcarNotificacionesComoLeidas(@PathVariable Integer organizadorId) {
-        Usuario organizador = usuarioService.findById(organizadorId)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-
-        try {
-            // Marcar todas las inscripciones del organizador como leídas (notificadas)
-            notificacionService.marcarTodasComoLeidas(organizador);
-            return ResponseEntity.ok("Notificaciones marcadas como leídas");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error al marcar notificaciones como leídas: " + e.getMessage());
-        }
-    }
+        return ResponseEntity.ok(usuarios);
+    }    
 
     /**
      * Endpoint para cancelar una inscripción de un usuario en un partido.
@@ -181,31 +150,4 @@ public class InscribeRestController {
     public int obtenerCantidadInscripciones(@PathVariable int idUsuario) {
         return inscribeService.obtenerCantidadInscripciones(idUsuario);
     }
- 
-
-    @PutMapping("/modificarEstado")
-    public ResponseEntity<String> modificarEstadoInscripcion(@RequestBody InscripcionDTO inscripcionDTO) {
-        try {
-            // Extraer los IDs del usuario y el partido
-            Integer idUsuario = inscripcionDTO.getUsuario().getIdUsuario();
-            Integer idPartido = inscripcionDTO.getPartido().getIdPartido();
-            String estado = inscripcionDTO.getEstado(); 
-
-            // Llamar al servicio con los parámetros extraídos
-            boolean resultado = inscribeService.modificarEstadoInscripcion(idUsuario, idPartido, estado);
-
-            if (resultado) {
-                if (estado == "cancelada" || estado == "rechazada") {
-                    partidoService.aumentarVacante(idPartido);
-                }
-                return ResponseEntity.ok("Estado de la inscripción actualizado correctamente");
-            } else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                        .body("No se pudo actualizar el estado de la inscripción");
-            }
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al procesar la solicitud");
-        }
-    }
-
 }

@@ -285,6 +285,7 @@ legend{
     margin-top: 50px;
     margin-bottom: 30px;
 }
+
 /* Botones para cambiar de noticia  */
 #anterior,
 #siguiente {         
@@ -441,56 +442,7 @@ legend{
     filter: invert(1) brightness(2);
 }
 
-/* Estilo del pie de página
-footer {
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    padding: 10px 0;
-    margin-top: 10px;
-    border: 2px solid whitesmoke;
-    border-radius: 15px;
-}
 
-footer ul {
-    list-style: none;
-    padding: 0;
-}
-
-footer ul li {
-    display: inline;
-    margin-right: 10px;
-}
-
-footer ul li a {
-    color: #fff;
-    text-decoration: none;
-} */
-
-/* Animación de desplazamiento hacia la derecha  */
-/* @keyframes moveRigth {
-    from {
-        opacity: 0;
-        transform: translateX(-200%);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-} */
-/* Animación de desplazamiento hacia la izquierda */
-/* @keyframes moveLeft {
-    from {
-        opacity: 0;
-        transform: translateX(200%);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-} */
 /* Animación de escalado para el logo  */
 @keyframes escalar {
     from {

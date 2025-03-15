@@ -19,13 +19,13 @@
             <img src="img/logo.png" id="logo-cabecera" class="icono-cabecera" alt="Logotipo de GoToPádel">
             <h3>GoToPádel</h3>
         </div>
-        <div class="notificaciones">
-            <!-- <img src="img/ico_sobre2.png" alt="Icono de notificación"> -->
+
+        <!-- Avisador de notificaciones, oculto por defecto  -->
+        <div class="notificaciones">            
             <i class="fas fa-bell"></i>
             <h3>Ver notificaciones</h3>
             <div id="detalle-notificaciones" class="detalle-notificaciones">
                 <ul></ul>
-
             </div>
         </div>
 
@@ -70,7 +70,7 @@
         <div id="confirmar-archivado" class="confirmar-archivado">
             <div class="cabecera-archivado">
                 <p>Seleccione el motivo del archivado:</p>
-                <span id="cerrar-notificaciones">&times;</span>
+                <span class="cerrar-dialogo">&times;</span>
             </div>
             <div class="botones-accion">
                 <button id="archivar-jugado" class="archivar-jugado opciones-archivado">Partido jugado</button>
@@ -87,13 +87,14 @@
                 <img class="icono-usuario-ficha icono-cabecera" src="img/ico_usuario.png" alt="Icono del usuario">
                 <div class="ficha-usuario-nombre">
                     <p class="nombre-usuario-ficha">Carlos Martinez</p>
-                    <p class="ficha-usuario-fecha">Miembro desde <span></span></p>
+                    <p class="ficha-usuario-fecha">Miembro desde </p>
                 </div>
+                <span class="ficha-usuario-fecha-span"></span>
                 <span id="cerrar-notificaciones">&times;</span>
             </div>
             <div class="ficha-usuario-body">
                 <p class="id-usuario-ficha">Nº de Usuario: <span></span></p>
-                <p class="nacimiento-usuario-ficha">Fecha de Nacimiento: <span></span></p>
+                <p class="nacimiento-usuario-ficha">F. Nacimiento: <span></span></p>
                 <p class="genero-usuario-ficha">Género: <span></span></p>
                 <p class="nivel-usuario-ficha">Nivel de Juego: <span></span></p>
                 <p class="publicados-usuario-ficha">Partidos Publicados: <span></span></p>
@@ -112,85 +113,116 @@
             <div id="ficha-detalles" class="ficha-detalles">
                 <!-- Número de Partido -->
                 <div class="detalle-item">
-                    <i class="fa-solid fa-hashtag"></i>
-                    <p class="detalles-partido">Partido N°:</p>
+                    <div>
+                        <i class="fa-solid fa-hashtag"></i>
+                        <p class="detalles-partido">Partido N°:</p>
+                    </div>
                     <span class="numero-partido"></span>
                 </div>
 
                 <!-- Organizador -->
                 <div class="detalle-item">
-                    <i class="fa-solid fa-user"></i>
-                    <p class="detalles-organizador">Organizador:</p>
+                    <div>
+                        <i class="fa-solid fa-user"></i>
+                        <p class="detalles-organizador">Organizador:</p>
+                    </div>
                     <span class="organizador-partido"></span>
                 </div>
 
                 <!-- Fecha de Publicación -->
                 <div class="detalle-item">
-                    <i class="fa-solid fa-pencil-alt"></i>
-                    <p class="detalles-publicacion">Fecha de publicación:</p>
+                    <div>
+                        <i class="fa-solid fa-pencil-alt"></i>
+                        <p class="detalles-publicacion">Fecha de publicación:</p>
+                    </div>
                     <span class="fecha-publicacion"></span>
                 </div>
 
                 <!-- Fecha -->
                 <div class="detalle-item">
-                    <i class="fa-solid fa-calendar-days"></i>
-                    <p class="detalles-fecha">Fecha del partido:</p>
+                    <div>
+                        <i class="fa-solid fa-calendar-days"></i>
+                        <p class="detalles-fecha">Fecha del partido:</p>
+                    </div>
                     <span class="fecha-partido"></span>
                 </div>
 
                 <!-- Hora -->
                 <div class="detalle-item">
-                    <i class="fa-solid fa-clock"></i>
-                    <p class="detalles-hora">Hora de inicio:</p>
+                    <div>
+                        <i class="fa-solid fa-clock"></i>
+                        <p class="detalles-hora">Hora de inicio:</p>
+                    </div>
                     <span class="hora-partido"></span>
                 </div>
 
                 <!-- Lugar -->
                 <div class="detalle-item">
-                    <i class="fa-solid fa-location-dot"></i>
-                    <p class="detalles-lugar">Lugar:</p>
+                    <div>
+                        <i class="fa-solid fa-location-dot"></i>
+                        <p class="detalles-lugar">Lugar:</p>
+                    </div>
                     <span class="lugar-partido"></span>
                 </div>
 
                 <!-- Ciudad -->
                 <div class="detalle-item">
-                    <i class="fa-solid fa-city"></i>
-                    <p class="detalles-ciudad">Ciudad:</p>
+                    <div>
+                        <i class="fa-solid fa-city"></i>
+                        <p class="detalles-ciudad">Ciudad:</p>
+                    </div>
                     <span class="ciudad-partido"></span>
                 </div>
 
                 <!-- Tipo de Partido -->
                 <div class="detalle-item">
-                    <i class="fa-solid fa-gamepad"></i>
-                    <p class="detalles-tipo">Tipo de partido:</p>
+                    <div>
+                        <i class="fa-solid fa-gamepad"></i>
+                        <p class="detalles-tipo">Tipo de partido:</p>
+                    </div>
                     <span class="tipo-partido"></span>
                 </div>
 
                 <!-- Jugadores inscritos -->
                 <div class="detalle-item">
-                    <i class="fa-solid fa-users"></i>
-                    <p class="detalles-jugadores">Jugadores inscritos:</p>
-                    <span class="jugadores-inscritos"></span>
+                    <div>
+                        <i class="fa-solid fa-users"></i>
+                        <p class="detalles-jugadores">Jugadores inscritos:</p>
+                    </div>
+                    <div>
+                        <span class="jugadores-inscritos"></span>
+                        <i id="ver-jugadores-inscritos" class="fas fa-eye"></i>
+                    </div>
                 </div>
 
                 <!-- Vacantes -->
                 <div class="detalle-item">
-                    <i class="fa-solid fa-user-plus"></i>
-                    <p class="detalles-vacantes">Vacantes:</p>
+                    <div>
+                        <i class="fa-solid fa-user-plus"></i>
+                        <p class="detalles-vacantes">Vacantes:</p>
+                    </div>
                     <span class="vacantes-partido"></span>
                 </div>
+
                 <!-- Nivel de Juego -->
                 <div class="detalle-item">
-                    <i class="fa-solid fa-chart-line"></i>
-                    <p class="detalles-nivel">Nivel de juego:</p>
+                    <div>
+                        <i class="fa-solid fa-chart-line"></i>
+                        <p class="detalles-nivel">Nivel de juego:</p>
+                    </div>
                     <span class="nivel-partido"></span>
                 </div>
+
                 <!-- Comentarios -->
                 <div class="detalle-item">
-                    <i class="fa-solid fa-comment"></i>
-                    <p class="detalles-comentarios">Comentarios:</p>
+                    <div>
+                        <i class="fa-solid fa-comment"></i>
+                        <p class="detalles-comentarios">Comentarios:</p>
+                    </div>
                     <span class="comentarios-partido"></span>
                 </div>
+
+
 
                 <!-- Botones -->
                 <div class="detalle-botones">
@@ -199,8 +231,8 @@
                     <!-- Botón dinámico de inscripción -->
                     <button id="bt-inscribir">Inscribirse</button>
                 </div>
+                
             </div>
-
 
             <!-- Ficha general de los partidos  -->
             <div id="ficha-partido">
@@ -284,9 +316,9 @@
 
         <!-- Area de partidos donde el usuario participa  -->
         <div class="contenido mis-partidos" id="mis-partidos">
-            <!-- <h2>Mis partidos</h2> -->
+            
             <div id="ficha-mis-partidos">
-                <div id="detalle-mi-partido-id" class="detalle-item">
+                <div id="detalle-mi-partido-id" class="detalle-mis-partidos">
                     <i class="fa-solid fa-hashtag"></i>
                     <p>N°: <span class="numero-partido"></span></p>
                 </div>
@@ -294,15 +326,15 @@
                     <img class="img-icono-ficha" src="" alt="">
                     <p class="texto-icono"></p>
                 </div>
-                <div class="detalle-item">
+                <div class="detalle-mis-partidos">
                     <i class="fa-solid fa-user"></i>
                     <p class="organizador-partido">Organizador: <span></span></p>
                 </div>
-                <div class="detalle-item">
+                <div class="detalle-mis-partidos">
                     <i class="fa-solid fa-calendar-days"></i>
                     <p class="fecha-partido">Fecha: <span></span></p>
                 </div>
-                <div class="detalle-item">
+                <div class="detalle-mis-partidos">
                     <i class="fa-solid fa-location-dot"></i>
                     <p class="lugar-partido">Lugar: <span></span></p>
                 </div>
@@ -312,6 +344,8 @@
             </div>
         </div>
     </section>
+
+    <!-- Contenedor donde se muestran las notificaciones recibidas  -->
     <div class="detalle-notificaciones">
 
         <div class="header-notificaciones">
@@ -323,8 +357,13 @@
         <div class="informacion">
             <button class="cerrar-info"><span id="cerrar-info">&times;</span></button>
             <div class="contenido-info"></div>
-            <button class="btn-cerrar-info">Aceptar</button>            
+            <button class="btn-cerrar-info">Aceptar</button>
         </div>
+    </div>
+    <div id="div-jugadores-inscritos">
+        <h3>Jugadores inscritos en el partido</h3>
+        <span class="cerrar-inscritos">&times;</span>
+        <div class="fichas-container"></div>        
     </div>
     <!-- Pie de página  -->
     <footer>
@@ -339,9 +378,8 @@
     <script src="/js/variables.js"></script>
     <script src="/js/private.js"></script>
     <script src="/js/publicar.js"></script>
-    <script src="js/utilidades.js"></script>
-    <script src="/js/mis-partidos.js"></script>
-    <script src="/js/ver-partidos.js"></script>
+    <script src="js/utilidades.js"></script>    
+    <script src="/js/partidos.js"></script>
 </body>
 
 

@@ -43,8 +43,7 @@ header {
     border: 2px solid black;
     padding: 5px 20px;
     border-radius: 50px;
-    background-color:var(--color-secundario);
-    /* padding: 15px; */
+    background-color:var(--color-secundario);    
     cursor: pointer;
     color: whitesmoke;
    
@@ -58,27 +57,7 @@ header {
     color: goldenrod;
     font-size: 20px;
 }
-/* 
-.detalle-notificaciones{
-    display: none;
-   
-    background-color: var(--color-azul);
-    padding: 15px;
-    border-top: 1px solid #ddd;
-    border: 2px solid black;
-    border-radius: 10px;
-    max-height: 40vh;
-    overflow-y: auto;
-    
-    font-weight: 500 !important;
-     
-    position: absolute; 
-    left: 0;
-    top: 100%;
-    width: 100%; 
-    height: 200px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-} */
+
 .detalle-notificaciones {
     display: none;
     position: fixed;
@@ -112,19 +91,25 @@ header {
    
 }
 
-#cerrar-notificaciones {
-    position: relative;
+#cerrar-notificaciones, .cerrar-dialogo {
+    position: absolute;
+    top: 10px;
+    right: 30px;
     font-size: 30px;
     font-weight: bold;
     cursor: pointer;
     color: whitesmoke;
-    /* height: 20px; */
-    /* float: right !important; */
-    /* margin-bottom: 20px; */
+    height: fit-content !important;
+    max-height: fit-content !important;
 }
 
-#cerrar-notificaciones:hover {
-    color: red;
+#cerrar-notificaciones:hover, .cerrar-dialogo:hover {
+    color: red !important;
+}
+.cerrar-dialogo{
+    color: black;
+    right: 10px !important;
+    top: 5px !important;
 }
 
 .fa-eye{
@@ -224,11 +209,32 @@ header {
     font-weight: bold;
     z-index: 4;
 }
+
+/* Ficha con los datos de los usuarios inscritos a partidos */
+.ficha-usuario-inscrito {
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto !important;
+    justify-content: flex-start;
+    width: 100% !important;
+    height: 50% !important;
+    min-height: fit-content;
+    gap: 20px;
+    border: 2px solid whitesmoke;
+    border-radius: 10px;
+    background-color: var(--color-azul);
+    font-size: 20px;
+    color: whitesmoke;
+    font-weight: bold;
+    z-index: 4;
+    padding: 20px 40px;
+
+}
+/* Cabecera de las fichas de usuario  */
 .ficha-usuario-header{
     display: grid;
-    grid-template-columns: 0.5fr 2fr 0.1fr;
-    text-align: center;
-    /* gap: 40px; */
+    grid-template-columns: 0.5fr auto 0.1fr;
+    text-align: center;   
     width: 100%;
     border-bottom: 1px solid whitesmoke;
     margin-bottom: 10px;
@@ -236,14 +242,15 @@ header {
 .ficha-usuario-fecha{
     font-size: 16px;
     width: 100% !important;
-    margin-right: 5px;
-    /* display: inline;
-    white-space: nowrap;
-    float: right; */
+    
+
 }
-/* .ficha-usuario-fecha span{
-    float: right;
-} */
+.ficha-usuario-fecha-span{
+    align-self: end;
+    margin-bottom: 0px !important;
+}
+
+/* Cuerpo de la ficha del usuario  */
 .ficha-usuario-body{
     display: flex;
     flex-direction: column;
@@ -263,13 +270,15 @@ header {
 }
 
 .ficha-usuario span {
-    color: var(--color-verde);
-    float: right;
+    color: var(--color-verde) !important;
+    float: right !important;
 }
 
 .nombre-usuario-ficha {
     font-size: 22px;
     font-weight: bold;
+    white-space: normal;
+    word-wrap: break-word;
 }
 
 /* Botones en la ficha del usuario  */
@@ -361,7 +370,7 @@ fieldset {
     height: auto;
     max-width: 90vw;
     margin: auto;
-    padding: auto;
+    padding: 10px;
     color: whitesmoke;
     opacity: 0.95;
 }
@@ -483,7 +492,7 @@ legend {
 
 /* Estilo para el input de texto */
 #form-publicar input[type="text"] {
-    width: 70%;
+    width: 60%;
     height: 50px;
     margin-bottom: 20px;
 }
@@ -497,8 +506,7 @@ legend {
 /* Contenedor para la zona de partidos publicados  */
 .ver-partidos {
     position: relative;
-    width: 100%;
-    /* min-height: 80vh;     */
+    width: 100%;    
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 0.2fr auto;
@@ -633,20 +641,38 @@ legend {
     color: whitesmoke;
     font-size: 20px;
     font-weight: bold;
-    opacity: 0.90;
+    opacity: 0.95;
     border-radius: 10px;
     border: 3px solid #333;
     z-index: 1;
+    overflow-y: auto;
 }
 /* Elementos individuales dentro de la ficha detallada */
 .detalle-item {
     display: flex;
     align-items: center;
+    justify-content: space-between; 
     margin-bottom: 10px;
-    gap: 20px;
+    gap: 20px;    
 }
+.detalle-item div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;    
+}
+
 .detalle-item span {
-    font-weight: bold;
+    font-weight: bold;    
+    color: var(--color-resaltado);
+    overflow-x: auto;     
+}
+.detalle-mis-partidos{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; 
+    margin-bottom: 10px;
+    gap: 20px;  
 }
 .comentarios-partido {
     max-width: 200px;
@@ -669,6 +695,73 @@ legend {
     background-color: var(--color-azul);
     color: whitesmoke;
     font-weight: bold;
+}
+
+/* Modal que muestra los jugadores inscritos en un partido */
+#div-jugadores-inscritos {
+    display: none; /* Oculto inicialmente */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 60%;
+    border: 1px solid whitesmoke;
+    border-radius: 10px;
+    background-color: var(--color-secundario);
+    padding: 20px;    
+    overflow-y: auto;
+    z-index: 3;    
+    grid-template-rows: auto 1fr; 
+    gap: 20px;
+}
+
+/* Estilo para el título */
+#div-jugadores-inscritos h3 {
+    text-align: center; 
+    margin: 0; 
+    grid-column: 1 / -1;
+    color: whitesmoke;
+}
+
+/* Botón que cierra el contenedor de inscritos  */
+.cerrar-inscritos {
+    position: absolute;
+    top: 10px;
+    right: 15px;         
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    color: whitesmoke;
+    background: none;
+    border: none;
+}
+
+.cerrar-inscritos:hover {
+    color: #DC3545;
+
+}
+
+/* Enlace para cancelar la inscripción de un jugador a un partido propio  */
+.ficha-inscrito-cancelar{
+    color: var(--color-rojo);
+    cursor: pointer;
+    text-decoration: underline;   
+}
+
+/* Texto que indica si el usuario es organizador o inscrito en la ficha de inscritos  */
+.ficha-inscrito-organizador{
+    color: var(--color-verde) !important;
+}
+
+/* Contenedor para las fichas */
+#div-jugadores-inscritos .fichas-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20%, 30%));
+    gap: 20px; 
+    justify-content: center;
+    align-content: center;
+    
 }
 
 /* Contenedor para la zona de partidos del usuario  */
@@ -738,30 +831,6 @@ legend {
     font-weight: bold;
 }
 
-/* Estilo del pie de página */
-/* footer {
-    border: 2px solid white;
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    padding: 10px 0;
-}
-
-footer ul {
-    list-style: none;
-    padding: 0;
-}
-
-footer ul li {
-    display: inline;
-    margin-right: 10px;
-}
-
-footer ul li a {
-    color: #fff;
-    text-decoration: none;
-} */
-
 /* Efecto de clic de los botones */
 .boton-click {
     transform: scale(0.80);
@@ -777,17 +846,15 @@ footer ul li a {
     display: none;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    /* gap: 10px; */
+    align-items: center;    
     border-radius: 5px;
     text-align: center;
     font-size: 16px;
     font-weight: bold;
     background-color: whitesmoke;
-    border: 2px solid black;
-    /* color: whitesmoke;     */
+    border: 2px solid black;    
     padding: 20px;
-    z-index: 5;
+    z-index: 7;
 }
 .botones-accion{
     display: flex;
@@ -796,14 +863,10 @@ footer ul li a {
 .aceptar-accion,
 .cancelar-accion,
 .opciones-archivado {
-    padding: 5px 10px;
-    /* width: 50%;
-    height: 30px; */
-    margin: 20px;
-    /* font-size: 16px; */
+    padding: 5px 10px;   
+    margin: 20px; 
     font-weight: bold;
-    border-radius: 5px;
-    
+    border-radius: 5px;    
     color: whitesmoke;
 }
 
@@ -815,16 +878,6 @@ footer ul li a {
     height: 50px;
 }
 
-/* .opciones-archivado {
-    width: 70%;
-    height: auto;
-    margin: 20px;
-    font-size: 18px;
-    font-weight: bold;
-    border-radius: 10px;
-    padding: 10px;
-    color: whitesmoke;
-} */
 .aceptar-accion,
 .archivar-jugado {
     background-color: var(--color-verde);
@@ -834,8 +887,11 @@ footer ul li a {
     background-color: var(--color-rojo);
 }
 .archivar-cancelado {
-    background-color: orange;
+    background-color: var(--color-rojo);
     color: whitesmoke;
+}
+.archivar-jugado, .archivar-cancelado{
+    width: 50%;
 }
 /* Estilo de los cuadros que muestran mensajes al usuario  */
 .mensaje-exito,
@@ -861,6 +917,7 @@ footer ul li a {
     color: var(--color-rojo);
 }
 
+/* Animaciones de movimiento  */
 @-webkit-keyframes mover {
     0% {
         transform: translateY(0);

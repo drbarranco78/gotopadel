@@ -2,16 +2,12 @@ package com.danielrodriguez.gotopadel.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.danielrodriguez.gotopadel.dto.InscripcionDTO;
 import com.danielrodriguez.gotopadel.model.Inscribe;
-import com.danielrodriguez.gotopadel.model.Partido;
 import com.danielrodriguez.gotopadel.model.Usuario;
 import com.danielrodriguez.gotopadel.repository.InscribeRepository;
 
@@ -152,47 +148,4 @@ public class InscribeService {
     public int obtenerCantidadInscripciones(int idUsuario) {
         return inscribeRepository.countByUsuario_id(idUsuario);
     }
-
-    // @Transactional
-    // public boolean modificarEstadoInscripcion(Inscribe inscribe) {
-    // // Buscar la inscripción por usuario y partido
-    // Optional<Inscribe> inscripcionOpt =
-    // inscribeRepository.findByUsuario_idAndPartido_idPartido(
-    // inscribe.getUsuario().getIdUsuario(), inscribe.getPartido().getIdPartido());
-    // System.out.println("Usuario ID recibido: " +
-    // inscribe.getUsuario().getIdUsuario());
-    // System.out.println("Partido ID recibido: " +
-    // inscribe.getPartido().getIdPartido());
-    // System.out.println("Inscripción encontrada: " + inscripcionOpt.isPresent());
-    // System.out.println("Nuevo Estado: " + inscribe.getEstado());
-    // if (inscripcionOpt.isPresent()) {
-    // Inscribe inscripcion = inscripcionOpt.get();
-    // System.out.println("Inscripcion: " + inscripcion);
-    // // Asignar directamente el nuevo estado
-    // inscripcion.setEstado(inscribe.getEstado()); // Modificar el estado
-    // // Puedes actualizar otros campos como 'motivoCancelacion', si es necesario
-    // inscribeRepository.save(inscripcion);
-    // inscribeRepository.flush();
-    // return true;
-    // }
-    // return false;
-    // }
-
-    @Transactional
-    public boolean modificarEstadoInscripcion(Integer idUsuario, Integer idPartido, String estado) {
-        // Buscar la inscripción por usuario y partido
-        Optional<Inscribe> inscripcionOpt = inscribeRepository.findByUsuario_idAndPartido_idPartido(idUsuario,
-                idPartido);
-
-        if (inscripcionOpt.isPresent()) {
-            Inscribe inscripcion = inscripcionOpt.get();
-
-            // Asignar directamente el nuevo estado
-            inscripcion.setEstado(estado); // Modificar el estado
-            inscribeRepository.save(inscripcion);
-            return true;
-        }
-        return false;
-    }
-
 }

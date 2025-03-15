@@ -115,6 +115,10 @@ function mostrarDialogo(pregunta) {
     });
 }
 
+
+$('.cerrar-dialogo').click(function () {
+    $('#confirmar-archivado').hide();
+})
 /**
  * Muestra un cuadro de confirmación exclusivo para archivar partidos.
  * @returns {Promise} - Se resuelve con un valor dependiendo de la selección del usuario.
@@ -128,12 +132,14 @@ function mostrarConfirmacionArchivado() {
         $('#archivar-jugado').off('click').click(() => {
             $('#confirmar-archivado').css('display', 'none');
             resolve(1); // Devuelve 1 si se selecciona "Partido jugado"
+            // $('#enlace-ver').click();
         });
 
         // Evento para "Partido cancelado"
         $('#archivar-cancelado').off('click').click(() => {
             $('#confirmar-archivado').css('display', 'none');
             resolve(2); // Devuelve 2 si se selecciona "Partido cancelado"
+            // $('#enlace-ver').click();
         });
 
         // Evento para "Cancelar"
@@ -153,15 +159,25 @@ function mostrarConfirmacionArchivado() {
     });
 }
 
-// Cuando el usuario haga clic en los enlaces de "privacidad", "ayuda" o "acerca-de", 
-// se evita la acción predeterminada y se muestra la información correspondiente.
+/**
+ * Maneja el evento de clic en los elementos con ID 'privacidad', 'ayuda' y 'acerca-de'.
+ * Previene el comportamiento por defecto del enlace y llama a la función mostrarInfo
+ * pasando el tipo de información a mostrar.
+ * 
+ * @param {Event} event - El evento de clic.
+ */
 $('#privacidad , #ayuda, #acerca-de').click(function (event) {
     event.preventDefault();
     mostrarInfo($(this).data('tipo'));
 });
 
-// Cuando el usuario haga clic en los botones de cerrar (cerrar-info o btn-cerrar-info), 
-// se quita la clase 'activo' del elemento de bloqueo de pantalla para cerrar la ventana emergente.
+/**
+ * Maneja el evento de clic en los botones de cierre ('cerrar-info' y 'btn-cerrar-info').
+ * Al hacer clic, elimina la clase 'activo' del elemento con la clase 'bloqueo-pantalla',
+ * cerrando así la ventana emergente de información.
+ * 
+ * @param {Event} event - El evento de clic.
+ */
 $('.cerrar-info, .btn-cerrar-info').click(function (event) {
     event.preventDefault();
     $('.bloqueo-pantalla').removeClass('activo');

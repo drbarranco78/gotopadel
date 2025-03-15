@@ -1,22 +1,22 @@
 package com.danielrodriguez.gotopadel.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-// import jakarta.transaction.Transactional;
 import java.util.Optional;
-import com.danielrodriguez.gotopadel.dto.InscripcionDTO;
-import com.danielrodriguez.gotopadel.dto.NotificacionDTO;
 import com.danielrodriguez.gotopadel.model.Inscribe;
 import com.danielrodriguez.gotopadel.model.Notificacion;
-import com.danielrodriguez.gotopadel.model.Partido;
 import com.danielrodriguez.gotopadel.model.Usuario;
 import com.danielrodriguez.gotopadel.repository.InscribeRepository;
 import com.danielrodriguez.gotopadel.repository.NotificacionRepository;
 
+/**
+ * Servicio encargado de gestionar las notificaciones de la aplicación.
+ * Proporciona métodos para eliminar notificaciones, obtener notificaciones completas,
+ * y marcar inscripciones como leídas.
+ */
 @Service
 public class NotificacionService {
 
@@ -24,17 +24,21 @@ public class NotificacionService {
     private final NotificacionRepository notificacionRepository;
     private final InscribeRepository inscribeRepository;
     private final UsuarioService usuarioService;
-    private final PartidoService partidoService;
 
+    /**
+     * Constructor de la clase NotificacionService.
+     *
+     * @param inscribeRepository El repositorio de inscripciones que se usará en el servicio.
+     * @param notificacionRepository El repositorio de notificaciones que se usará en el servicio.
+     * @param usuarioService El servicio de usuario que se usará en el servicio.
+     */
     @Autowired
     public NotificacionService(InscribeRepository inscribeRepository,
             NotificacionRepository notificacionRepository,
-            UsuarioService usuarioService,
-            PartidoService partidoService) {
+            UsuarioService usuarioService) {
         this.inscribeRepository = inscribeRepository;
         this.notificacionRepository = notificacionRepository;
         this.usuarioService = usuarioService;
-        this.partidoService = partidoService;
     }
 
     /**
@@ -54,11 +58,8 @@ public class NotificacionService {
                 .orElseThrow(() -> new RuntimeException("Usuario emisor no encontrado"));
         Usuario receptor = usuarioService.findById(idReceptor)
                 .orElseThrow(() -> new RuntimeException("Usuario receptor no encontrado"));
-        // Partido partido = partidoService.obtenerPartidoPorId(idPartido)
-        //         .orElseThrow(() -> new RuntimeException("Partido no encontrado"));
-
-        // Verificar si ya existe una notificación con el mismo emisor, receptor,
-        // partido y tipo
+        
+        // Verificar si ya existe una notificación con el mismo emisor, receptor, partido y tipo
         Optional<Notificacion> notificacionExistente = notificacionRepository
                 .findByEmisorAndReceptorAndMensaje(emisor, receptor, mensaje);
 
@@ -91,57 +92,15 @@ public class NotificacionService {
     public void eliminarNotificacion(Integer idNotificacion) {
         notificacionRepository.deleteById(idNotificacion);
     }
-
+    /**
+     * Obtiene una notificación completa por su ID.
+     *
+     * @param id El ID de la notificación que se desea obtener.
+     * @return La notificación correspondiente al ID, o null si no se encuentra.
+     */
     public Notificacion obtenerNotificacionCompleta(Integer id) {
-        return notificacionRepository.findById(id)
-                // .map(this::completarNotificacion)
+        return notificacionRepository.findById(id)                
                 .orElse(null);
     }
 
-    /**
-     * Actualiza el estado de la notificación para un conjunto de inscripciones
-     * que no han sido notificadas aún, según el organizador del partido, y devuelve
-     * la lista de usuarios que se han inscrito.
-     * 
-     * @param organizador El usuario organizador del partido.
-     * @return Lista de usuarios que se han inscrito en los partidos del
-     *         organizador.
-     */
-    // public List<NotificacionDTO> notificarInscripciones(Usuario organizador) {
-    //     List<Inscribe> inscripciones = inscribeRepository.findByPartido_UsuarioAndNotificadoFalse(organizador);
-    //     List<NotificacionDTO> notificacionesDTO = new ArrayList<>();
-
-    //     for (Inscribe inscribe : inscripciones) {
-    //         if (!organizador.getIdUsuario().equals(inscribe.getUsuario().getIdUsuario())) {
-    //             // Aquí se puede crear una notificación con tipo "inscripcion"
-    //             Notificacion notificacion = new Notificacion(
-    //                     inscribe.getUsuario(), // Emisor: el usuario que se inscribió
-    //                     organizador, // Receptor: el organizador
-    //                     inscribe.getPartido(),
-    //                     "inscripción");
-    //             // Suponiendo que modificamos el constructor o establecemos el tipo
-    //             // posteriormente:
-    //             // notificacion.setTipo("inscripcion");
-    //             notificacionRepository.save(notificacion);
-
-    //             // Convertir a DTO
-    //             NotificacionDTO dto = new NotificacionDTO(
-    //                     notificacion.getId(),
-    //                     inscribe.getUsuario(), // Emisor
-    //                     inscribe.getPartido(), // Partido
-    //                     notificacion.getTipo(), // Tipo
-    //                     notificacion.getFechaCreacion());
-    //             notificacionesDTO.add(dto);
-    //         }
-    //     }
-    //     return notificacionesDTO;
-    // }
-
-    public void marcarTodasComoLeidas(Usuario usuario) {
-        List<Inscribe> inscripciones = inscribeRepository.findByPartido_UsuarioAndNotificadoFalse(usuario);
-        for (Inscribe inscribe : inscripciones) {
-            inscribe.setNotificado(true);
-            inscribeRepository.save(inscribe); // Marca la inscripción como leída
-        }
-    }
 }

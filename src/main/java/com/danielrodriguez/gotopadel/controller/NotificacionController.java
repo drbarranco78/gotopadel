@@ -2,12 +2,7 @@ package com.danielrodriguez.gotopadel.controller;
 
 import com.danielrodriguez.gotopadel.dto.NotificacionDTO;
 import com.danielrodriguez.gotopadel.model.Notificacion;
-import com.danielrodriguez.gotopadel.model.Partido;
-import com.danielrodriguez.gotopadel.model.Usuario;
 import com.danielrodriguez.gotopadel.service.NotificacionService;
-import com.danielrodriguez.gotopadel.service.PartidoService;
-import com.danielrodriguez.gotopadel.service.UsuarioService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,15 +15,17 @@ import java.util.stream.Collectors;
 public class NotificacionController {
 
     private final NotificacionService notificacionService;
-    private final UsuarioService usuarioService;
-    private final PartidoService partidoService;
 
+    /**
+     * Constructor de la clase NotificacionController.
+     * 
+     * Este constructor inyecta el servicio necesario para gestionar las notificaciones.
+     *
+     * @param notificacionService El servicio encargado de gestionar las notificaciones.
+     */
     @Autowired
-    public NotificacionController(NotificacionService notificacionService, UsuarioService usuarioService,
-            PartidoService partidoService) {
+    public NotificacionController(NotificacionService notificacionService) {
         this.notificacionService = notificacionService;
-        this.usuarioService = usuarioService;
-        this.partidoService = partidoService;
     }
 
     /**
@@ -55,11 +52,9 @@ public class NotificacionController {
 
         List<NotificacionDTO> notificacionesDTO = notificaciones.stream().map(notif -> new NotificacionDTO(
                 notif.getId(),
-                notif.getEmisor(),
-                // notif.getPartido(),
+                notif.getEmisor(),                
                 notif.getMensaje(),
-                notif.getTipo(),
-                
+                notif.getTipo(),                
                 notif.getFechaCreacion())).collect(Collectors.toList());
 
         return ResponseEntity.ok(notificacionesDTO);
