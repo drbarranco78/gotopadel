@@ -57,5 +57,16 @@ public interface InscribeRepository extends JpaRepository<Inscribe, Integer> {
      */
     List<Inscribe> findByPartido_UsuarioAndNotificadoFalse(Usuario usuario);
 
+    /**
+     * Obtiene una lista de inscripciones asociadas a un partido específico.
+     * 
+     * Este método busca todas las inscripciones (de tipo {@link Inscribe}) que están vinculadas a un partido
+     * en particular, identificado por su ID. La lista de inscripciones puede estar vacía si no existen
+     * inscripciones para el partido especificado.
+     *
+     * @param idPartido El ID del partido para el cual se desean obtener las inscripciones.
+     * @return Una lista de inscripciones asociadas al partido con el ID proporcionado.
+     *         Si no hay inscripciones, se devuelve una lista vacía.
+     */
     List<Inscribe> findByPartidoIdPartido(Integer idPartido);
 }
