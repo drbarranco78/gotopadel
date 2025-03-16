@@ -14,7 +14,7 @@ public class InscripcionDTO {
 
     private Usuario usuario;
     private Partido partido;
-    private String estado; 
+    
 
      /**
      * Constructor de la clase InscripcionDTO.
@@ -23,13 +23,11 @@ public class InscripcionDTO {
      * Si el estado es null, se establecerá también como null.
      *
      * @param usuario El usuario inscrito en el partido.
-     * @param partido El partido en el que el usuario está inscrito.
-     * @param estado El estado de la inscripción
+     * @param partido El partido en el que el usuario está inscrito.     
      */
-    public InscripcionDTO(Usuario usuario, Partido partido, String estado) {
+    public InscripcionDTO(Usuario usuario, Partido partido) {
         this.usuario = usuario;
-        this.partido = partido;
-        this.estado = (estado != null) ? estado : null;
+        this.partido = partido;       
     }
 
     /**
@@ -67,13 +65,5 @@ public class InscripcionDTO {
     public void setPartido(Partido partido) {
         this.partido = partido;
     }
-
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
+    
 }

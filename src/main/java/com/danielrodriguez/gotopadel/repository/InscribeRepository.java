@@ -45,17 +45,7 @@ public interface InscribeRepository extends JpaRepository<Inscribe, Integer> {
      *                  contar.
      * @return el número de partidos en los que el usuario está inscrito.
      */
-    int countByUsuario_id(int idUsuario);
-
-    /**
-     * Busca todas las inscripciones en las que el organizador del partido coincida
-     * con el usuario dado y el campo de notificación esté marcado como falso.
-     *
-     * @param organizador El usuario que es el organizador del partido.
-     * @return Una lista de inscripciones donde el partido tiene como organizador
-     *         al usuario proporcionado y el campo 'notificado' es falso.
-     */
-    List<Inscribe> findByPartido_UsuarioAndNotificadoFalse(Usuario usuario);
+    int countByUsuario_id(int idUsuario);    
 
     /**
      * Obtiene una lista de inscripciones asociadas a un partido específico.

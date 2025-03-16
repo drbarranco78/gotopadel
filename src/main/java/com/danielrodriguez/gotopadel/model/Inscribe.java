@@ -47,30 +47,7 @@ public class Inscribe implements Serializable {
     @Column(name = "fecha_ins")
     private String fechaIns;
 
-    /**
-     * Indica si el organizador del partido ha sido notificado de la inscripción.
-     * Este campo se inicializa en {@code false} y se actualiza a {@code true}
-     * cuando la notificación ha sido enviada.
-     */
-    private boolean notificado = false;
-
-    /**
-     * Motivo por el cual la inscripción ha sido cancelada o rechazada.
-     * Si la inscripción está activa, este campo será {@code null}.
-     * Cuando un usuario se desinscribe, es rechazado o el partido se cancela,
-     * este campo almacena la razón de la cancelación.
-     */
-    @Column(name = "motivo_cancelacion")
-    private String motivoCancelacion;
-
-    @Column(name = "estado")
-    private String estado;
-
-    /**
-     * Obtiene la fecha en la que el usuario se inscribió en el partido.
-     *
-     * @return Fecha de inscripción como cadena de texto.
-     */
+ 
 
     // Constructores, getters y setters
 
@@ -165,42 +142,4 @@ public class Inscribe implements Serializable {
     public void setFechaIns(String fechaIns) {
         this.fechaIns = fechaIns;
     }
-
-    /**
-     * Obtiene el estado de notificación de la inscripción.
-     *
-     * @return true si el organizador ha sido notificado, false en caso contrario.
-     */
-    public boolean isNotificado() {
-        return notificado;
-    }
-
-    /**
-     * Establece el estado de notificación de la inscripción.
-     *
-     * @param notificado true si el organizador ha sido notificado, false en caso
-     *                   contrario.
-     */
-    public void setNotificado(boolean notificado) {
-        this.notificado = notificado;
-    }
-
-    /**
-     * Obtiene el estado de la inscripción.
-     *
-     * @return Estado de la inscripción (por ejemplo, "Inscrito", "Cancelado").
-     */
-    public String getEstado() {
-        return estado;
-    }
-
-    /**
-     * Establece el estado de la inscripción.
-     *
-     * @param estado Estado de la inscripción
-     */
-    public void setEstado(String estado) {
-        this.estado =  estado;  // Evita valores nulos
-    }
-
 }

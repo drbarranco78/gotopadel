@@ -57,6 +57,7 @@ $(document).ready(function () {
      */
     $("#formulario-login").submit(function (event) {
         event.preventDefault();
+        console.log(apiKey)
         if (validarLogin()) {
             emailLogin = $("#username").val();
             passwordLogin = $("#current-password").val();
@@ -64,6 +65,9 @@ $(document).ready(function () {
                 url: '/api/usuario/login',
                 type: 'POST',
                 contentType: 'application/json',
+                headers: {
+                    'X-API-KEY': apiKey
+                },
                 data: JSON.stringify({ email: emailLogin, password: passwordLogin }),
                 success: function (response) {
                     console.log('Success:', response);
@@ -181,6 +185,9 @@ $(document).ready(function () {
                 url: '/api/usuario/registrarUsuario',
                 type: 'POST',
                 contentType: 'application/json',
+                headers: {
+                    'X-API-KEY': apiKey
+                },
                 data: JSON.stringify({
                     nombre: nombre,
                     email: emailRegistro,

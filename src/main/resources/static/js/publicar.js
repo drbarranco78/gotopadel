@@ -114,6 +114,7 @@ async function cargarPistas(ciudad) {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
+                'X-API-KEY': apiKey
             }
         });
 
@@ -143,7 +144,11 @@ document.getElementById('form-publicar').addEventListener('submit', function (ev
     event.preventDefault(); // Prevenir el comportamiento por defecto del formulario
 
     // Obtener datos del usuario logueado
-    fetch('/api/usuario/datosUsuario')
+    fetch('/api/usuario/datosUsuario', {
+        headers: {
+            'X-API-KEY': apiKey
+        }
+    })
         .then(response => response.json())
         .then(usuario => {
             if (usuario) {
@@ -158,7 +163,10 @@ document.getElementById('form-publicar').addEventListener('submit', function (ev
 
                 // Verificar o crear la ubicación
                 fetch(`/api/ubicacion/check?nombre=${encodeURIComponent(nombreUbicacion)}&ciudad=${encodeURIComponent(ciudadFormateada)}`, {
-                    method: 'POST'
+                    method: 'POST',
+                    headers: {
+                        'X-API-KEY': apiKey
+                    }
                 })
                     .then(response => response.json())
                     .then(ubicacion => {
@@ -183,7 +191,8 @@ document.getElementById('form-publicar').addEventListener('submit', function (ev
                         fetch('/api/partido', {
                             method: 'POST',
                             headers: {
-                                'Content-Type': 'application/json'
+                                'Content-Type': 'application/json',
+                                'X-API-KEY': apiKey
                             },
                             body: JSON.stringify(partidoData)
                         })

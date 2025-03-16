@@ -15,11 +15,13 @@ $(document).ready(function () {
     $.ajax({
         url: '/api/usuario/datosUsuario',
         type: 'GET',
+        headers: {
+            'X-API-KEY': apiKey
+        },
         success: function (response) {
             usuario = response;
             $("#mensaje-bienvenida").html("Bienvenid" + (usuario.genero === "Hombre" ? "o, " : "a, ") + usuario.nombre + " con id " + usuario.idUsuario);
             obtenerNotificaciones(usuario);
-
         },
         error: function (error) {
             console.error('Error:', error);
@@ -37,12 +39,14 @@ $(document).ready(function () {
         $.ajax({
             url: '/api/notificaciones/usuario/' + usuario.idUsuario,
             type: 'POST',
+            headers: {
+                'X-API-KEY': apiKey
+            },
             success: function (response) {
-                notificacionesObtenidas = response; // Asignamos el valor globalmente
-
-                // Eliminar solo las notificaciones previas, no el header
+                notificacionesObtenidas = response;
+        
                 $('.detalle-notificaciones .notificacion').remove();
-
+        
                 if (notificacionesObtenidas.length > 0) {
                     $(".notificaciones").show();                    
                 } else {                    
@@ -121,6 +125,9 @@ $(document).ready(function () {
         $.ajax({
             url: `/api/notificaciones/${idNotificacion}`,
             method: 'GET',
+            headers: {
+                'X-API-KEY': apiKey
+            },
             success: function (notificacion) {
                 let mensajeRecibido = notificacion.mensaje;
 
@@ -177,8 +184,10 @@ $(document).ready(function () {
         $.ajax({
             url: `/api/notificaciones/eliminar/${idNotificacion}`,
             type: 'DELETE',
+            headers: {
+                'X-API-KEY': apiKey
+            },
             success: function (response) {
-                // Eliminar la notificación del DOM
                 $(`.notificacion[data-id="${idNotificacion}"]`).remove();
                 
                 if ($('.detalle-notificaciones .notificacion').length === 0) {
@@ -298,10 +307,13 @@ $(document).ready(function () {
         mostrarDialogo("Cerrar la sesión y volver al inicio?")
             .then(() => {
                 $.ajax({
-                    url: '/api/usuario/logout', // Endpoint para cerrar sesión
+                    url: '/api/usuario/logout',
                     type: 'POST',
+                    headers: {
+                        'X-API-KEY': apiKey
+                    },
                     success: function () {                       
-                        window.location.href = '/'; // Redirigir al inicio
+                        window.location.href = '/';
                     },
                     error: function () {
                         mostrarMensaje("Error al cerrar la sesión. Inténtalo de nuevo.", ".mensaje-error");
@@ -332,12 +344,26 @@ $(document).ready(function () {
         ficha.find('.genero-usuario-ficha span').text(user.genero);
         ficha.find('.nivel-usuario-ficha span').text(user.nivel);
 
-        $.get(`/api/usuario/${user.idUsuario}/publicados/count`, function (count) {
-            ficha.find('.publicados-usuario-ficha span').text(count);
+        $.ajax({
+            url: `/api/usuario/${user.idUsuario}/publicados/count`,
+            type: 'GET',
+            headers: {
+                'X-API-KEY': apiKey
+            },
+            success: function (count) {
+                ficha.find('.publicados-usuario-ficha span').text(count);
+            }
         });
-
-        $.get(`/api/inscripciones/cantidad/${user.idUsuario}`, function (count) {
-            ficha.find('.inscrito-usuario-ficha span').text(count);
+        
+        $.ajax({
+            url: `/api/inscripciones/cantidad/${user.idUsuario}`,
+            type: 'GET',
+            headers: {
+                'X-API-KEY': apiKey
+            },
+            success: function (count) {
+                ficha.find('.inscrito-usuario-ficha span').text(count);
+            }
         });
 
         ficha.show();
@@ -359,13 +385,16 @@ $(document).ready(function () {
         mostrarDialogo("Seguro que quieres eliminar tu cuenta de usuario? Esta acción es irreversible")
             .then(() => {
                 $.ajax({
-                    url: '/api/usuario/eliminarCuenta/' + usuario.idUsuario, // Endpoint para eliminar cuenta
+                    url: '/api/usuario/eliminarCuenta/' + usuario.idUsuario,
                     type: 'DELETE',
+                    headers: {
+                        'X-API-KEY': apiKey
+                    },
                     success: function () {
                         mostrarMensaje('La cuenta ha sido eliminada', ".mensaje-exito");
                         setTimeout(function () {
-                            window.location.href = '/'; // Redirigir tras eliminar cuenta
-                        }, 3000); // Esperar 3 segundos
+                            window.location.href = '/';
+                        }, 3000);
                     },
                     error: function () {
                         mostrarDialogo("Error al eliminar la cuenta. Inténtalo de nuevo.");

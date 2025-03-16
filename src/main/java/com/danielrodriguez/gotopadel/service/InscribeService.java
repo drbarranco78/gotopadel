@@ -39,47 +39,9 @@ public class InscribeService {
         if (yaInscrito) {
             return null; // Ya está inscrito, devuelve -1
         }
-        // Inscripción exitosa
-
-        inscribe.setNotificado(false);
+        // Inscripción exitosa        
         return inscribeRepository.save(inscribe);
-
-    }
-
-    /**
-     * Obtiene una lista de inscripciones que aún no han sido notificadas
-     * para los partidos organizados por un usuario específico.
-     *
-     * @param organizador El usuario organizador de los partidos.
-     * @return Lista de inscripciones no notificadas a los partidos organizados por
-     *         el usuario.
-     */
-    public List<Inscribe> obtenerInscripcionesPendientes(Usuario organizador) {
-        return inscribeRepository.findByPartido_UsuarioAndNotificadoFalse(organizador);
-    }
-
-    /**
-     * Actualiza el estado de la notificación para un conjunto de inscripciones
-     * que no han sido notificadas aún, según el organizador del partido, y devuelve
-     * la lista de usuarios que se han inscrito.
-     * 
-     * @param organizador El usuario organizador del partido.
-     * @return Lista de usuarios que se han inscrito en los partidos del
-     *         organizador.
-     */
-    public List<InscripcionDTO> notificarInscripciones(Usuario organizador) {
-        List<Inscribe> inscripciones = inscribeRepository.findByPartido_UsuarioAndNotificadoFalse(organizador);
-        List<InscripcionDTO> inscripcionesDTO = new ArrayList<>();
-
-        for (Inscribe inscribe : inscripciones) {
-            if (organizador.getIdUsuario() != inscribe.getUsuario().getIdUsuario()) {
-                inscribe.setNotificado(true);
-                inscribeRepository.save(inscribe); // Marca las inscripciones como notificadas
-                inscripcionesDTO.add(new InscripcionDTO(inscribe.getUsuario(), inscribe.getPartido(),null));
-            }
-        }
-        return inscripcionesDTO; // Devuelve la lista de DTOs con usuario y partido
-    }
+    }  
 
     /**
      * Elimina la inscripción de un usuario a un partido por el id de la

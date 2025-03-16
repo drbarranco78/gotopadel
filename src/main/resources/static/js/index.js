@@ -30,7 +30,11 @@ document.getElementById('anterior').addEventListener('click', mostrarArticuloAnt
 // ZONA DE NOTICIAS 
 
 // Fetch para obtener noticias desde la API
-fetch('/api/noticias')
+fetch('/api/noticias', {
+    headers: {
+        'X-API-KEY': apiKey 
+    }
+})
     .then(response => response.json()) // Convierte la respuesta en JSON
     .then(data => {
         // Filtra los artículos que tienen imágenes válidas según las extensiones permitidas
@@ -169,6 +173,7 @@ async function buscarPistas(ciudad) {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
+                'X-API-KEY': apiKey
             }
         });
 

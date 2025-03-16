@@ -41,7 +41,12 @@ function cargarPartidos() {
     // Limpia los contenedores antes de cargar nuevos partidos
     limpiarContenedores();
     // Realiza una petición GET al backend para obtener los partidos
-    fetch('/api/partido', { method: 'GET' })
+    fetch('/api/partido', {
+        method: 'GET',
+        headers: {
+            'X-API-KEY': apiKey // Asegúrate de que apiKey esté definida
+        }
+    })
         // Convierte la respuesta a formato JSON
         .then(response => response.json())
         .then(data => {
@@ -335,9 +340,11 @@ function getUsuarioActivo() {
     // Retorna una promesa que intenta obtener el ID del usuario actual
     return new Promise((resolve, reject) => {
         $.ajax({
-            // URL para obtener los datos del usuario del backend
             url: '/api/usuario/datosUsuario',
             type: 'GET',
+            headers: {
+                'X-API-KEY': apiKey
+            },
             success: function (response) {
                 // Si la respuesta contiene un ID de usuario válido, resuelve la promesa
                 if (response && response.idUsuario) {
@@ -366,13 +373,16 @@ function getUsuarioActivo() {
 function comprobarInscripcion(idUsuario, idPartido) {
 
     // Envía una solicitud GET al backend para verificar si el usuario está inscrito en el partido
-    fetch(`/api/inscripciones/verificar?idUsuario=${idUsuario}&idPartido=${idPartido}`)
+    fetch(`/api/inscripciones/verificar?idUsuario=${idUsuario}&idPartido=${idPartido}`, {
+        headers: {
+            'X-API-KEY': apiKey
+        }
+    })
         .then(res => {
-            // Comprueba si la respuesta de la API es correcta
             if (!res.ok) {
                 throw new Error('Error en la respuesta de la API');
             }
-            return res.json(); // Convierte la respuesta a JSON
+            return res.json();
         })
         .then(data => {
             // Verifica si el usuario ya está inscrito
@@ -408,13 +418,15 @@ function inscribirJugador(idUsuario, partido, organizador) {
     fetch("/api/inscripciones", {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'X-API-KEY': apiKey
         },
         body: JSON.stringify({
-            usuario: { idUsuario },  // Enviamos un objeto para el usuario
-            partido: { idPartido },  // Enviamos un objeto para el partido
-            fechaIns: fechaFormateada // Añadimos la fecha de inscripción
+            usuario: { idUsuario },
+            partido: { idPartido },
+            fechaIns: fechaFormateada
         })
+
     }).then(res => {
         if (res.ok) {
             // Si la respuesta es exitosa:
@@ -457,7 +469,8 @@ function crearNotificacion(idEmisor, idReceptor, mensaje, tipo) {
     return fetch("/api/notificaciones/crear", {
         method: "POST",
         headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
+            "Content-Type": "application/x-www-form-urlencoded",
+            "X-API-KEY": apiKey
         },
         body: new URLSearchParams({
             idEmisor: idEmisor,
@@ -469,7 +482,7 @@ function crearNotificacion(idEmisor, idReceptor, mensaje, tipo) {
         .then(response => {
 
             if (response.ok) {
-                mostrarMensaje("Notificación generada con éxito", ".mensaje-exito");
+                // mostrarMensaje("Notificación generada con éxito", ".mensaje-exito");
                 return;
             } else {
                 return response.text().then(text => {
@@ -493,15 +506,19 @@ function cargarMisPartidos(idUsuario) {
     fichaMiPartidoContainer.innerHTML = `<h2>Mis Partidos</h2>`;
 
     // Solicita los partidos del usuario al backend
-    fetch(`/api/partido/misPartidos?usuario=${idUsuario}`)
-        .then(res => res.json()) // Convierte la respuesta en JSON
+    fetch(`/api/partido/misPartidos?usuario=${idUsuario}`, {
+        headers: {
+            'X-API-KEY': apiKey
+        }
+    })
+        .then(res => res.json())
         .then(partidos => {
-            // Si no hay partidos, muestra la pantalla de "lista vacía"
             if (!partidos || partidos.length === 0) {
                 fichaMiPartidoContainer.style.display = 'flex';
                 mostrarListaVacia(fichaMiPartidoContainer);
                 return;
             }
+
 
             // Configura el diseño del contenedor para mostrar las fichas de partidos
             fichaMiPartidoContainer.style.display = 'grid';
@@ -573,9 +590,13 @@ function archivarPartido(partido, motivoArchivado, btInscribe) {
             }
         })
         .then(() => {
-            // Archiva el partido después de enviar las notificaciones
             const url = `/api/archivo?idPartido=${partido.idPartido}&motivoArchivado=${motivoArchivado}`;
-            return fetch(url, { method: 'POST' });
+            return fetch(url, {
+                method: 'POST',
+                headers: {
+                    'X-API-KEY': apiKey
+                }
+            });
         })
         .then(response => {
             if (!response.ok) {
@@ -604,14 +625,20 @@ function archivarPartido(partido, motivoArchivado, btInscribe) {
  */
 function obtenerInscritos(idPartido) {
     return new Promise((resolve, reject) => {
-        $.get(`/api/inscripciones/partido/${idPartido}/usuarios`)
-            .done((usuarios) => {
+        $.ajax({
+            url: `/api/inscripciones/partido/${idPartido}/usuarios`,
+            type: 'GET',
+            headers: {
+                'X-API-KEY': apiKey
+            },
+            success: function (usuarios) {
                 resolve(usuarios);
-            })
-            .fail((error) => {
+            },
+            error: function (error) {
                 console.error("Error al obtener los usuarios inscritos:", error.responseText);
                 reject(error);
-            });
+            }
+        });
     });
 }
 
@@ -627,10 +654,14 @@ function cancelarInscripcion(idUsuario, idPartido, partido = null, btInscribe = 
     mostrarDialogo("¿Seguro que quieres cancelar la inscripción a este partido?")
         .then(() => {
             // Si el usuario confirma la acción, realiza la solicitud DELETE
-            fetch(`/api/inscripciones/cancelar?idUsuario=${idUsuario}&idPartido=${idPartido}`, { method: 'DELETE' })
+            fetch(`/api/inscripciones/cancelar?idUsuario=${idUsuario}&idPartido=${idPartido}`, {
+                method: 'DELETE',
+                headers: {
+                    'X-API-KEY': apiKey
+                }
+            })
                 .then(response => {
                     if (response.ok) {
-                        // Si se cancela correctamente, actualiza el botón y muestra un mensaje
                         mostrarMensaje('Inscripción cancelada correctamente', ".mensaje-exito");
                         // Se crea la notificación correspondiente según quién haya cancelado la inscripción
                         if (partido && !rechazo) {

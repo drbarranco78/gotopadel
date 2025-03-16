@@ -12,8 +12,11 @@ window.onbeforeunload = function (event) {
 // Evento de click en el botón "Ver partidos"
 $('#admin-ver-partidos').click(function () {
     $.ajax({
-        url: '/api/partido',  // URL del endpoint del backend
+        url: '/api/partido',
         type: 'GET',
+        headers: {
+            'X-API-KEY': apiKey
+        },
         success: function (partidos) {
             // Limpiar el contenedor antes de cargar nuevos partidos
             $('.listados-admin').empty();
@@ -66,6 +69,9 @@ $(document).on('click', '.eliminar-partido', function () {
             $.ajax({
                 url: '/api/partido/' + idPartido,
                 type: 'DELETE',
+                headers: {
+                    'X-API-KEY': apiKey
+                },
                 success: function () {
                     // Eliminar el elemento del DOM
                     $('#partido-' + idPartido).remove();                    
@@ -84,8 +90,11 @@ $(document).on('click', '.eliminar-partido', function () {
 // Evento de click en el botón "Ver usuarios"
 $('#admin-ver-usuarios').click(function () {
     $.ajax({
-        url: '/api/usuario/listaUsuarios', // Endpoint para obtener usuarios
+        url: '/api/usuario/listaUsuarios',
         type: 'GET',
+        headers: {
+            'X-API-KEY': apiKey
+        },
         success: function (usuarios) {
             // Limpiar el contenedor antes de agregar nuevos usuarios
             $('.listados-admin').empty();
@@ -134,6 +143,9 @@ $(document).on('click', '.eliminar-usuario', function () {
             $.ajax({
                 url: '/api/usuario/adminEliminaUsuario/' + idUsuario,
                 type: 'DELETE',
+                headers: {
+                    'X-API-KEY': apiKey
+                },
                 success: function () {
                     // Eliminar el usuario del DOM
                     $('#usuario-' + idUsuario).remove();
@@ -155,6 +167,9 @@ $('#admin-ver-archivo').click(function () {
     $.ajax({
         url: '/api/archivo/obtenerPartidosArchivados',
         type: 'GET',
+        headers: {
+            'X-API-KEY': apiKey
+        },
         success: function (archivados) {
             $('.listados-admin').empty();
             if (archivados.length === 0) {
@@ -202,6 +217,9 @@ $('.listados-admin').on('click', '.eliminar-archivado', function () {
             $.ajax({
                 url: `/api/archivo/eliminarPartidoArchivado/${idPartido}`,
                 type: 'DELETE',
+                headers: {
+                    'X-API-KEY': apiKey
+                },
                 success: function () {
                     $(`#archivado-${idPartido}`).remove(); // Eliminar del DOM
                     mostrarMensaje("Partido archivado eliminado con éxito", ".mensaje-exito");                    
