@@ -1,0 +1,6 @@
+[phases.setup]
+nixPkgs = ['jdk21'] # Especifica JDK 21 explícitamente
+
+[phases.build]
+dependsOn = ['setup']
+cmds = ['chmod +x ./mvnw && ./mvnw -DskipTests clean install']
