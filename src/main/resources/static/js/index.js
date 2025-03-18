@@ -173,7 +173,7 @@ async function buscarPistas(ciudad) {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'X-API-KEY': apiKey
+                // 'X-API-KEY': apiKey
             }
         });
 

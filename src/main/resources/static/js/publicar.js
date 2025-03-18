@@ -114,7 +114,7 @@ async function cargarPistas(ciudad) {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'X-API-KEY': apiKey
+                // 'X-API-KEY': apiKey
             }
         });
 
