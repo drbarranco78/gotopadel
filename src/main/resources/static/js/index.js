@@ -30,18 +30,18 @@ document.getElementById('anterior').addEventListener('click', mostrarArticuloAnt
 // ZONA DE NOTICIAS 
 
 // Fetch para obtener noticias desde la API
-fetch('/api/noticias', {
-    headers: {
-        'X-API-KEY': apiKey 
-    }
-})
-    .then(response => response.json()) // Convierte la respuesta en JSON
-    .then(data => {
-        // Filtra los artículos que tienen imágenes válidas según las extensiones permitidas
-        articulos = data.articles.filter(articulo => esUrlImagenValida(articulo.urlToImage));
-        renderizarArticulos(); // Renderiza los artículos en el DOM
-    })
-    .catch(error => console.error('Error al obtener las noticias:', error)); // Manejo de errores en la solicitud
+// fetch('/api/noticias', {
+//     headers: {
+//         'X-API-KEY': apiKey 
+//     }
+// })
+//     .then(response => response.json()) // Convierte la respuesta en JSON
+//     .then(data => {
+//         // Filtra los artículos que tienen imágenes válidas según las extensiones permitidas
+//         articulos = data.articles.filter(articulo => esUrlImagenValida(articulo.urlToImage));
+//         renderizarArticulos(); // Renderiza los artículos en el DOM
+//     })
+//     .catch(error => console.error('Error al obtener las noticias:', error)); // Manejo de errores en la solicitud
 
 /**
  * Renderiza los artículos en la sección de noticias.
