@@ -24,7 +24,7 @@ public class VistasController {
      */
     @GetMapping("/")
     public String home(HttpSession session) {
-        session.invalidate();  // Invalida la sesión al acceder a la página de inicio.
+        session.invalidate(); // Invalida la sesión al acceder a la página de inicio.
         return "index";
     }
 
@@ -36,11 +36,11 @@ public class VistasController {
      */
     @GetMapping("/private")
     public String mostrarZonaPrivada(HttpSession session) {
-        //Object usuario = session.getAttribute("usuarioAutenticado");
-        //if (usuario != null) {
-            return "private";  // Usuario autenticado, mostrar zona privada.
-       // }
-       // return "redirect:/";  // Redirigir a la página de inicio si no hay sesión.
+        Object usuario = session.getAttribute("usuarioAutenticado");
+        if (usuario != null) {
+            return "private"; // Usuario autenticado, mostrar zona privada.
+        }
+        return "redirect:/"; // Redirigir a la página de inicio si no hay sesión.
     }
 
     /**
@@ -53,9 +53,9 @@ public class VistasController {
     public String mostrarZonaAdministrador(HttpSession session) {
         Object usuario = session.getAttribute("usuarioAutenticado");
         if (usuario != null && esAdmin(usuario)) {
-            return "admin";  // Usuario autenticado y es administrador.
+            return "admin"; // Usuario autenticado y es administrador.
         }
-        return "redirect:/";  // Redirigir a la página de inicio si no es admin o no está autenticado.
+        return "redirect:/"; // Redirigir a la página de inicio si no es admin o no está autenticado.
     }
 
     /**
@@ -72,7 +72,8 @@ public class VistasController {
      * Verifica si el usuario autenticado tiene rol de administrador.
      *
      * @param usuario El objeto usuario de la sesión.
-     * @return {@code true} si el usuario tiene rol de administrador, {@code false} en caso contrario.
+     * @return {@code true} si el usuario tiene rol de administrador, {@code false}
+     *         en caso contrario.
      */
     private boolean esAdmin(Object usuario) {
         if (usuario instanceof Usuario) {
