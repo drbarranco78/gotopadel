@@ -1,7 +1,7 @@
 -- USE GOTOPADEL;
 
-INSERT IGNORE INTO USUARIO (id_usuario, nombre, email, fecha_nac, genero, nivel, fecha_inscripcion,rol)
-VALUES (1, 'admin', 'admin@email.com', NULL, 'Hombre', NULL, NULL, 'ADMIN');
+INSERT IGNORE INTO USUARIO (nombre, email, fecha_nac, genero, nivel, fecha_inscripcion,rol)
+VALUES ('admin', 'admin@email.com', NULL, 'Hombre', NULL, NULL, 'ADMIN');
 
 INSERT IGNORE INTO CREDENCIALES (id_usuario, password) 
 VALUES (1, 'Gotopadel1');
