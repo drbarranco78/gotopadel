@@ -176,7 +176,7 @@ async function buscarPistas(ciudad) {
                 // 'X-API-KEY': apiKey
             }
         });
-        if (!response.ok) {
+        if (!responsePistas.ok) {
             const errorData = await response.json(); // Parsea el JSON del error
             throw new Error(`${errorData.error}: ${errorData.cause}`);
         }
