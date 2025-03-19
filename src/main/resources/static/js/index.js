@@ -177,7 +177,7 @@ async function buscarPistas(ciudad) {
             }
         });
         if (!responsePistas.ok) {
-            const errorData = await response.json(); // Parsea el JSON del error
+            const errorData = await responsePistas.json(); // Parsea el JSON del error
             throw new Error(`${errorData.error}: ${errorData.cause}`);
         }
 
