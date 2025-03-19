@@ -79,7 +79,13 @@ public class Archivo implements Serializable{
     @Column(name = "motivo_archivado", length = 30)
     private String motivoArchivado;
 
-    // Getters y setters
+    // Constructores, Getters y setters
+
+    /**
+     * Constructor vacío requerido para JPA.
+     */
+    public Archivo() {
+    }
 
     /**
      * Obtiene el identificador del partido.

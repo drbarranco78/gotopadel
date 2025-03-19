@@ -12,7 +12,8 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 
 /**
- * Servicio que gestiona las operaciones relacionadas con los usuarios y sus credenciales.
+ * Servicio que gestiona las operaciones relacionadas con los usuarios y sus
+ * credenciales.
  */
 @Service
 public class UsuarioService {
@@ -24,16 +25,19 @@ public class UsuarioService {
     private CredencialesRepository credencialesRepository;
 
     // Expresiones regulares para validar los campos
-    private static final Pattern patronNombre = Pattern.compile("^(?=[A-Za-zñÑáéíóúÁÉÍÓÚ])[A-Za-zñÑáéíóúÁÉÍÓÚ\\s]{1,48}[A-Za-zñÑáéíóúÁÉÍÓÚ]$");
-    private static final Pattern patronEmail = Pattern.compile("^[a-zA-Z0-9._%+-]{1,40}@[a-zA-Z0-9.-]{2,20}\\.[a-zA-Z]{2,}$");
+    private static final Pattern patronNombre = Pattern
+            .compile("^(?=[A-Za-zñÑáéíóúÁÉÍÓÚ])[A-Za-zñÑáéíóúÁÉÍÓÚ\\s]{1,48}[A-Za-zñÑáéíóúÁÉÍÓÚ]$");
+    private static final Pattern patronEmail = Pattern
+            .compile("^[a-zA-Z0-9._%+-]{1,40}@[a-zA-Z0-9.-]{2,20}\\.[a-zA-Z]{2,}$");
     private static final Pattern patronPassword = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,20}$");
 
     /**
      * Realiza el inicio de sesión de un usuario.
      *
-     * @param email el email del usuario.
+     * @param email    el email del usuario.
      * @param password la contraseña del usuario.
-     * @return el objeto Usuario si las credenciales son correctas; de lo contrario, retorna null.
+     * @return el objeto Usuario si las credenciales son correctas; de lo contrario,
+     *         retorna null.
      */
     public Usuario login(String email, String password) {
         Usuario usuario = usuarioRepository.findByEmail(email);
@@ -48,9 +52,10 @@ public class UsuarioService {
     /**
      * Registra un nuevo usuario en la base de datos.
      *
-     * @param usuario el objeto Usuario a registrar.
+     * @param usuario  el objeto Usuario a registrar.
      * @param password la contraseña del usuario.
-     * @return true si el registro fue exitoso; false si hubo un error o el email ya está registrado.
+     * @return true si el registro fue exitoso; false si hubo un error o el email ya
+     *         está registrado.
      */
     public boolean registrarUsuario(Usuario usuario, String password) {
         try {
@@ -103,23 +108,25 @@ public class UsuarioService {
     /**
      * Valida los campos de un usuario y su contraseña.
      *
-     * @param usuario el objeto Usuario con los datos a validar.
+     * @param usuario  el objeto Usuario con los datos a validar.
      * @param password la contraseña a validar.
      * @return true si todos los campos son válidos; false de lo contrario.
      */
     private boolean validarCampos(Usuario usuario, String password) {
         return patronNombre.matcher(usuario.getNombre()).matches() &&
-               patronEmail.matcher(usuario.getEmail()).matches() &&
-               patronPassword.matcher(password).matches();
+                patronEmail.matcher(usuario.getEmail()).matches() &&
+                patronPassword.matcher(password).matches();
     }
 
     /**
-     * Busca un usuario por su ID.
-     * @param idUsuario El ID del usuario.
-     * @return Un Optional<Usuario> con el usuario encontrado o vacío si no existe.
+     * Busca un usuario por su identificador.
+     *
+     * @param idUsuario el identificador del usuario a buscar
+     * @return un {@code Optional<Usuario>} que contiene el usuario si se encuentra,
+     *         o vacío si no existe
      */
     public Optional<Usuario> findById(Integer idUsuario) {
         return usuarioRepository.findById(idUsuario);
     }
-    
+
 }

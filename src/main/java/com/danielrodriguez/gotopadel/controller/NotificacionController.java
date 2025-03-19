@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Controlador REST para la gestión de notificaciones en la aplicación.
+ * Expone endpoints bajo la ruta base "/api/notificaciones" para interactuar con el servicio de notificaciones.
+ */
 @RestController
 @RequestMapping("/api/notificaciones")
 public class NotificacionController {
@@ -17,11 +21,9 @@ public class NotificacionController {
     private final NotificacionService notificacionService;
 
     /**
-     * Constructor de la clase NotificacionController.
-     * 
-     * Este constructor inyecta el servicio necesario para gestionar las notificaciones.
+     * Constructor que inyecta el servicio de notificaciones.
      *
-     * @param notificacionService El servicio encargado de gestionar las notificaciones.
+     * @param notificacionService el servicio encargado de gestionar las notificaciones
      */
     @Autowired
     public NotificacionController(NotificacionService notificacionService) {
@@ -29,7 +31,13 @@ public class NotificacionController {
     }
 
     /**
-     * Crea una nueva notificación.
+     * Crea una nueva notificación con los datos proporcionados.
+     *
+     * @param idEmisor el identificador del usuario que envía la notificación
+     * @param idReceptor el identificador del usuario que recibe la notificación
+     * @param mensaje el contenido de la notificación
+     * @param tipo el tipo de notificación (ejemplo: invitación, alerta, etc.)
+     * @return una respuesta HTTP con la notificación creada y estado 200 (OK)
      */
     @PostMapping("/crear")
     public ResponseEntity<Notificacion> crearNotificacion(
@@ -43,8 +51,10 @@ public class NotificacionController {
     }
 
     /**
-     * Obtiene las notificaciones de un usuario receptor con datos sobre el emisor y
-     * el partido.
+     * Obtiene las notificaciones de un usuario receptor en formato DTO, incluyendo datos del emisor y fecha.
+     *
+     * @param idReceptor el identificador del usuario receptor cuyas notificaciones se desean obtener
+     * @return una respuesta HTTP con la lista de notificaciones en formato DTO y estado 200 (OK)
      */
     @PostMapping("/usuario/{idReceptor}")
     public ResponseEntity<List<NotificacionDTO>> obtenerNotificaciones(@PathVariable Integer idReceptor) {
@@ -61,7 +71,10 @@ public class NotificacionController {
     }
 
     /**
-     * Elimina una notificación por su ID.
+     * Elimina una notificación específica por su identificador.
+     *
+     * @param idNotificacion el identificador de la notificación a eliminar
+     * @return una respuesta HTTP con estado 204 (No Content) si la eliminación es exitosa
      */
     @DeleteMapping("/eliminar/{idNotificacion}")
     public ResponseEntity<Void> eliminarNotificacion(@PathVariable Integer idNotificacion) {
@@ -69,6 +82,13 @@ public class NotificacionController {
         return ResponseEntity.noContent().build();
     }
 
+    /**
+     * Obtiene una notificación completa por su identificador.
+     *
+     * @param id el identificador de la notificación a recuperar
+     * @return una respuesta HTTP con la notificación y estado 200 (OK) si se encuentra,
+     *         o estado 404 (Not Found) si no existe
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Notificacion> obtenerNotificacionPorID(@PathVariable Integer id) {
         Notificacion notificacion = notificacionService.obtenerNotificacionCompleta(id);

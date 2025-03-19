@@ -5,11 +5,11 @@ let detallePartido;
 
 $(document).ready(function () {
     // Asegurar que el usuario cierra sesión al salir de la página   
-    // window.onbeforeunload = function (event) {
-    //     navigator.sendBeacon('/api/usuario/logout');
-    //     event.preventDefault();
-    //     event.returnValue = ''; // Necesario en algunos navegadores como Chrome
-    // };
+    window.onbeforeunload = function (event) {
+        navigator.sendBeacon('/api/usuario/logout');
+        event.preventDefault();
+        event.returnValue = '';
+    };
 
     // Obtener datos del usuario desde el backend
     $.ajax({
@@ -20,7 +20,7 @@ $(document).ready(function () {
         },
         success: function (response) {
             usuario = response;
-            $("#mensaje-bienvenida").html("Bienvenid" + (usuario.genero === "Hombre" ? "o, " : "a, ") + usuario.nombre + " con id " + usuario.idUsuario);
+            $("#mensaje-bienvenida").html("Bienvenid" + (usuario.genero === "Hombre" ? "o, " : "a, ") + usuario.nombre);
             obtenerNotificaciones(usuario);
         },
         error: function (error) {

@@ -1,65 +1,58 @@
 package com.danielrodriguez.gotopadel.service;
 
 import java.util.List;
-
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.Optional;
-import com.danielrodriguez.gotopadel.model.Inscribe;
 import com.danielrodriguez.gotopadel.model.Notificacion;
 import com.danielrodriguez.gotopadel.model.Usuario;
-import com.danielrodriguez.gotopadel.repository.InscribeRepository;
 import com.danielrodriguez.gotopadel.repository.NotificacionRepository;
 
 /**
  * Servicio encargado de gestionar las notificaciones de la aplicación.
- * Proporciona métodos para eliminar notificaciones, obtener notificaciones completas,
- * y marcar inscripciones como leídas.
+ * Proporciona métodos para crear, eliminar y obtener notificaciones, 
+ * así como para verificar duplicados y manejar transacciones.
  */
 @Service
 public class NotificacionService {
 
     @Autowired
     private final NotificacionRepository notificacionRepository;
-    private final InscribeRepository inscribeRepository;
     private final UsuarioService usuarioService;
 
     /**
-     * Constructor de la clase NotificacionService.
+     * Constructor que inyecta los repositorios y servicios necesarios para la gestión de notificaciones.
      *
-     * @param inscribeRepository El repositorio de inscripciones que se usará en el servicio.
-     * @param notificacionRepository El repositorio de notificaciones que se usará en el servicio.
-     * @param usuarioService El servicio de usuario que se usará en el servicio.
+     * @param notificacionRepository el repositorio para acceder y manipular datos de notificaciones
+     * @param usuarioService el servicio para gestionar datos de usuarios
      */
     @Autowired
-    public NotificacionService(InscribeRepository inscribeRepository,
+    public NotificacionService(
             NotificacionRepository notificacionRepository,
             UsuarioService usuarioService) {
-        this.inscribeRepository = inscribeRepository;
         this.notificacionRepository = notificacionRepository;
         this.usuarioService = usuarioService;
     }
 
     /**
-     * Crea y guarda una notificación utilizando los datos de emisor, receptor,
-     * idPartido y tipo.
-     * Evita duplicados basándose en emisor, receptor, partido y tipo.
+     * Crea y guarda una notificación utilizando los datos proporcionados, evitando duplicados.
+     * Verifica si ya existe una notificación con el mismo emisor, receptor y mensaje antes de crearla.
      *
-     * @param idEmisor   ID del usuario que genera la notificación.
-     * @param idReceptor ID del usuario afectado.
-     * @param idPartido  ID del partido relacionado.
-     * @param tipo       Tipo de notificación ("rechazo", "inscripcion_cancelada",
-     *                   "partido_cancelado", etc.)
-     * @return La notificación creada o null si ya existe una equivalente.
+     * @param idEmisor el identificador del usuario que genera la notificación
+     * @param idReceptor el identificador del usuario que recibe la notificación
+     * @param mensaje el contenido de la notificación
+     * @param tipo el tipo de notificación (ejemplo: "rechazo", "inscripcion_cancelada", "partido_cancelado")
+     * @return la notificación creada, o {@code null} si ya existe una notificación equivalente
+     * @throws RuntimeException si el emisor o receptor no se encuentran en la base de datos
      */
-    public Notificacion crearNotificacion(Integer idEmisor, Integer idReceptor, String mensaje, String tipo ) {
+    public Notificacion crearNotificacion(Integer idEmisor, Integer idReceptor, String mensaje, String tipo) {
         Usuario emisor = usuarioService.findById(idEmisor)
                 .orElseThrow(() -> new RuntimeException("Usuario emisor no encontrado"));
         Usuario receptor = usuarioService.findById(idReceptor)
                 .orElseThrow(() -> new RuntimeException("Usuario receptor no encontrado"));
-        
-        // Verificar si ya existe una notificación con el mismo emisor, receptor, partido y tipo
+
+        // Verificar si ya existe una notificación con el mismo emisor, receptor y mensaje
         Optional<Notificacion> notificacionExistente = notificacionRepository
                 .findByEmisorAndReceptorAndMensaje(emisor, receptor, mensaje);
 
@@ -74,33 +67,34 @@ public class NotificacionService {
     }
 
     /**
-     * Obtiene las notificaciones asociadas a un receptor.
+     * Obtiene todas las notificaciones asociadas a un receptor específico.
      *
-     * @param idReceptor ID del usuario receptor.
-     * @return Lista de notificaciones para ese usuario.
+     * @param idReceptor el identificador del usuario receptor
+     * @return una lista de notificaciones asociadas al receptor
      */
     public List<Notificacion> obtenerNotificacionesPorReceptor(Integer idReceptor) {
         return notificacionRepository.findByReceptor_Id(idReceptor);
     }
 
     /**
-     * Elimina una notificación por su ID.
+     * Elimina una notificación específica por su identificador.
+     * Este método está anotado con {@code @Transactional} para garantizar la integridad de la operación.
      *
-     * @param idNotificacion ID de la notificación a eliminar.
+     * @param idNotificacion el identificador de la notificación a eliminar
      */
     @Transactional
     public void eliminarNotificacion(Integer idNotificacion) {
         notificacionRepository.deleteById(idNotificacion);
     }
+
     /**
-     * Obtiene una notificación completa por su ID.
+     * Obtiene una notificación completa por su identificador.
      *
-     * @param id El ID de la notificación que se desea obtener.
-     * @return La notificación correspondiente al ID, o null si no se encuentra.
+     * @param id el identificador de la notificación a recuperar
+     * @return la notificación correspondiente al ID, o {@code null} si no se encuentra
      */
     public Notificacion obtenerNotificacionCompleta(Integer id) {
-        return notificacionRepository.findById(id)                
+        return notificacionRepository.findById(id)
                 .orElse(null);
     }
-
 }

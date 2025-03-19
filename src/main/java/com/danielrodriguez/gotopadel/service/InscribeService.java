@@ -1,14 +1,11 @@
 package com.danielrodriguez.gotopadel.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.danielrodriguez.gotopadel.dto.InscripcionDTO;
 import com.danielrodriguez.gotopadel.model.Inscribe;
-import com.danielrodriguez.gotopadel.model.Usuario;
 import com.danielrodriguez.gotopadel.repository.InscribeRepository;
 
 /**
@@ -20,6 +17,11 @@ public class InscribeService {
 
     private final InscribeRepository inscribeRepository;
 
+    /**
+     * Constructor que inyecta el repositorio de inscripciones.
+     *
+     * @param inscribeRepository el repositorio para acceder y manipular datos relacionados con las inscripciones
+     */
     @Autowired
     public InscribeService(InscribeRepository inscribeRepository) {
         this.inscribeRepository = inscribeRepository;

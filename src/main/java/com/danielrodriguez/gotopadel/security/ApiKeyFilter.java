@@ -12,6 +12,11 @@ import org.springframework.web.filter.GenericFilterBean;
 
 import java.io.IOException;
 
+/**
+ * Filtro de seguridad que valida la presencia y corrección de una API Key en las solicitudes entrantes.
+ * Este filtro se aplica a las rutas que comienzan por "/api/", excluyendo las rutas de "/api/pistas".
+ * Si la API Key no es válida o no está presente, se rechaza la solicitud con un estado HTTP 401 (Unauthorized).
+ */
 @Component
 public class ApiKeyFilter extends GenericFilterBean {
 
@@ -19,7 +24,24 @@ public class ApiKeyFilter extends GenericFilterBean {
     private String validApiKey;
 
     private static final String API_KEY_HEADER = "X-API-KEY";
+    /**
+     * Constructor por defecto para la inicialización del filtro.
+     */
+    public ApiKeyFilter() {
+        
+    }
 
+    /**
+     * Procesa las solicitudes entrantes para validar la API Key en el encabezado de la solicitud.
+     * Si la solicitud no pertenece a una ruta protegida o la API Key es válida, permite que la solicitud continúe.
+     * En caso contrario, retorna una respuesta de error con estado 401.
+     *
+     * @param request la solicitud entrante recibida por el filtro
+     * @param response la respuesta que se enviará al cliente
+     * @param chain el objeto FilterChain que permite pasar la solicitud al siguiente filtro o controlador
+     * @throws IOException si ocurre un error de entrada/salida durante el procesamiento
+     * @throws ServletException si ocurre un error relacionado con el servlet durante el procesamiento
+     */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
@@ -30,7 +52,6 @@ public class ApiKeyFilter extends GenericFilterBean {
         // Obtén la ruta de la solicitud
         String path = httpRequest.getServletPath();
 
-       
         // Solo aplica el filtro a rutas que empiecen por /api/
         if (!path.startsWith("/api/") || path.startsWith("/api/pistas")) {
             chain.doFilter(request, response);

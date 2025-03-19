@@ -25,6 +25,12 @@ public class ArchivoService {
     private final ArchivoRepository archivoRepository;
     private final PartidoRepository partidoRepository;
 
+    /**
+     * Constructor que inyecta los repositorios necesarios para la gestión de archivos y partidos.
+     *
+     * @param archivoRepository el repositorio para acceder y manipular datos en la tabla ARCHIVO
+     * @param partidoRepository el repositorio para acceder y manipular datos en la tabla PARTIDO
+     */
     @Autowired
     public ArchivoService(ArchivoRepository archivoRepository, PartidoRepository partidoRepository) {
         this.archivoRepository = archivoRepository;

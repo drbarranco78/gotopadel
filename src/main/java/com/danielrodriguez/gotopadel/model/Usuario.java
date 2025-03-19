@@ -75,7 +75,13 @@ public class Usuario implements Serializable {
      */
     private String rol;
 
-    // Métodos getter y setter
+    // Constructor, getter y setter
+
+    /**
+     * Constructor vacío requerido para JPA.
+     */
+    public Usuario() {
+    }
 
     /**
      * Obtiene el identificador único del usuario.

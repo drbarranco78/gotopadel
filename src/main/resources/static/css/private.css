@@ -34,6 +34,8 @@ header {
     height: 50px;
     border-radius: 50%;
 }
+
+/* Contenedor de aviso de notificaciones  */
 .notificaciones{
     display: none;
     position:relative;
@@ -49,6 +51,7 @@ header {
    
 }
 
+/* Icono de las notificaciones  */
 .notificaciones i{
     animation: campana 0.5s infinite ease-in-out;
     transform-origin: top center;
@@ -58,6 +61,7 @@ header {
     font-size: 20px;
 }
 
+/* Contenedor general de notificaciones  */
 .detalle-notificaciones {
     display: none;
     position: fixed;
@@ -82,6 +86,7 @@ header {
     color: whitesmoke;
 }
 
+/* Cabecera del contenedor  */
 .header-notificaciones {
     display: flex;   
     justify-content: space-between;
@@ -91,6 +96,7 @@ header {
    
 }
 
+/* Botones de cierre (X) */
 #cerrar-notificaciones, .cerrar-dialogo {
     position: absolute;
     top: 10px;
@@ -112,11 +118,13 @@ header {
     top: 5px !important;
 }
 
+/* Icono para ver los inscritos en un partido  */
 .fa-eye{
     float: right;
     cursor: pointer;
 }
 
+/* Tarjeta de notificación */
 .notificacion {
     background: white;
     padding: 10px;
@@ -124,6 +132,8 @@ header {
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
+
+/* Botones de acción de las notificaciones  */
 .btn-aceptar, .btn-rechazar{
     padding: 5px 10px;
     margin: 5px;
@@ -131,8 +141,6 @@ header {
     cursor: pointer;
     border-radius: 5px;
 }
-
-
 
 .btn-aceptar {
     background-color: #198754;

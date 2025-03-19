@@ -105,6 +105,12 @@ public class Partido implements Serializable{
     // Getters y setters
 
     /**
+     * Constructor vacío requerido para JPA.
+     */
+    public Partido() {
+    }
+
+    /**
      * Obtiene el identificador único del partido.
      *
      * @return el identificador del partido.

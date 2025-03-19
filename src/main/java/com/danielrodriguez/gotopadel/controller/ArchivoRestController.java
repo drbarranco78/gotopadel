@@ -27,6 +27,12 @@ public class ArchivoRestController {
 
     private final ArchivoService archivoService;
 
+    /**
+     * Constructor que inyecta el servicio de archivos mediante autoconexión.
+     *
+     * @param archivoService el servicio que maneja la lógica de negocio relacionada
+     *                       con archivos
+     */
     @Autowired
     public ArchivoRestController(ArchivoService archivoService) {
         this.archivoService = archivoService;
@@ -42,7 +48,7 @@ public class ArchivoRestController {
      */
     @PostMapping
     public ResponseEntity<String> archivarPartido(@RequestParam Integer idPartido,
-            @RequestParam Integer motivoArchivado) {        
+            @RequestParam Integer motivoArchivado) {
 
         try {
             archivoService.archivarPartido(idPartido, motivoArchivado);

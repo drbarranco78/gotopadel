@@ -18,9 +18,7 @@ import java.util.stream.Collectors;
 import com.danielrodriguez.gotopadel.model.Inscribe;
 import com.danielrodriguez.gotopadel.model.Usuario;
 import com.danielrodriguez.gotopadel.service.InscribeService;
-import com.danielrodriguez.gotopadel.service.NotificacionService;
 import com.danielrodriguez.gotopadel.service.PartidoService;
-import com.danielrodriguez.gotopadel.service.UsuarioService;
 
 /**
  * Controlador REST para manejar las inscripciones de usuarios a partidos.
@@ -33,8 +31,7 @@ public class InscribeRestController {
 
     private final InscribeService inscribeService;
     private final PartidoService partidoService;
-    private final UsuarioService usuarioService;
-    private final NotificacionService notificacionService;
+   
 
     /**
      * Constructor de la clase InscribeRestController.
@@ -45,16 +42,11 @@ public class InscribeRestController {
      *
      * @param inscribeService El servicio encargado de gestionar las inscripciones.
      * @param partidoService El servicio encargado de gestionar los partidos.
-     * @param usuarioService El servicio encargado de gestionar los usuarios.
-     * @param notificacionService El servicio encargado de gestionar las notificaciones.
      */
     @Autowired
-    public InscribeRestController(InscribeService inscribeService, PartidoService partidoService,
-            UsuarioService usuarioService, NotificacionService notificacionService) {
+    public InscribeRestController(InscribeService inscribeService, PartidoService partidoService) {
         this.inscribeService = inscribeService;
-        this.partidoService = partidoService;
-        this.usuarioService = usuarioService;
-        this.notificacionService = notificacionService;
+        this.partidoService = partidoService;        
     }
 
     /**

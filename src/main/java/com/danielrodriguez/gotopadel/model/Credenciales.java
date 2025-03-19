@@ -33,6 +33,14 @@ public class Credenciales implements Serializable {
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 
+
+    /**
+     * Constructor vacío requerido para JPA.
+     */
+    public Credenciales() {
+    }
+
+
     /**
      * Obtiene el identificador de usuario asociado con estas credenciales.
      * 

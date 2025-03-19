@@ -21,6 +21,12 @@ public class NoticiasRestController {
     private final String URL = "https://newsapi.org/v2/everything?qInTitle=padel&language=es&apiKey=" + API_KEY;
 
     /**
+     * Constructor por defecto para la inicialización del controlador.
+     */
+    public NoticiasRestController() {
+      
+    }
+    /**
      * Endpoint para obtener noticias sobre pádel.
      *
      * @return Una respuesta HTTP que contiene las noticias en formato JSON.

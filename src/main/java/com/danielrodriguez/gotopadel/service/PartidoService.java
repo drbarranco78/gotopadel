@@ -12,6 +12,7 @@ import java.util.Optional;
 
 /**
  * Servicio que gestiona las operaciones relacionadas con los partidos de pádel.
+ * Proporciona métodos para crear, actualizar, eliminar y consultar partidos en la base de datos.
  */
 @Service
 public class PartidoService {
@@ -20,6 +21,13 @@ public class PartidoService {
     private UbicacionService ubicacionService;
     private InscribeService inscribeService;
 
+    /**
+     * Constructor que inyecta las dependencias necesarias para la gestión de partidos.
+     *
+     * @param partidoRepository el repositorio para acceder y manipular datos de partidos
+     * @param ubicacionService el servicio para gestionar datos de ubicaciones
+     * @param inscribeService el servicio para gestionar inscripciones en partidos
+     */
     @Autowired
     public PartidoService(PartidoRepository partidoRepository, UbicacionService ubicacionService,
                           InscribeService inscribeService) {
@@ -28,25 +36,29 @@ public class PartidoService {
         this.inscribeService = inscribeService;
     }
 
+    /**
+     * Constructor alternativo que inyecta solo el repositorio de partidos.
+     *
+     * @param partidoRepository el repositorio para acceder y manipular datos de partidos
+     */
     public PartidoService(PartidoRepository partidoRepository) {
         this.partidoRepository = partidoRepository;
-        
     }
 
     /**
      * Obtiene todos los partidos registrados en la base de datos.
      *
-     * @return una lista de partidos.
+     * @return una lista de todos los partidos registrados
      */
     public List<Partido> obtenerTodosLosPartidos() {
         return partidoRepository.findAll();
     }
 
     /**
-     * Obtiene un partido específico por su id.
+     * Obtiene un partido específico por su identificador.
      *
-     * @param id el id del partido a buscar.
-     * @return un objeto Optional que contiene el partido si se encuentra, o vacío si no existe.
+     * @param id el identificador del partido a buscar
+     * @return un {@code Optional<Partido>} que contiene el partido si se encuentra, o vacío si no existe
      */
     public Optional<Partido> obtenerPartidoPorId(int id) {
         return partidoRepository.findById(id);
@@ -55,8 +67,8 @@ public class PartidoService {
     /**
      * Obtiene una lista de partidos organizados o en los que un usuario está inscrito.
      *
-     * @param idUsuario el id del usuario.
-     * @return una lista de partidos.
+     * @param idUsuario el identificador del usuario
+     * @return una lista de partidos relacionados con el usuario
      */
     public List<Partido> obtenerPartidosPorUsuario(Integer idUsuario) {
         return partidoRepository.findByUsuarioOrInscripciones_Usuario(idUsuario);
@@ -64,11 +76,11 @@ public class PartidoService {
 
     /**
      * Crea o actualiza un partido en la base de datos.
-     * Si el partido tiene una ubicación asociada, se busca en la base de datos y se asigna.
-     * Además, inscribe automáticamente al organizador del partido.
+     * Si el partido tiene una ubicación asociada, la busca y asigna. Además, inscribe automáticamente
+     * al organizador del partido.
      *
-     * @param partido el partido a guardar o actualizar.
-     * @return el partido guardado o actualizado.
+     * @param partido el partido a guardar o actualizar
+     * @return el partido guardado o actualizado
      */
     public Partido guardarPartido(Partido partido) {
         if (partido.getUbicacion() != null) {
@@ -84,9 +96,9 @@ public class PartidoService {
     }
 
     /**
-     * Descuenta una vacante de un partido, si hay vacantes disponibles.
+     * Reduce en uno el número de vacantes disponibles en un partido, si hay vacantes.
      *
-     * @param idPartido el id del partido cuyo número de vacantes se desea modificar.
+     * @param idPartido el identificador del partido cuya cantidad de vacantes se desea modificar
      */
     public void descontarVacante(int idPartido) {
         Optional<Partido> optionalPartido = partidoRepository.findById(idPartido);
@@ -101,9 +113,9 @@ public class PartidoService {
     }
 
     /**
-     * Aumenta el número de vacantes de un partido.
+     * Aumenta en uno el número de vacantes disponibles en un partido.
      *
-     * @param idPartido el id del partido cuyo número de vacantes se desea incrementar.
+     * @param idPartido el identificador del partido cuya cantidad de vacantes se desea incrementar
      */
     public void aumentarVacante(int idPartido) {
         Optional<Partido> optionalPartido = partidoRepository.findById(idPartido);
@@ -116,9 +128,10 @@ public class PartidoService {
     }
 
     /**
-     * Elimina un partido de la base de datos por su id.
+     * Elimina un partido de la base de datos por su identificador.
      *
-     * @param id el id del partido a eliminar.
+     * @param id el identificador del partido a eliminar
+     * @return {@code true} si el partido existía y fue eliminado, {@code false} si no existía
      */
     public boolean eliminarPartido(int id) {
         if (partidoRepository.existsById(id)) {
@@ -131,8 +144,8 @@ public class PartidoService {
     /**
      * Cuenta el número de partidos publicados por un usuario.
      *
-     * @param idUsuario el id del usuario para contar sus partidos publicados.
-     * @return el número de partidos publicados por el usuario.
+     * @param idUsuario el identificador del usuario cuyos partidos publicados se desean contar
+     * @return el número total de partidos publicados por el usuario
      */
     public Integer contarPartidosPublicadosPorUsuario(Integer idUsuario) {
         return partidoRepository.countPartidosPublicadosPorUsuario(idUsuario);
