@@ -1,8 +1,5 @@
 package com.danielrodriguez.gotopadel.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,9 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Controlador REST para obtener información sobre pistas de pádel.
  * Este controlador interactúa con la API externa de Playtomic.
@@ -21,8 +15,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/pistas")
 public class PistasRestController {
-
-    private static final Logger logger = LoggerFactory.getLogger(PistasRestController.class);
 
     // URL base para la API de Playtomic
     private final String urlBase = "https://api.playtomic.io/v1/tenants";
@@ -37,41 +29,27 @@ public class PistasRestController {
      *
      * @param latitud  Latitud de la ubicación.
      * @param longitud Longitud de la ubicación.
-     * @return Respuesta de la API externa en formato JSON o un mensaje de error si falla.
+     * @return Respuesta de la API externa en formato JSON.
      */
     @GetMapping
-    public ResponseEntity<?> obtenerPistas(@RequestParam String latitud, @RequestParam String longitud) {
+    public ResponseEntity<String> obtenerPistas(@RequestParam String latitud, @RequestParam String longitud) {
+        // Construye las coordenadas y la URL completa
         String coordenadas = latitud + "," + longitud;
         String url = urlBase + parametros + coordenadas;
 
+        // Crea un cliente RestTemplate para realizar la solicitud
         RestTemplate restTemplate = new RestTemplate();
-        logger.info("Iniciando solicitud a Playtomic: {}", url);
+        ResponseEntity<String> response = null;
 
         try {
-            ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
-            logger.info("Respuesta recibida de Playtomic: {}", response.getStatusCode());
-            return ResponseEntity.ok(response.getBody());
+            // Realiza la solicitud GET a la API externa
+            response = restTemplate.getForEntity(url, String.class);
         } catch (RestClientException e) {
-            logger.error("Error al conectar con Playtomic: {}", e.getMessage(), e);
-
-            // Crea un objeto JSON con el mensaje de error
-            Map<String, String> errorResponse = new HashMap<>();
-            errorResponse.put("error", "No se pudo conectar con Playtomic");
-            errorResponse.put("cause", e.getMessage());
-
-            
-            return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
-                    .body(errorResponse);
-        } catch (Exception e) {
-            logger.error("Error inesperado en el endpoint: {}", e.getMessage(), e);
-
-            // Error genérico para otros casos
-            Map<String, String> errorResponse = new HashMap<>();
-            errorResponse.put("error", "Error interno del servidor");
-            errorResponse.put("cause", e.getMessage());
-
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR) // 500
-                    .body(errorResponse);
+            // Lanza una excepción en caso de error al realizar la solicitud
+            throw new RuntimeException(e);
         }
+
+        // Devuelve la respuesta obtenida de la API
+        return response;
     }
 }
