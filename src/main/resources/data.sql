@@ -1,4 +1,4 @@
-USE GOTOPADEL;
+-- USE GOTOPADEL;
 
 INSERT IGNORE INTO USUARIO (id_usuario, nombre, email, fecha_nac, genero, nivel, fecha_inscripcion,rol)
 VALUES (1, 'admin', 'admin@email.com', NULL, 'Hombre', NULL, NULL, 'ADMIN');
