@@ -176,10 +176,14 @@ async function buscarPistas(ciudad) {
                 // 'X-API-KEY': apiKey
             }
         });
-
-        if (!responsePistas.ok) { // Verifica si la respuesta es exitosa
-            throw new Error('Error al hacer la solicitud al backend');
+        if (!response.ok) {
+            const errorData = await response.json(); // Parsea el JSON del error
+            throw new Error(`${errorData.error}: ${errorData.cause}`);
         }
+
+        // if (!responsePistas.ok) { // Verifica si la respuesta es exitosa
+        //     throw new Error('Error al hacer la solicitud al backend');
+        // }
         const dataPistas = await responsePistas.json(); // Convierte la respuesta en JSON
 
         // Itera sobre las pistas a partir del índice actual y muestra hasta 6
@@ -214,7 +218,7 @@ async function buscarPistas(ciudad) {
         }
 
     } catch (error) {
-        console.error('Error al hacer la solicitud:', error); // Manejo de errores
+        console.error('Error al hacer la solicitud:', error.message); // Manejo de errores
     }
 }
 // Carga las ciudades cuando se completa la carga del DOM
