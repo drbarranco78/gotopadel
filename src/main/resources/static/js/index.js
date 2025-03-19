@@ -130,7 +130,7 @@ function cargarCiudades() {
             // Actualiza la ciudad seleccionada
             ciudadSeleccionada = selectCiudades.value.toLowerCase();
             // Busca las pistas de la ciudad seleccionada por defecto
-            // buscarPistas(ciudadSeleccionada);
+            buscarPistas(ciudadSeleccionada);
         })
         .catch(error => {
             console.error('Error al cargar las ciudades:', error); // Manejo de errores
