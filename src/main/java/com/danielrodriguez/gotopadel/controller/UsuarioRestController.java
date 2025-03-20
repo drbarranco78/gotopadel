@@ -3,6 +3,8 @@ package com.danielrodriguez.gotopadel.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,6 +25,7 @@ import jakarta.servlet.http.HttpSession;
 @RestController
 @RequestMapping("/api/usuario")
 public class UsuarioRestController {
+    private static final Logger logger = LoggerFactory.getLogger(UsuarioRestController.class);
 
     @Autowired
     // Servicio para operaciones de usuarios
@@ -172,9 +175,21 @@ public class UsuarioRestController {
      * @return Respuesta sin contenido.
      */
     @DeleteMapping("/adminEliminaUsuario/{id}")
-    public ResponseEntity<Void> eliminarUsuario(@PathVariable Integer id) {
-        usuarioService.eliminarUsuarioPorId(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<?> eliminarUsuario(@PathVariable Integer id) {
+        logger.info("Solicitud DELETE recibida para eliminar usuario con ID: {}", id);
+        try {
+            usuarioService.eliminarUsuarioPorId(id);
+            logger.info("Usuario con ID {} eliminado exitosamente", id);
+            return ResponseEntity.noContent().build();
+        } catch (IllegalArgumentException e) {
+            logger.warn("Intento de eliminar usuario con ID inválido: {}", id, e);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("ID de usuario inválido: " + e.getMessage());
+        } catch (Exception e) {
+            logger.error("Error al eliminar usuario con ID: {}", id, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error interno al eliminar usuario: " + e.getMessage());
+        }
     }
 
     /**

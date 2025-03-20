@@ -133,27 +133,37 @@ $('#admin-ver-usuarios').click(function () {
     });
 });
 
-// Acción de click en el botón de eliminar usuario 
 $(document).on('click', '.eliminar-usuario', function () {
-    // Obtiene el ID del usuario de la ficha 
     let idUsuario = $(this).data('id');
+    const baseUrl = window.location.hostname === 'localhost' ? '' : 'https://api.tuapp.com'; // Ajusta según tu dominio
 
     mostrarDialogo("¿Estás seguro de eliminar este usuario?")
         .then(() => {
+            console.log("Iniciando solicitud DELETE para usuario ID:", idUsuario);
+            console.log("URL:", baseUrl + '/api/usuario/adminEliminaUsuario/' + idUsuario);
+            console.log("API Key:", apiKey);
+
             $.ajax({
-                url: '/api/usuario/adminEliminaUsuario/' + idUsuario,
+                url: baseUrl + '/api/usuario/adminEliminaUsuario/' + idUsuario,
                 type: 'DELETE',
                 headers: {
                     'X-API-KEY': apiKey
                 },
                 success: function () {
-                    // Eliminar el usuario del DOM
+                    console.log("Usuario ID", idUsuario, "eliminado con éxito");
                     $('#usuario-' + idUsuario).remove();
                     alert("El usuario " + idUsuario + " ha sido eliminado");
                     mostrarMensaje("Usuario eliminado correctamente", ".mensaje-exito");
                 },
-                error: function () {                    
-                    mostrarMensaje("Error al eliminar el usuario", ".mensaje-error");
+                error: function (xhr, status, error) {
+                    console.error("Error en la solicitud DELETE:");
+                    console.error("Estado HTTP:", xhr.status);
+                    console.error("Mensaje de error:", error);
+                    console.error("Respuesta del servidor:", xhr.responseText);
+                    mostrarMensaje(
+                        "Error al eliminar el usuario (Código: " + xhr.status + "): " + xhr.responseText,
+                        ".mensaje-error"
+                    );
                 }
             });
         })
