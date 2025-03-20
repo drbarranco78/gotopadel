@@ -135,7 +135,7 @@ $('#admin-ver-usuarios').click(function () {
 
 $(document).on('click', '.eliminar-usuario', function () {
     let idUsuario = $(this).data('id');
-    const baseUrl = window.location.hostname === 'localhost' ? '' : 'https://api.tuapp.com'; // Ajusta según tu dominio
+    const baseUrl = window.location.hostname === 'localhost' ? '' : 'https://gotopadel-production.up.railway.app/'; // Ajusta según tu dominio
 
     mostrarDialogo("¿Estás seguro de eliminar este usuario?")
         .then(() => {
