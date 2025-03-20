@@ -213,7 +213,10 @@ function verDetalles(partido, inscrito, organizador) {
                         .then(() => {
                             // Inscribe al usuario en el partido 
                             inscribirJugador(idUsuarioActivo, partido, false);
-
+                        })
+                        .catch(() => {
+                            // Si el usuario cancela la acción, registra un mensaje en la consola
+                            console.log("Acción cancelada");
                         });
                 } else {
                     // Si el nivel del usuario es inferior, muestra un mensaje de error
