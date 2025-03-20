@@ -480,9 +480,7 @@ function crearNotificacion(idEmisor, idReceptor, mensaje, tipo) {
         })
     })
         .then(response => {
-
-            if (response.ok) {
-                // mostrarMensaje("Notificación generada con éxito", ".mensaje-exito");
+            if (response.ok) {                
                 return;
             } else {
                 return response.text().then(text => {
@@ -518,7 +516,6 @@ function cargarMisPartidos(idUsuario) {
                 mostrarListaVacia(fichaMiPartidoContainer);
                 return;
             }
-
 
             // Configura el diseño del contenedor para mostrar las fichas de partidos
             fichaMiPartidoContainer.style.display = 'grid';
@@ -574,7 +571,7 @@ function archivarPartido(partido, motivoArchivado, btInscribe) {
     obtenerInscritos(partido.idPartido)
         .then((usuariosInscritos) => {
 
-            let mensajeNotificacion = `Un partido donde estabas inscrito ha sido cancelado por su organizador             
+            let mensajeNotificacion = `Un partido donde estabas inscrito ha sido <strong>cancelado</strong> por su organizador             
             <p>Organizador: ${usuarioActivo.nombre || 'Usuario desconocido'} (${usuarioActivo.email || 'No disponible'})</p>
             <p>Partido: ${partido.tipoPartido || 'desconocido'} en ${partido.ubicacion?.nombre || 'ubicación desconocida'}</p>
             <p>Fecha original: ${partido.fechaPartido || 'fecha desconocida'} a las ${partido.horaPartido || 'hora desconocida'}</p>`;
@@ -661,7 +658,7 @@ function cancelarInscripcion(idUsuario, idPartido, partido = null, btInscribe = 
                 }
             })
                 .then(response => {
-                    if (response.ok) {
+                    if (response.status === 200) {
                         mostrarMensaje('Inscripción cancelada correctamente', ".mensaje-exito");
                         // Se crea la notificación correspondiente según quién haya cancelado la inscripción
                         if (partido && !rechazo) {
@@ -693,7 +690,11 @@ function cancelarInscripcion(idUsuario, idPartido, partido = null, btInscribe = 
                         $('#enlace-ver').click();
                         cargarPartidos();
 
+                    } else if (response.status === 204) {
+                        // Si el usuario inscrito ya canceló la inscripción                        
+                        mostrarMensaje('La inscripción ya ha sido cancelada', ".mensaje-exito");
                     } else {
+                        
                         // Muestra un mensaje de error si no se puede cancelar la inscripción
                         mostrarMensaje('No se ha podido cancelar la inscripción. Inténtalo de nuevo', ".mensaje-error");
                     }

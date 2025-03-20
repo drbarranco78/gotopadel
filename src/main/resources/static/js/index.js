@@ -30,7 +30,9 @@ document.getElementById('anterior').addEventListener('click', mostrarArticuloAnt
 // ZONA DE NOTICIAS 
 
 // Fetch para obtener noticias desde la API
+
 fetch('/api/noticias', {
+    
     headers: {
         'X-API-KEY': apiKey 
     }
@@ -181,9 +183,6 @@ async function buscarPistas(ciudad) {
             throw new Error(`${errorData.error}: ${errorData.cause}`);
         }
 
-        // if (!responsePistas.ok) { // Verifica si la respuesta es exitosa
-        //     throw new Error('Error al hacer la solicitud al backend');
-        // }
         const dataPistas = await responsePistas.json(); // Convierte la respuesta en JSON
 
         // Itera sobre las pistas a partir del índice actual y muestra hasta 6

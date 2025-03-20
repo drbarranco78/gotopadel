@@ -305,6 +305,7 @@ legend{
     opacity: 0.5;
     filter: grayscale(100%);
     transform: scale(0.8);
+    min-height: fit-content;
 }
 .noticia-articulo img {
     max-width: 100%;

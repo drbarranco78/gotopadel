@@ -53,7 +53,8 @@ public class ApiKeyFilter extends GenericFilterBean {
         String path = httpRequest.getServletPath();
 
         // Solo aplica el filtro a rutas que empiecen por /api/
-        if (!path.startsWith("/api/") || path.startsWith("/api/pistas")) {
+        if (!path.startsWith("/api/") || path.startsWith("/api/pistas") || 
+        path.startsWith("/api/usuario/config") || path.startsWith("/api/noticias")) {
             chain.doFilter(request, response);
             return;
         }

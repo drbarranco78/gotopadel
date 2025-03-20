@@ -114,7 +114,7 @@ async function cargarPistas(ciudad) {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                // 'X-API-KEY': apiKey
+                
             }
         });
 
@@ -198,8 +198,7 @@ document.getElementById('form-publicar').addEventListener('submit', function (ev
                         })
                             .then(res => res.json())
                             .then(partidoCreado => {
-                                mostrarMensaje("Partido publicado con éxito", ".mensaje-exito");
-                                console.log(partidoCreado);
+                                mostrarMensaje("Partido publicado con éxito", ".mensaje-exito");                                
 
                                 // Limpiar el formulario y recargar la interfaz
                                 setTimeout(() => {

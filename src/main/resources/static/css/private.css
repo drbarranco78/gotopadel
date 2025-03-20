@@ -223,10 +223,11 @@ header {
     flex-direction: column;
     align-items: center;
     overflow-y: auto !important;
-    justify-content: flex-start;
-    width: 100% !important;
+    justify-content: flex-start;    
+    width:100%;
     height: 50% !important;
     min-height: fit-content;
+    min-width: 100%;
     gap: 20px;
     border: 2px solid whitesmoke;
     border-radius: 10px;
@@ -236,6 +237,10 @@ header {
     font-weight: bold;
     z-index: 4;
     padding: 20px 40px;
+}
+
+.ficha-usuario-body span{
+    float: right;
 
 }
 /* Cabecera de las fichas de usuario  */
@@ -250,12 +255,14 @@ header {
 .ficha-usuario-fecha{
     font-size: 16px;
     width: 100% !important;
-    
-
 }
 .ficha-usuario-fecha-span{
     align-self: end;
     margin-bottom: 0px !important;
+}
+.ficha-inscrito-organizador{
+    text-align: center;
+    margin-top: 20px;
 }
 
 /* Cuerpo de la ficha del usuario  */
@@ -551,7 +558,7 @@ legend {
 /* Ficha del partido en la sección de "Ver partidos" */
 #ficha-partido {    
     z-index: 1;
-    width: 80%;
+    width: 90%;
     filter: none;
     height: auto;    
     padding: 10px;
@@ -579,7 +586,7 @@ legend {
     gap: 10px;
     justify-content: start;
     padding: 0px 0px 0px 50px;
-    overflow: hidden;
+    
 }
 /* Zona de la fecha dentro de la ficha */
 .partido-fecha {
@@ -628,12 +635,12 @@ legend {
     font-weight: bolder;
 }
 /* Botón para ver detalles del partido */
-#boton-detalles {
-    position: sticky;
+#boton-detalles {    
     grid-area: boton;
-    border-radius: 10px;
-    font-weight: bold;
-    width: 60%;
+    border-radius: 50px;
+    font-weight: bold;    
+    width: 100px;
+    height: 40px;
     margin: 0 auto;
 }
 /* Contenedor para la ficha detallada de los partidos */
@@ -645,13 +652,13 @@ legend {
     display: none;
     flex-direction: column;
     padding: 20px 50px;    
-    background-color: var(--color-secundario);
+    background-color: var(--color-azul);
     color: whitesmoke;
     font-size: 20px;
     font-weight: bold;
     opacity: 0.95;
     border-radius: 10px;
-    border: 3px solid #333;
+    border: 3px solid whitesmoke;
     z-index: 1;
     overflow-y: auto;
 }
@@ -661,7 +668,8 @@ legend {
     align-items: center;
     justify-content: space-between; 
     margin-bottom: 10px;
-    gap: 20px;    
+    gap: 20px;   
+    border-bottom: 1px solid whitesmoke; 
 }
 .detalle-item div{
     display: flex;
@@ -672,7 +680,7 @@ legend {
 
 .detalle-item span {
     font-weight: bold;    
-    color: var(--color-resaltado);
+    color: var(--color-verde);
     overflow-x: auto;     
 }
 .detalle-mis-partidos{
@@ -700,23 +708,23 @@ legend {
     margin: 30px;
     border-radius: 10px;
     margin-bottom: 0px;
-    background-color: var(--color-azul);
+    background-color: var(--color-resaltado);
     color: whitesmoke;
     font-weight: bold;
 }
 
 /* Modal que muestra los jugadores inscritos en un partido */
 #div-jugadores-inscritos {
-    display: none; /* Oculto inicialmente */
+    display: none;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 80%;
+    width: 80vw;
     height:auto;
     border: 1px solid whitesmoke;
     border-radius: 10px;
-    background-color: var(--color-secundario);
+    background-color: rgba(0, 85, 115, 0.9);
     padding: 20px;    
     overflow-y: auto;
     z-index: 3;    
@@ -763,13 +771,16 @@ legend {
 }
 
 /* Contenedor para las fichas */
-#div-jugadores-inscritos .fichas-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(20%, 30%));
+.fichas-container {
+    display: grid;    
+    grid-template-columns: repeat(auto-fit, minmax(150px, 400px));
     gap: 20px; 
     justify-content: center;
     align-content: center;
     
+}
+.fichas-container:has(:nth-child(4)) {
+    grid-template-columns: repeat(auto-fit, minmax(150px, auto));   
 }
 
 /* Contenedor para la zona de partidos del usuario  */
@@ -916,13 +927,13 @@ legend {
     max-width: 300px;
     text-align: center;
     display: none;
-    z-index: 3;
+    z-index: 10;
 }
 .mensaje-exito h3 {
     color: var(--color-verde);
 }
 .mensaje-error h3 {
-    color: var(--color-rojo);
+    color: red;
 }
 
 /* Animaciones de movimiento  */

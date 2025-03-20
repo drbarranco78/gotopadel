@@ -1,15 +1,26 @@
 let verDetallesFicha, fichaPartidoContainer, fichaMiPartidoContainer, fichaPartidoTemplate,
     fichaMiPartidoTemplate, btInscribeVer, btInscribe, contenedorPrincipal, usuarioActivo, idUsuarioActivo, licencia, privacidad, ayuda;
-const apiKey = 'a3b1c5d7e9f0123456789abcdef01234';
+
+let apiKey=null;
+loadApiKey();
+function loadApiKey() {
+    $.get('/api/usuario/config', function(response) {
+        apiKey = response; // Asigna la clave a la variable global  
+      
+        if (apiKey===null) {
+            loadApiKey();
+        }
+    }).fail(function(xhr, status, error) {
+        console.error('Error al cargar la API key:', error);
+    });
+}
 document.addEventListener("DOMContentLoaded", () => {
     // Inicialización de variables
-    verDetallesFicha = document.getElementById('ficha-detalles');
-    // misDetallesFicha = document.getElementById('ficha-detalles-mis');
+    verDetallesFicha = document.getElementById('ficha-detalles');    
     fichaPartidoContainer = document.getElementById('ver-partidos');
     fichaMiPartidoContainer = document.getElementById('mis-partidos');
     fichaPartidoTemplate = document.getElementById('ficha-partido');
-    fichaMiPartidoTemplate = document.getElementById('ficha-mis-partidos');
-    // btInscribeMis = document.getElementById('bt-inscribir-mis');
+    fichaMiPartidoTemplate = document.getElementById('ficha-mis-partidos');    
     btInscribeVer = document.getElementById('bt-inscribir');
     contenedorPrincipal = document.getElementById('contenedor-principal');
 
@@ -61,7 +72,5 @@ document.addEventListener("DOMContentLoaded", () => {
             <h3>Modificaciones a esta Política</h3>
             <p>Nos reservamos el derecho de actualizar y modificar esta política en cualquier momento. Las actualizaciones serán reflejadas en esta página y, si es necesario, te informaremos de los cambios importantes.</p>
         `;
-    // if (!verDetallesFicha || !fichaMiPartidoTemplate  || !fichaPartidoContainer || !fichaPartidoTemplate) {
-    //     console.error("No se encontraron los elementos requeridos en el DOM.");
-    // }
+   
 });

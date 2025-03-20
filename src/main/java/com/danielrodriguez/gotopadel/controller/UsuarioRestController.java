@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -185,6 +186,27 @@ public class UsuarioRestController {
     @GetMapping("/{idUsuario}/publicados/count")
     public int contarPartidosPublicados(@PathVariable Integer idUsuario) {
         return partidoService.contarPartidosPublicadosPorUsuario(idUsuario);
+    }
+
+
+
+    /**
+     * Clave de API inyectada desde las propiedades de la aplicación.
+     * Este valor se obtiene de la propiedad {@code api.key} definida en el archivo de configuración
+     * 
+     */
+    @Value("${api.key}")
+    private String apiKey;
+
+    /**
+     * Obtiene la clave de API configurada para la aplicación.
+     * Este método expone la clave de API a través de una solicitud HTTP GET en la ruta especificada.
+     *
+     * @return la clave de API como una cadena de texto.
+     */
+    @GetMapping("/config")
+    public String getApiKey() {
+        return apiKey;
     }
     
 }

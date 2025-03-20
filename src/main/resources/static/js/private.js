@@ -164,7 +164,7 @@ $(document).ready(function () {
                     crearNotificacion(notificacion.receptor.idUsuario, notificacion.emisor.idUsuario, mensajeNotificacion, "rechazo");
                     eliminarNotificacion(idNotificacion);
                 } else {
-                    console.log("No se encontró el ID del partido.");
+                    mostrarMensaje("No se encontró el ID del partido.", ".mensaje-error");
                 }
             },
             error: function () {

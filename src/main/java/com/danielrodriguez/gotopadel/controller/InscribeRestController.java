@@ -94,7 +94,7 @@ public class InscribeRestController {
         boolean existeInscripcion = inscribeService.verificarInscripcion(idUsuario, idPartido);
 
         if (!existeInscripcion) {
-            return ResponseEntity.status(404).body("No se encontró inscripción para el usuario en este partido.");
+            return ResponseEntity.status(204).body("No se encontró inscripción para el usuario en este partido.");
         }
 
         // Cancelar la inscripción y devolver la vacante al partido
