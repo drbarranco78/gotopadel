@@ -2,6 +2,10 @@ package com.danielrodriguez.gotopadel.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import jakarta.persistence.*;
 
 
@@ -19,10 +23,12 @@ public class Notificacion implements Serializable{
 
     @ManyToOne
     @JoinColumn(name = "id_emisor", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Usuario emisor;
 
     @ManyToOne
     @JoinColumn(name = "id_receptor", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Usuario receptor;   
 
     @Column(nullable = true)

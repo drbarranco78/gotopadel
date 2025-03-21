@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
@@ -32,6 +35,7 @@ public class Partido implements Serializable{
      */
     @ManyToOne
     @JoinColumn(name = "id_usuario", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Usuario usuario;
 
     /**
@@ -81,7 +85,7 @@ public class Partido implements Serializable{
      * Es una relación @ManyToOne con la entidad `Ubicacion`.
      */
     @ManyToOne
-    @JoinColumn(name = "ubicacion", referencedColumnName = "id_ubicacion")
+    @JoinColumn(name = "ubicacion", referencedColumnName = "id_ubicacion")    
     private Ubicacion ubicacion;
 
     /**

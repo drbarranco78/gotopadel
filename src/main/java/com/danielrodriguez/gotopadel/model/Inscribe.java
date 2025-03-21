@@ -2,6 +2,9 @@ package com.danielrodriguez.gotopadel.model;
 
 import java.io.Serializable;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import jakarta.persistence.*;
 
 /**
@@ -29,6 +32,7 @@ public class Inscribe implements Serializable {
      */
     @ManyToOne
     @JoinColumn(name = "id_usuario", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Usuario usuario;
 
     /**
@@ -38,6 +42,7 @@ public class Inscribe implements Serializable {
      */
     @ManyToOne
     @JoinColumn(name = "id_partido", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Partido partido;
 
     /**

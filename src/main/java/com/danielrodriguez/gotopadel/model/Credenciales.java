@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 /**
  * Representa las credenciales de un usuario en el sistema, incluyendo su contraseña.
  * La entidad está vinculada a la tabla "CREDENCIALES" en la base de datos.
@@ -31,6 +34,7 @@ public class Credenciales implements Serializable {
      */
     @OneToOne
     @JoinColumn(name = "id_usuario")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Usuario usuario;
 
 
