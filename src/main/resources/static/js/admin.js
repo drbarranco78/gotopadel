@@ -149,7 +149,7 @@ $(document).on('click', '.eliminar-usuario', function () {
                 success: function () {
                     // Eliminar el usuario del DOM
                     $('#usuario-' + idUsuario).remove();
-                    alert("El usuario " + idUsuario + " ha sido eliminado");
+                    // alert("El usuario " + idUsuario + " ha sido eliminado");
                     mostrarMensaje("Usuario eliminado correctamente", ".mensaje-exito");
                 },
                 error: function () {                    
